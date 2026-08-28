@@ -202,25 +202,17 @@
   transform: none;
 }
 
-@keyframes bretia-join-left {
-  from {
+@keyframes bretia-symbol-in {
+  0% {
     opacity: 0;
-    transform: translate3d(-16px, 0, 0) rotate(-8deg);
+    transform: scale(1.12);
   }
-  to {
+  60% {
     opacity: 1;
-    transform: none;
   }
-}
-
-@keyframes bretia-join-right {
-  from {
-    opacity: 0;
-    transform: translate3d(16px, 0, 0) rotate(8deg);
-  }
-  to {
+  100% {
     opacity: 1;
-    transform: none;
+    transform: scale(1);
   }
 }
 
@@ -235,14 +227,9 @@
   }
 }
 
-@utility anim-join-left {
+@utility anim-symbol {
   transform-origin: 50% 50%;
-  animation: bretia-join-left 1.15s var(--ease-brand) both;
-}
-
-@utility anim-join-right {
-  transform-origin: 50% 50%;
-  animation: bretia-join-right 1.15s var(--ease-brand) both;
+  animation: bretia-symbol-in 0.75s var(--ease-brand) both;
 }
 
 @utility anim-wordmark {
