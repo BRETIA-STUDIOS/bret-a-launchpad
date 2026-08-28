@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3">
-              <BretiaSymbol className="h-9 w-9 text-primary" />
+              <BretiaSymbol className="h-9 w-auto" />
               <div>
                 <p className="font-display text-xl font-semibold tracking-[0.18em]">BRETÌA</p>
                 <p className="mt-1 text-[0.5625rem] tracking-[0.34em] text-muted-foreground">
