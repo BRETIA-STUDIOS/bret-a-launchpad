@@ -75,23 +75,34 @@ export function Header() {
         </button>
       </div>
 
+      {open ? (
+        <button
+          type="button"
+          aria-label="Chiudi il menu"
+          tabIndex={-1}
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 top-20 z-40 cursor-default bg-background/70 backdrop-blur-sm lg:hidden"
+        />
+      ) : null}
+
       <div
         id="mobile-nav"
         hidden={!open}
-        className="border-t border-border bg-background lg:hidden"
+        className="relative z-50 border-t border-border bg-background lg:hidden"
       >
         <nav aria-label="Navigazione mobile" className="container-brand flex flex-col py-6">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className="border-b border-border py-4 font-display text-lg tracking-[0.04em] text-foreground/90 [&.active]:text-primary"
+              onClick={() => setOpen(false)}
+              className="border-b border-border py-4 font-display text-lg tracking-[0.04em] text-foreground/90 transition-colors duration-200 hover:text-primary active:text-primary [&.active]:text-primary"
               activeProps={{ className: "active" }}
             >
               {item.label}
             </Link>
           ))}
-          <BrandButton to="/contatti" className="mt-8 w-full">
+          <BrandButton to="/contatti" className="mt-8 w-full" onClick={() => setOpen(false)}>
             Parliamone
           </BrandButton>
         </nav>

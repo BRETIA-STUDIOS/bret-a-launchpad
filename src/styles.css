@@ -51,44 +51,53 @@
 :root {
   --radius: 0.75rem;
 
-  --background: oklch(0.16 0.026 264);
-  --foreground: oklch(0.97 0.005 250);
-  --surface: oklch(0.2 0.028 264);
-  --surface-2: oklch(0.24 0.03 264);
+  /* Palette derived from the official BRETÌA logo:
+     BRETÌA blue #003CFD, silver #DADDEA, deep navy #0B1020. */
+  --bretia-blue: oklch(0.494 0.282 264);
+  --bretia-blue-bright: oklch(0.58 0.25 264);
+  --bretia-blue-deep: oklch(0.4 0.24 264);
+  --bretia-silver: oklch(0.899 0.018 276);
+  --bretia-silver-dim: oklch(0.72 0.028 270);
+  --bretia-navy: oklch(0.177 0.034 270);
 
-  --card: oklch(0.2 0.028 264);
-  --card-foreground: oklch(0.97 0.005 250);
-  --popover: oklch(0.2 0.028 264);
-  --popover-foreground: oklch(0.97 0.005 250);
+  --background: oklch(0.15 0.03 268);
+  --foreground: oklch(0.97 0.008 276);
+  --surface: oklch(0.195 0.032 268);
+  --surface-2: oklch(0.235 0.036 268);
 
-  --primary: oklch(0.66 0.19 255);
-  --primary-foreground: oklch(0.14 0.03 264);
+  --card: oklch(0.195 0.032 268);
+  --card-foreground: oklch(0.97 0.008 276);
+  --popover: oklch(0.195 0.032 268);
+  --popover-foreground: oklch(0.97 0.008 276);
 
-  --secondary: oklch(0.24 0.03 264);
-  --secondary-foreground: oklch(0.97 0.005 250);
+  --primary: var(--bretia-blue);
+  --primary-foreground: oklch(0.98 0.005 276);
 
-  --muted: oklch(0.24 0.03 264);
-  --muted-foreground: oklch(0.72 0.018 258);
+  --secondary: oklch(0.235 0.036 268);
+  --secondary-foreground: oklch(0.97 0.008 276);
 
-  --accent: oklch(0.66 0.19 255);
-  --accent-foreground: oklch(0.14 0.03 264);
+  --muted: oklch(0.235 0.036 268);
+  --muted-foreground: var(--bretia-silver-dim);
+
+  --accent: var(--bretia-blue-bright);
+  --accent-foreground: oklch(0.98 0.005 276);
 
   --destructive: oklch(0.62 0.21 25);
-  --destructive-foreground: oklch(0.98 0.003 250);
+  --destructive-foreground: oklch(0.98 0.003 276);
 
-  --border: oklch(1 0 0 / 10%);
-  --border-strong: oklch(1 0 0 / 20%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.66 0.19 255);
+  --border: oklch(0.899 0.018 276 / 12%);
+  --border-strong: oklch(0.899 0.018 276 / 24%);
+  --input: oklch(0.899 0.018 276 / 16%);
+  --ring: var(--bretia-blue-bright);
 
   --gradient-accent: linear-gradient(
     135deg,
-    oklch(0.7 0.18 250),
-    oklch(0.6 0.2 268)
+    var(--bretia-blue-bright),
+    var(--bretia-silver)
   );
   --gradient-veil: radial-gradient(
     60% 50% at 50% 0%,
-    oklch(0.66 0.19 255 / 18%),
+    oklch(0.494 0.282 264 / 22%),
     transparent 70%
   );
 
@@ -193,25 +202,17 @@
   transform: none;
 }
 
-@keyframes bretia-join-left {
-  from {
+@keyframes bretia-symbol-in {
+  0% {
     opacity: 0;
-    transform: translate3d(-16px, 0, 0) rotate(-8deg);
+    transform: scale(1.12);
   }
-  to {
+  60% {
     opacity: 1;
-    transform: none;
   }
-}
-
-@keyframes bretia-join-right {
-  from {
-    opacity: 0;
-    transform: translate3d(16px, 0, 0) rotate(8deg);
-  }
-  to {
+  100% {
     opacity: 1;
-    transform: none;
+    transform: scale(1);
   }
 }
 
@@ -226,22 +227,17 @@
   }
 }
 
-@utility anim-join-left {
+@utility anim-symbol {
   transform-origin: 50% 50%;
-  animation: bretia-join-left 1.15s var(--ease-brand) both;
-}
-
-@utility anim-join-right {
-  transform-origin: 50% 50%;
-  animation: bretia-join-right 1.15s var(--ease-brand) both;
+  animation: bretia-symbol-in 0.75s var(--ease-brand) both;
 }
 
 @utility anim-wordmark {
-  animation: bretia-fade-up 0.6s var(--ease-brand) 0.85s both;
+  animation: bretia-fade-up 0.55s var(--ease-brand) 0.6s both;
 }
 
 @utility anim-descriptor {
-  animation: bretia-fade-up 0.6s var(--ease-brand) 1.05s both;
+  animation: bretia-fade-up 0.55s var(--ease-brand) 0.85s both;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,25 +1,43 @@
-import { BretiaSymbol } from "./BretiaSymbol";
+import symbolColor from "@/assets/brand/symbol_color.png.asset.json";
+import wordmark from "@/assets/brand/wordmark.png.asset.json";
+import descriptor from "@/assets/brand/descriptor.png.asset.json";
 import { cn } from "@/lib/utils";
 
 /**
- * One-time refined entrance animation of the BRETÌA mark:
- * the two ribbons drift in, interweave, settle, then the wordmark and
- * descriptor fade in. Total ~1.4s. Never loops. Honors prefers-reduced-motion.
+ * One-time entrance of the OFFICIAL BRETÌA logo assets:
+ * symbol fades + scales in, settles, then the wordmark and the
+ * "WEB STUDIO" descriptor fade in. ~1.35s total. Never loops.
+ * Honors prefers-reduced-motion (static official logo).
  */
 export function AnimatedLogo({ className }: { className?: string }) {
   return (
     <div className={cn("flex flex-col items-center", className)}>
-      <BretiaSymbol
-        animated
-        title="Simbolo BRETÌA"
-        className="h-20 w-20 text-primary sm:h-24 sm:w-24"
+      <img
+        src={symbolColor.url}
+        alt="BRETÌA"
+        width={541}
+        height={694}
+        fetchPriority="high"
+        decoding="async"
+        className="anim-symbol h-24 w-auto object-contain sm:h-28"
       />
-      <p className="anim-wordmark mt-6 font-display text-2xl font-semibold tracking-[0.3em] sm:text-3xl">
-        BRETÌA
-      </p>
-      <p className="anim-descriptor mt-3 text-[0.625rem] tracking-[0.42em] text-muted-foreground">
-        WEB STUDIO
-      </p>
+      <img
+        src={wordmark.url}
+        alt=""
+        aria-hidden="true"
+        width={520}
+        height={86}
+        className="anim-wordmark mt-7 h-[1.6rem] w-auto object-contain sm:h-8"
+      />
+      <img
+        src={descriptor.url}
+        alt=""
+        aria-hidden="true"
+        width={525}
+        height={29}
+        className="anim-descriptor mt-3 h-[0.6rem] w-auto object-contain sm:h-3"
+      />
+      <span className="sr-only">BRETÌA Web Studio</span>
     </div>
   );
 }

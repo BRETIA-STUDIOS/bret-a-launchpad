@@ -1,7 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { BretiaSymbol } from "./BretiaSymbol";
+import symbolWhite from "@/assets/brand/symbol.png.asset.json";
+import wordmark from "@/assets/brand/wordmark.png.asset.json";
+import descriptor from "@/assets/brand/descriptor.png.asset.json";
 import { cn } from "@/lib/utils";
 
+/**
+ * Official BRETÌA logo lockup for the header, built from the official
+ * brand assets (white variant). Assets are never redrawn or distorted:
+ * width is always auto so the aspect ratio is preserved.
+ */
 export function Logo({
   className,
   showDescriptor = true,
@@ -14,17 +21,35 @@ export function Logo({
       to="/"
       aria-label="BRETÌA Web Studio — home"
       className={cn(
-        "group inline-flex items-center gap-3 transition-opacity duration-200 hover:opacity-80",
+        "inline-flex items-center gap-3 transition-opacity duration-200 hover:opacity-80",
         className,
       )}
     >
-      <BretiaSymbol className="h-8 w-8 text-primary transition-transform duration-500 ease-[var(--ease-brand)] group-hover:rotate-180" />
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-lg font-semibold tracking-[0.16em]">BRETÌA</span>
+      <img
+        src={symbolWhite.url}
+        alt=""
+        aria-hidden="true"
+        width={202}
+        height={264}
+        className="h-9 w-auto object-contain sm:h-10"
+      />
+      <span className="flex flex-col items-start">
+        <img
+          src={wordmark.url}
+          alt="BRETÌA"
+          width={520}
+          height={86}
+          className="h-[0.9rem] w-auto object-contain sm:h-4"
+        />
         {showDescriptor ? (
-          <span className="mt-1 text-[0.5625rem] tracking-[0.32em] text-muted-foreground">
-            WEB STUDIO
-          </span>
+          <img
+            src={descriptor.url}
+            alt=""
+            aria-hidden="true"
+            width={525}
+            height={29}
+            className="mt-1.5 h-[0.4rem] w-auto object-contain"
+          />
         ) : null}
       </span>
     </Link>

@@ -215,9 +215,7 @@ function Home() {
 
       {/* SECTION 7 — FINAL CTA */}
       <section className="relative overflow-hidden border-t border-border bg-surface/40 py-28 sm:py-40">
-        <BretiaSymbol
-          className="pointer-events-none absolute -right-16 top-1/2 h-72 w-72 -translate-y-1/2 text-primary/8 sm:h-[26rem] sm:w-[26rem]"
-        />
+        <BretiaSymbol className="pointer-events-none absolute -right-16 top-1/2 h-72 w-auto -translate-y-1/2 opacity-[0.07] sm:h-[26rem]" />
         <div className="container-brand relative text-center">
           <Reveal as="h2" className="font-display text-4xl font-semibold leading-[1.05] sm:text-6xl lg:text-7xl">
             HAI UN PROGETTO?
