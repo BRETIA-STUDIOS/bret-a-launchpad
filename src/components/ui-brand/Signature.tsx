@@ -1,9 +1,9 @@
-import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
+import poweredBy from "@/assets/brand/poweredby.png.asset.json";
 import { cn } from "@/lib/utils";
 
 /**
- * Minimal reusable signature for BRETÌA-built client websites:
- * "powered by [BRETÌA symbol]".
+ * Official BRETÌA "powered by" signature, reusable on client websites.
+ * Uses the official brand asset as provided.
  */
 export function Signature({
   className,
@@ -15,15 +15,21 @@ export function Signature({
   return (
     <a
       href={href}
+      aria-label="powered by BRETÌA"
       className={cn(
-        "inline-flex items-center gap-2 text-[0.6875rem] tracking-[0.16em] text-muted-foreground transition-colors duration-200 hover:text-foreground",
+        "inline-flex opacity-80 transition-opacity duration-200 hover:opacity-100",
         className,
       )}
-      aria-label="powered by BRETÌA"
     >
-      <span>powered by</span>
-      <BretiaSymbol className="h-4 w-4 text-primary" />
-      <span className="sr-only">BRETÌA</span>
+      <img
+        src={poweredBy.url}
+        alt="powered by BRETÌA"
+        width={625}
+        height={197}
+        loading="lazy"
+        decoding="async"
+        className="h-9 w-auto object-contain sm:h-10"
+      />
     </a>
   );
 }
