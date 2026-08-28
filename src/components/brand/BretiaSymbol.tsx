@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { cn } from "@/lib/utils";
 
 type BretiaSymbolProps = {
@@ -12,7 +13,11 @@ type BretiaSymbolProps = {
  * single continuous geometric symbol.
  */
 export function BretiaSymbol({ className, title, animated = false }: BretiaSymbolProps) {
-  const maskId = "bretia-weave-mask";
+  const uid = useId().replace(/:/g, "");
+  const clipId = `bretia-weave-${uid}`;
+
+  const ribbonA = "M35 26 h-9 a24 24 0 0 0 0 48 h9 a24 24 0 0 0 0 -48 z";
+  const ribbonB = "M65 26 h9 a24 24 0 0 1 0 48 h-9 a24 24 0 0 1 0 -48 z";
 
   return (
     <svg
@@ -25,39 +30,41 @@ export function BretiaSymbol({ className, title, animated = false }: BretiaSymbo
     >
       {title ? <title>{title}</title> : null}
       <defs>
-        <mask id={maskId}>
-          <rect x="0" y="0" width="100" height="100" fill="white" />
-          {/* Cut a notch so ribbon B passes behind ribbon A at the crossing */}
-          <path
-            d="M50 26 v48"
-            stroke="black"
-            strokeWidth="17"
-            strokeLinecap="round"
-            transform="translate(-9 0)"
-          />
-        </mask>
+        <clipPath id={clipId}>
+          {/* Top crossing zone: ribbon A passes over ribbon B here */}
+          <rect x="34" y="14" width="32" height="34" />
+        </clipPath>
       </defs>
 
-      {/* Ribbon A — opens to the left */}
-      <path
-        d="M28 28 H50 a22 22 0 0 1 0 44 H28"
-        stroke="currentColor"
-        strokeWidth="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={animated ? "anim-join-left" : undefined}
-      />
-
-      {/* Ribbon B — opens to the right, woven through A */}
-      <g mask={`url(#${maskId})`}>
+      <g className={animated ? "anim-join-left" : undefined}>
         <path
-          d="M72 72 H50 a22 22 0 0 1 0 -44 H72"
+          d={ribbonA}
           stroke="currentColor"
-          strokeWidth="10"
+          strokeWidth="9"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={animated ? "anim-join-right" : undefined}
-          opacity="0.85"
+        />
+      </g>
+
+      <g className={animated ? "anim-join-right" : undefined}>
+        <path
+          d={ribbonB}
+          stroke="currentColor"
+          strokeWidth="9"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.7"
+        />
+      </g>
+
+      {/* Re-draw A over B at the top crossing to create the weave */}
+      <g clipPath={`url(#${clipId})`} className={animated ? "anim-join-left" : undefined}>
+        <path
+          d={ribbonA}
+          stroke="currentColor"
+          strokeWidth="9"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
     </svg>
