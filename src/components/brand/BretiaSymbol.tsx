@@ -16,8 +16,9 @@ export function BretiaSymbol({ className, title, animated = false }: BretiaSymbo
   const uid = useId().replace(/:/g, "");
   const clipId = `bretia-weave-${uid}`;
 
-  const ribbonA = "M35 26 h-9 a24 24 0 0 0 0 48 h9 a24 24 0 0 0 0 -48 z";
-  const ribbonB = "M65 26 h9 a24 24 0 0 1 0 48 h-9 a24 24 0 0 1 0 -48 z";
+  // Two rounded ribbon loops, offset diagonally, woven into one mark
+  const ribbonA = "M40 24 a22 22 0 1 0 0 44 a22 22 0 1 0 0 -44 z";
+  const ribbonB = "M60 32 a22 22 0 1 1 0 44 a22 22 0 1 1 0 -44 z";
 
   return (
     <svg
@@ -32,7 +33,7 @@ export function BretiaSymbol({ className, title, animated = false }: BretiaSymbo
       <defs>
         <clipPath id={clipId}>
           {/* Top crossing zone: ribbon A passes over ribbon B here */}
-          <rect x="34" y="14" width="32" height="34" />
+          <rect x="30" y="12" width="34" height="34" />
         </clipPath>
       </defs>
 
