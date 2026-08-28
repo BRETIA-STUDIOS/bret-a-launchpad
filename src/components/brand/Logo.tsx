@@ -1,28 +1,57 @@
 import { Link } from "@tanstack/react-router";
-import logoFull from "@/assets/brand/full.png.asset.json";
+import symbolWhite from "@/assets/brand/symbol.png.asset.json";
+import wordmark from "@/assets/brand/wordmark.png.asset.json";
+import descriptor from "@/assets/brand/descriptor.png.asset.json";
 import { cn } from "@/lib/utils";
 
 /**
- * Official BRETÌA logo (symbol + wordmark + descriptor), used in the header.
- * The official asset is used as provided; only its rendered size changes.
+ * Official BRETÌA logo lockup for the header, built from the official
+ * brand assets (white variant). Assets are never redrawn or distorted:
+ * width is always auto so the aspect ratio is preserved.
  */
-export function Logo({ className }: { className?: string; showDescriptor?: boolean }) {
+export function Logo({
+  className,
+  showDescriptor = true,
+}: {
+  className?: string;
+  showDescriptor?: boolean;
+}) {
   return (
     <Link
       to="/"
       aria-label="BRETÌA Web Studio — home"
       className={cn(
-        "inline-flex items-center transition-opacity duration-200 hover:opacity-80",
+        "inline-flex items-center gap-3 transition-opacity duration-200 hover:opacity-80",
         className,
       )}
     >
       <img
-        src={logoFull.url}
-        alt="BRETÌA Web Studio"
-        width={525}
-        height={412}
-        className="h-11 w-auto object-contain sm:h-12"
+        src={symbolWhite.url}
+        alt=""
+        aria-hidden="true"
+        width={202}
+        height={264}
+        className="h-9 w-auto object-contain sm:h-10"
       />
+      <span className="flex flex-col items-start">
+        <img
+          src={wordmark.url}
+          alt="BRETÌA"
+          width={520}
+          height={86}
+          className="h-[0.9rem] w-auto object-contain sm:h-4"
+        />
+        {showDescriptor ? (
+          <img
+            src={descriptor.url}
+            alt=""
+            aria-hidden="true"
+            width={525}
+            height={29}
+            className="mt-1.5 h-[0.4rem] w-auto object-contain"
+          />
+        ) : null}
+      </span>
     </Link>
   );
 }
