@@ -233,11 +233,11 @@
 }
 
 @utility anim-wordmark {
-  animation: bretia-fade-up 0.6s var(--ease-brand) 0.85s both;
+  animation: bretia-fade-up 0.55s var(--ease-brand) 0.6s both;
 }
 
 @utility anim-descriptor {
-  animation: bretia-fade-up 0.6s var(--ease-brand) 1.05s both;
+  animation: bretia-fade-up 0.55s var(--ease-brand) 0.85s both;
 }
 
 @media (prefers-reduced-motion: reduce) {
