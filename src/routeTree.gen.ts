@@ -13,8 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChiSiamoRouteImport } from './routes/chi-siamo'
 import { Route as ContattiRouteImport } from './routes/contatti'
 import { Route as MetodoRouteImport } from './routes/metodo'
-import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as ServiziRouteImport } from './routes/servizi'
+import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
 import { Route as PortfolioOsteriaNovaRouteImport } from './routes/portfolio.osteria-nova'
 
 const IndexRoute = IndexRouteImport.update({
@@ -37,20 +37,20 @@ const MetodoRoute = MetodoRouteImport.update({
   path: '/metodo',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PortfolioRoute = PortfolioRouteImport.update({
-  id: '/portfolio',
-  path: '/portfolio',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ServiziRoute = ServiziRouteImport.update({
   id: '/servizi',
   path: '/servizi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortfolioIndexRoute = PortfolioIndexRouteImport.update({
+  id: '/portfolio/',
+  path: '/portfolio/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortfolioOsteriaNovaRoute = PortfolioOsteriaNovaRouteImport.update({
-  id: '/osteria-nova',
-  path: '/osteria-nova',
-  getParentRoute: () => PortfolioRoute,
+  id: '/portfolio/osteria-nova',
+  path: '/portfolio/osteria-nova',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -58,18 +58,18 @@ export interface FileRoutesByFullPath {
   '/chi-siamo': typeof ChiSiamoRoute
   '/contatti': typeof ContattiRoute
   '/metodo': typeof MetodoRoute
-  '/portfolio': typeof PortfolioRouteWithChildren
   '/servizi': typeof ServiziRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
+  '/portfolio/': typeof PortfolioIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chi-siamo': typeof ChiSiamoRoute
   '/contatti': typeof ContattiRoute
   '/metodo': typeof MetodoRoute
-  '/portfolio': typeof PortfolioRouteWithChildren
   '/servizi': typeof ServiziRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
+  '/portfolio': typeof PortfolioIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,9 +77,9 @@ export interface FileRoutesById {
   '/chi-siamo': typeof ChiSiamoRoute
   '/contatti': typeof ContattiRoute
   '/metodo': typeof MetodoRoute
-  '/portfolio': typeof PortfolioRouteWithChildren
   '/servizi': typeof ServiziRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
+  '/portfolio/': typeof PortfolioIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,27 +88,27 @@ export interface FileRouteTypes {
     | '/chi-siamo'
     | '/contatti'
     | '/metodo'
-    | '/portfolio'
     | '/servizi'
     | '/portfolio/osteria-nova'
+    | '/portfolio/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/chi-siamo'
     | '/contatti'
     | '/metodo'
-    | '/portfolio'
     | '/servizi'
     | '/portfolio/osteria-nova'
+    | '/portfolio'
   id:
     | '__root__'
     | '/'
     | '/chi-siamo'
     | '/contatti'
     | '/metodo'
-    | '/portfolio'
     | '/servizi'
     | '/portfolio/osteria-nova'
+    | '/portfolio/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,8 +116,9 @@ export interface RootRouteChildren {
   ChiSiamoRoute: typeof ChiSiamoRoute
   ContattiRoute: typeof ContattiRoute
   MetodoRoute: typeof MetodoRoute
-  PortfolioRoute: typeof PortfolioRouteWithChildren
   ServiziRoute: typeof ServiziRoute
+  PortfolioOsteriaNovaRoute: typeof PortfolioOsteriaNovaRoute
+  PortfolioIndexRoute: typeof PortfolioIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -150,13 +151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MetodoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/portfolio': {
-      id: '/portfolio'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof PortfolioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/servizi': {
       id: '/servizi'
       path: '/servizi'
@@ -164,35 +158,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiziRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portfolio/': {
+      id: '/portfolio/'
+      path: '/portfolio'
+      fullPath: '/portfolio/'
+      preLoaderRoute: typeof PortfolioIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portfolio/osteria-nova': {
       id: '/portfolio/osteria-nova'
-      path: '/osteria-nova'
+      path: '/portfolio/osteria-nova'
       fullPath: '/portfolio/osteria-nova'
       preLoaderRoute: typeof PortfolioOsteriaNovaRouteImport
-      parentRoute: typeof PortfolioRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
-
-interface PortfolioRouteChildren {
-  PortfolioOsteriaNovaRoute: typeof PortfolioOsteriaNovaRoute
-}
-
-const PortfolioRouteChildren: PortfolioRouteChildren = {
-  PortfolioOsteriaNovaRoute: PortfolioOsteriaNovaRoute,
-}
-
-const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
-  PortfolioRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChiSiamoRoute: ChiSiamoRoute,
   ContattiRoute: ContattiRoute,
   MetodoRoute: MetodoRoute,
-  PortfolioRoute: PortfolioRouteWithChildren,
   ServiziRoute: ServiziRoute,
+  PortfolioOsteriaNovaRoute: PortfolioOsteriaNovaRoute,
+  PortfolioIndexRoute: PortfolioIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

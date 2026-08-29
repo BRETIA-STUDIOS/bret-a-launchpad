@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -96,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=DM+Sans:opsz,wght@9..40,300..700&family=Jost:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap",
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
@@ -123,6 +124,8 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isImmersive = pathname.startsWith("/portfolio/osteria-nova");
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -132,11 +135,11 @@ function RootComponent() {
       >
         Vai al contenuto
       </a>
-      <Header />
+      {isImmersive ? null : <Header />}
       <main id="main">
         <Outlet />
       </main>
-      <Footer />
+      {isImmersive ? null : <Footer />}
     </QueryClientProvider>
   );
 }
