@@ -94,14 +94,32 @@ function ProjectCard({
             {project.description}
           </p>
         ) : null}
-        <div className="mt-2 flex items-center gap-2.5 text-muted-foreground/80">
-          <span className="text-[0.5625rem] uppercase tracking-[0.28em]">A concept by</span>
-          <BretiaSymbol variant="white" className="h-3.5 w-auto opacity-70" />
-          <span className="font-display text-[0.75rem] font-semibold tracking-[0.16em] text-foreground/80">
-            BRETÌA
-          </span>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5 text-muted-foreground/80">
+            <span className="text-[0.5625rem] uppercase tracking-[0.28em]">A concept by</span>
+            <BretiaSymbol variant="white" className="h-3.5 w-auto opacity-70" />
+            <span className="font-display text-[0.75rem] font-semibold tracking-[0.16em] text-foreground/80">
+              BRETÌA
+            </span>
+          </div>
+          {project.to ? (
+            <span className="text-[0.5625rem] uppercase tracking-[0.28em] text-primary">
+              Apri il progetto →
+            </span>
+          ) : null}
         </div>
       </div>
+
+      {project.to ? (
+        <Link
+          to={project.to}
+          aria-label={`Apri il progetto ${project.title}`}
+          className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          onClick={(e) => {
+            if (movedRef?.current) e.preventDefault();
+          }}
+        />
+      ) : null}
     </article>
   );
 }
