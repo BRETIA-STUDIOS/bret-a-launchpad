@@ -606,7 +606,6 @@ function OsteriaNova() {
               as="h2"
               delay={140}
               className="mt-6 text-balance text-4xl leading-[1.08] sm:text-5xl"
-              // eslint-disable-next-line react/no-unknown-property
             >
               <span style={{ color: "var(--on-black)" }}>Il rispetto della materia prima.</span>
             </OnReveal>
