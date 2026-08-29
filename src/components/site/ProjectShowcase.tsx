@@ -234,7 +234,12 @@ export function ProjectShowcase({
         }}
       >
         {items.map((project, i) => (
-          <ProjectCard key={`${project.id}-${i}`} project={project} compact={compact} />
+          <ProjectCard
+            key={`${project.id}-${i}`}
+            project={project}
+            compact={compact}
+            movedRef={movedRef}
+          />
         ))}
       </div>
 
