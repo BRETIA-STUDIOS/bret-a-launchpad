@@ -68,12 +68,21 @@ const PROJECTS = [
   { title: "BEAUTY", caption: "Prenotazioni e trattamenti.", image: conceptBeauty },
 ];
 
-const STEPS = [
-  { index: "01", title: "ANALIZZIAMO", text: "Capiamo l'attività, gli obiettivi e le persone da raggiungere." },
-  { index: "02", title: "PROGETTIAMO", text: "Definiamo struttura, contenuti e direzione visiva." },
-  { index: "03", title: "SVILUPPIAMO", text: "Costruiamo un sito veloce, responsive e curato nel dettaglio." },
-  { index: "04", title: "LANCIAMO", text: "Pubblichiamo, verifichiamo e accompagniamo l'attività online." },
+const PRINCIPLES = [
+  {
+    title: "STRUTTURA AGILE",
+    text: "Nessuna sovrastruttura da agenzia: parli direttamente con chi progetta e sviluppa il tuo sito.",
+  },
+  {
+    title: "PROCESSI EFFICIENTI",
+    text: "Metodo e strumenti collaudati riducono i tempi e i passaggi inutili, non la qualità.",
+  },
+  {
+    title: "CURA DEL DETTAGLIO",
+    text: "Design, funzionalità e rifinitura restano al centro di ogni progetto, sempre.",
+  },
 ];
+
 
 function Home() {
   return (
