@@ -362,7 +362,7 @@ function ReservationForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="flex flex-col gap-5 p-6 sm:p-10"
+      className="flex w-full max-w-full flex-col gap-5 p-5 sm:p-10"
       style={{
         border: "1px solid color-mix(in oklab, #f1e8d5 18%, transparent)",
         backgroundColor: "color-mix(in oklab, #11100e 40%, transparent)",
