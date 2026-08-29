@@ -5,7 +5,7 @@ import { BrandButton } from "@/components/ui-brand/BrandButton";
 import { Reveal } from "@/components/ui-brand/Reveal";
 import { SectionHeading } from "@/components/ui-brand/SectionHeading";
 import { ServiceCard } from "@/components/site/ServiceCard";
-
+import { MethodFlow } from "@/components/site/MethodFlow";
 import { PortfolioCard } from "@/components/site/PortfolioCard";
 
 import conceptRestaurant from "@/assets/concept-restaurant.jpg";
@@ -167,7 +167,15 @@ function Home() {
         </div>
       </section>
 
-      {/* SECTION 5 — PHILOSOPHY */}
+      {/* SECTION 5 — METHOD */}
+      <section className="border-t border-border bg-surface/30 py-24 sm:py-32">
+        <div className="container-brand">
+          <SectionHeading eyebrow="IL NOSTRO METODO" title="Dal primo messaggio al sito online." />
+          <MethodFlow className="mt-16" />
+        </div>
+      </section>
+
+      {/* SECTION 6 — PHILOSOPHY */}
       <section className="relative overflow-hidden border-t border-border py-24 sm:py-32 lg:py-40">
         <div
           aria-hidden="true"
