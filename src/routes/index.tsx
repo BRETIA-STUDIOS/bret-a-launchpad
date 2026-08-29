@@ -156,14 +156,23 @@ function Home() {
       </section>
 
       {/* SECTION 4 — PORTFOLIO */}
-      <section className="border-t border-border py-24 sm:py-32">
+      <section className="overflow-hidden border-t border-border py-24 sm:py-32">
         <div className="container-brand">
-          <SectionHeading eyebrow="PORTFOLIO" title="Progetti che parlano." />
-          <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {PROJECTS.map((project, i) => (
-              <PortfolioCard key={project.title} {...project} delay={i * 90} />
-            ))}
-          </div>
+          <SectionHeading
+            eyebrow="PORTFOLIO"
+            title="Progetti che prendono forma."
+            description="Scopri alcuni dei concept e delle esperienze digitali progettate da BRETÌA."
+          />
+        </div>
+        <Reveal className="mt-14">
+          <ProjectShowcase compact />
+        </Reveal>
+        <div className="container-brand mt-12">
+          <Reveal>
+            <BrandButton to="/portfolio" variant="secondary">
+              VEDI IL PORTFOLIO
+            </BrandButton>
+          </Reveal>
         </div>
       </section>
 
