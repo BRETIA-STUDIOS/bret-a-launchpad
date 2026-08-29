@@ -177,6 +177,7 @@ export function ProjectShowcase({
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     dragRef.current = { active: true, startX: e.clientX, startOffset: offsetRef.current };
+    movedRef.current = false;
     pausedRef.current = true;
     setDragging(true);
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -184,7 +185,9 @@ export function ProjectShowcase({
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragRef.current.active) return;
-    offsetRef.current = dragRef.current.startOffset + (e.clientX - dragRef.current.startX);
+    const dx = e.clientX - dragRef.current.startX;
+    if (Math.abs(dx) > 6) movedRef.current = true;
+    offsetRef.current = dragRef.current.startOffset + dx;
   };
 
   const endDrag = (e: React.PointerEvent) => {
@@ -193,9 +196,13 @@ export function ProjectShowcase({
     setDragging(false);
     pausedRef.current = false;
     (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+    window.setTimeout(() => {
+      movedRef.current = false;
+    }, 120);
   };
 
   const items = [...SHOWCASE_PROJECTS, ...SHOWCASE_PROJECTS];
+
 
   return (
     <div
