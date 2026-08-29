@@ -160,58 +160,68 @@ function Home() {
       <section className="border-t border-border bg-surface/30 py-24 sm:py-32">
         <div className="container-brand">
           <SectionHeading eyebrow="IL NOSTRO METODO" title="Dal primo messaggio al sito online." />
-          <ol className="mt-16 grid gap-px overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((step, i) => (
-              <li key={step.index} className="bg-background">
-                <Reveal delay={i * 80} className="group h-full">
-                  <div className="h-full p-8 transition-colors duration-[var(--transition-base)] hover:bg-surface">
-                    <span className="font-display text-xs tracking-[0.3em] text-primary">
-                      {step.index}
-                    </span>
-                    <h3 className="mt-5 font-display text-lg font-semibold tracking-[0.1em]">
-                      {step.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                      {step.text}
-                    </p>
-                  </div>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
+          <MethodFlow className="mt-16" />
         </div>
       </section>
 
       {/* SECTION 6 — PHILOSOPHY */}
-      <section className="border-t border-border py-24 sm:py-32 lg:py-40">
-        <div className="container-brand grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <Reveal
-              as="h2"
-              className="text-balance font-display text-3xl font-semibold leading-[1.06] sm:text-5xl lg:text-6xl"
-            >
-              QUALITÀ SENZA
-              <br />
-              COSTI INUTILI.
-            </Reveal>
+      <section className="relative overflow-hidden border-t border-border py-24 sm:py-32 lg:py-40">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+        />
+        <div className="container-brand">
+          <Reveal as="p" className="label-eyebrow">
+            FILOSOFIA
+          </Reveal>
+
+          <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-7">
+              <Reveal
+                as="h2"
+                className="text-balance font-display text-3xl font-semibold leading-[1.06] sm:text-5xl lg:text-6xl"
+              >
+                QUALITÀ SENZA
+                <br />
+                <span className="text-gradient-accent">COSTI INUTILI.</span>
+              </Reveal>
+            </div>
+            <div className="lg:col-span-5">
+              <Reveal
+                as="p"
+                delay={100}
+                className="text-base leading-relaxed text-muted-foreground sm:text-lg"
+              >
+                Una struttura agile e processi produttivi efficienti ci permettono di concentrare le
+                nostre risorse su ciò che conta davvero: design, funzionalità e cura del dettaglio.
+              </Reveal>
+            </div>
           </div>
-          <div className="lg:col-span-5">
-            <Reveal
-              as="p"
-              delay={100}
-              className="text-base leading-relaxed text-muted-foreground sm:text-lg"
-            >
-              Una struttura agile e processi produttivi efficienti ci permettono di concentrare le
-              nostre risorse su ciò che conta davvero: design, funzionalità e cura del dettaglio.
-            </Reveal>
-            <Reveal delay={180} className="mt-10">
-              <p className="border-l-2 border-primary pl-5 font-display text-lg font-medium leading-snug sm:text-xl">
-                Professionalità digitale, alla portata di tutti.
-              </p>
-            </Reveal>
-          </div>
+
+          <ul className="mt-16 grid gap-px overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-border sm:grid-cols-3">
+            {PRINCIPLES.map((item, i) => (
+              <li key={item.title} className="bg-background">
+                <Reveal delay={i * 90} className="h-full">
+                  <div className="h-full p-8 transition-colors duration-[var(--transition-base)] hover:bg-surface">
+                    <span className="block h-px w-10 bg-primary" />
+                    <h3 className="mt-6 font-display text-base font-semibold tracking-[0.12em]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+
+          <Reveal delay={180} className="mt-16">
+            <p className="mx-auto max-w-3xl text-balance text-center font-display text-xl font-medium leading-snug sm:text-3xl">
+              Professionalità digitale, alla portata di tutti.
+            </p>
+          </Reveal>
         </div>
       </section>
+
 
       {/* SECTION 7 — FINAL CTA */}
       <section className="relative overflow-hidden border-t border-border bg-surface/40 py-28 sm:py-40">
