@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
-import { PortfolioCard } from "@/components/site/PortfolioCard";
-import conceptRestaurant from "@/assets/concept-restaurant.jpg";
-import conceptAutomotive from "@/assets/concept-automotive.jpg";
-import conceptBeauty from "@/assets/concept-beauty.jpg";
+import { ProjectShowcase } from "@/components/site/ProjectShowcase";
+import { BrandButton } from "@/components/ui-brand/BrandButton";
+import { Reveal } from "@/components/ui-brand/Reveal";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -11,34 +10,60 @@ export const Route = createFileRoute("/portfolio")({
       { title: "Portfolio — BRETÌA Web Studio" },
       {
         name: "description",
-        content: "Concept e progetti visivi realizzati da BRETÌA Web Studio: restaurant, automotive, beauty.",
+        content:
+          "Una selezione di identità digitali, siti web e concept progettati da BRETÌA Web Studio.",
       },
       { property: "og:title", content: "Portfolio — BRETÌA Web Studio" },
-      { property: "og:description", content: "Progetti che parlano: i concept firmati BRETÌA." },
+      {
+        property: "og:description",
+        content: "Progetti che prendono forma: identità digitali e concept firmati BRETÌA.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Portfolio,
 });
-
-const PROJECTS = [
-  { title: "RESTAURANT", caption: "Identità digitale per la ristorazione.", image: conceptRestaurant },
-  { title: "AUTOMOTIVE", caption: "Presentazione veicoli e servizi.", image: conceptAutomotive },
-  { title: "BEAUTY", caption: "Prenotazioni e trattamenti.", image: conceptBeauty },
-];
 
 function Portfolio() {
   return (
     <>
       <PageHero
         eyebrow="PORTFOLIO"
-        title="Progetti che parlano."
-        description="Una selezione di concept sviluppati internamente per mostrare la nostra direzione progettuale."
+        title="Progetti che prendono forma."
+        description="Una selezione di identità digitali, siti web e concept progettati da BRETÌA."
       />
-      <section className="py-20 sm:py-28">
-        <div className="container-brand grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {PROJECTS.map((project, i) => (
-            <PortfolioCard key={project.title} {...project} delay={i * 90} />
-          ))}
+
+      <section className="overflow-hidden py-20 sm:py-28">
+        <Reveal>
+          <ProjectShowcase />
+        </Reveal>
+        <div className="container-brand mt-10">
+          <Reveal
+            as="p"
+            className="text-xs uppercase tracking-[0.28em] text-muted-foreground/70"
+          >
+            Trascina per esplorare
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="border-t border-border py-24 text-center sm:py-32">
+        <div className="container-brand">
+          <Reveal
+            as="h2"
+            className="font-display text-3xl font-semibold leading-[1.06] sm:text-5xl"
+          >
+            Un progetto in mente?
+          </Reveal>
+          <Reveal as="p" delay={100} className="mt-5 text-base text-muted-foreground sm:text-lg">
+            Costruiamolo insieme.
+          </Reveal>
+          <Reveal delay={170} className="mt-10">
+            <BrandButton to="/contatti" size="lg">
+              PARLIAMONE
+            </BrandButton>
+          </Reveal>
         </div>
       </section>
     </>
