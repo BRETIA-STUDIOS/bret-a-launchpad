@@ -55,8 +55,8 @@ function ServiceVisual({ kind, active }: { kind: number; active: boolean }) {
       {/* 04 — rebranding: marks recomposing into a new identity */}
       {kind === 3 && (
         <g className={cn("method-draw", active && "is-active")}>
-          <circle cx="72" cy="68" r="24" stroke={faint} strokeWidth="1.5" pathLength={1} />
-          <circle cx="104" cy="68" r="24" stroke={stroke} strokeWidth="1.5" pathLength={1} />
+          <circle cx="72" cy="68" r="24" stroke={faint} strokeWidth="1.5" />
+          <circle cx="104" cy="68" r="24" stroke={stroke} strokeWidth="1.5" />
           <path d="M150 46 H180 M150 60 H172 M150 74 H180 M150 88 H164" stroke={faint} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
           <circle cx="88" cy="68" r="3" fill={stroke} className="method-dot" style={{ animationDelay: "560ms" }} />
         </g>
