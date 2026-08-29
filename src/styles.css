@@ -381,6 +381,10 @@
 .osteria input,
 .osteria textarea,
 .osteria select {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   font-family: var(--on-sans);
   background-color: color-mix(in oklab, var(--on-black) 45%, transparent);
   border: 1px solid color-mix(in oklab, var(--on-ivory) 22%, transparent);
