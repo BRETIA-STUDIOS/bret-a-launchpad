@@ -240,7 +240,43 @@
   animation: bretia-fade-up 0.55s var(--ease-brand) 0.85s both;
 }
 
+/* Method section — progressive line drawing (abstract, illustrative only) */
+.method-draw [pathLength],
+.method-draw path,
+.method-draw rect {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.1s var(--ease-brand);
+}
+
+.method-draw.is-active path,
+.method-draw.is-active rect {
+  stroke-dashoffset: 0;
+}
+
+.method-draw path:nth-of-type(2),
+.method-draw rect:nth-of-type(2) {
+  transition-delay: 160ms;
+}
+.method-draw path:nth-of-type(3),
+.method-draw rect:nth-of-type(3) {
+  transition-delay: 320ms;
+}
+.method-draw path:nth-of-type(4),
+.method-draw rect:nth-of-type(4) {
+  transition-delay: 460ms;
+}
+
+.method-draw .method-dot {
+  opacity: 0;
+}
+
+.method-draw.is-active .method-dot {
+  animation: bretia-fade-up 0.5s var(--ease-brand) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+
   html {
     scroll-behavior: auto;
   }

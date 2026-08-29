@@ -1,9 +1,10 @@
-import poweredBy from "@/assets/brand/poweredby.png.asset.json";
+import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { cn } from "@/lib/utils";
 
 /**
- * Official BRETÌA "powered by" signature, reusable on client websites.
- * Uses the official brand asset as provided.
+ * Official BRETÌA "powered by" signature — reusable on client websites.
+ * Composed with the official symbol asset (never redrawn) plus type,
+ * so it sits natively on any surface instead of looking like a pasted badge.
  */
 export function Signature({
   className,
@@ -17,19 +18,17 @@ export function Signature({
       href={href}
       aria-label="powered by BRETÌA"
       className={cn(
-        "inline-flex opacity-80 transition-opacity duration-200 hover:opacity-100",
+        "group inline-flex items-center gap-2.5 text-muted-foreground transition-colors duration-[var(--transition-fast)] hover:text-foreground",
         className,
       )}
     >
-      <img
-        src={poweredBy.url}
-        alt="powered by BRETÌA"
-        width={625}
-        height={197}
-        loading="lazy"
-        decoding="async"
-        className="h-9 w-auto object-contain sm:h-10"
-      />
+      <span className="text-[0.5625rem] uppercase tracking-[0.28em]">powered by</span>
+      <span className="flex items-center gap-1.5">
+        <BretiaSymbol className="h-4 w-auto opacity-80 transition-opacity duration-[var(--transition-fast)] group-hover:opacity-100" />
+        <span className="font-display text-[0.8125rem] font-semibold tracking-[0.16em] text-foreground/85 transition-colors duration-[var(--transition-fast)] group-hover:text-foreground">
+          BRETÌA
+        </span>
+      </span>
     </a>
   );
 }
