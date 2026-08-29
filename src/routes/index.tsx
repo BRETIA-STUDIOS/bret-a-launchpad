@@ -6,11 +6,8 @@ import { Reveal } from "@/components/ui-brand/Reveal";
 import { SectionHeading } from "@/components/ui-brand/SectionHeading";
 import { ServiceCard } from "@/components/site/ServiceCard";
 import { MethodFlow } from "@/components/site/MethodFlow";
-import { PortfolioCard } from "@/components/site/PortfolioCard";
+import { ProjectShowcase } from "@/components/site/ProjectShowcase";
 
-import conceptRestaurant from "@/assets/concept-restaurant.jpg";
-import conceptAutomotive from "@/assets/concept-automotive.jpg";
-import conceptBeauty from "@/assets/concept-beauty.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -60,12 +57,6 @@ const SERVICES = [
     description:
       "Rinnoviamo l'identità di un'attività, dal logo alla presenza digitale, senza cancellarne la storia.",
   },
-];
-
-const PROJECTS = [
-  { title: "RESTAURANT", caption: "Identità digitale per la ristorazione.", image: conceptRestaurant },
-  { title: "AUTOMOTIVE", caption: "Presentazione veicoli e servizi.", image: conceptAutomotive },
-  { title: "BEAUTY", caption: "Prenotazioni e trattamenti.", image: conceptBeauty },
 ];
 
 const PRINCIPLES = [
