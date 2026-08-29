@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { cn } from "@/lib/utils";
 import osteriaNova from "@/assets/osteria-nova.png.asset.json";
@@ -10,6 +11,7 @@ export type ShowcaseProject = {
   description?: string;
   image?: string;
   placeholder?: boolean;
+  to?: string;
 };
 
 export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
@@ -20,6 +22,7 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     description:
       "Un'esperienza digitale costruita attorno all'atmosfera, alla cucina e all'identità di un ristorante italiano contemporaneo.",
     image: osteriaNova.url,
+    to: "/portfolio/osteria-nova",
   },
   {
     id: "concept-1",
