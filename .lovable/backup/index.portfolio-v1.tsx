@@ -6,8 +6,11 @@ import { Reveal } from "@/components/ui-brand/Reveal";
 import { SectionHeading } from "@/components/ui-brand/SectionHeading";
 import { ServiceCard } from "@/components/site/ServiceCard";
 import { MethodFlow } from "@/components/site/MethodFlow";
-import { ProjectShowcase } from "@/components/site/ProjectShowcase";
+import { PortfolioCard } from "@/components/site/PortfolioCard";
 
+import conceptRestaurant from "@/assets/concept-restaurant.jpg";
+import conceptAutomotive from "@/assets/concept-automotive.jpg";
+import conceptBeauty from "@/assets/concept-beauty.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,6 +60,12 @@ const SERVICES = [
     description:
       "Rinnoviamo l'identità di un'attività, dal logo alla presenza digitale, senza cancellarne la storia.",
   },
+];
+
+const PROJECTS = [
+  { title: "RESTAURANT", caption: "Identità digitale per la ristorazione.", image: conceptRestaurant },
+  { title: "AUTOMOTIVE", caption: "Presentazione veicoli e servizi.", image: conceptAutomotive },
+  { title: "BEAUTY", caption: "Prenotazioni e trattamenti.", image: conceptBeauty },
 ];
 
 const PRINCIPLES = [
@@ -147,23 +156,14 @@ function Home() {
       </section>
 
       {/* SECTION 4 — PORTFOLIO */}
-      <section className="overflow-hidden border-t border-border py-24 sm:py-32">
+      <section className="border-t border-border py-24 sm:py-32">
         <div className="container-brand">
-          <SectionHeading
-            eyebrow="PORTFOLIO"
-            title="Progetti che prendono forma."
-            description="Scopri alcuni dei concept e delle esperienze digitali progettate da BRETÌA."
-          />
-        </div>
-        <Reveal className="mt-14">
-          <ProjectShowcase compact />
-        </Reveal>
-        <div className="container-brand mt-12">
-          <Reveal>
-            <BrandButton to="/portfolio" variant="secondary">
-              VEDI IL PORTFOLIO
-            </BrandButton>
-          </Reveal>
+          <SectionHeading eyebrow="PORTFOLIO" title="Progetti che parlano." />
+          <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {PROJECTS.map((project, i) => (
+              <PortfolioCard key={project.title} {...project} delay={i * 90} />
+            ))}
+          </div>
         </div>
       </section>
 
