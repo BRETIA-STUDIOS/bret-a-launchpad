@@ -41,9 +41,11 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
 function ProjectCard({
   project,
   compact,
+  movedRef,
 }: {
   project: ShowcaseProject;
   compact?: boolean;
+  movedRef?: React.MutableRefObject<boolean>;
 }) {
   return (
     <article
