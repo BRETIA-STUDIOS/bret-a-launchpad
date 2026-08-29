@@ -143,6 +143,7 @@ export function ProjectShowcase({
     startX: 0,
     startOffset: 0,
   });
+  const movedRef = useRef(false);
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
