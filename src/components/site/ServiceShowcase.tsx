@@ -36,19 +36,22 @@ function ServiceVisual({ kind, active }: { kind: number; active: boolean }) {
         </g>
       )}
 
-      {/* 03 — manutenzione: elements being refreshed */}
+      {/* 03 — manutenzione: continuous maintenance spinner */}
       {kind === 2 && (
         <g className={cn("method-draw", active && "is-active")}>
-          <path
-            d="M118 68 A28 28 0 1 1 100 42"
-            stroke={stroke}
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            pathLength={1}
-          />
-          <path d="M100 42 L92 48 M100 42 L104 51" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
           <path d="M28 44 H72 M28 58 H60 M28 72 H72 M28 86 H52" stroke={faint} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
-          <circle cx="96" cy="70" r="3" fill={stroke} className="method-dot" style={{ animationDelay: "520ms" }} />
+          <g className="service-spinner">
+            <circle
+              cx="100"
+              cy="68"
+              r="26"
+              stroke={stroke}
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeDasharray="120 43.4"
+            />
+          </g>
+          <circle cx="100" cy="68" r="2.5" fill={stroke} className="method-dot" style={{ animationDelay: "520ms" }} />
         </g>
       )}
 

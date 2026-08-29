@@ -38,27 +38,27 @@ export const Route = createFileRoute("/")({
 const SERVICES = [
   {
     index: "01",
-    title: "SITI WEB",
+    title: "CREAZIONE DI SITI WEB",
     description:
-      "Siti moderni e responsive progettati intorno all'identità dell'attività.",
+      "Progettiamo e sviluppiamo siti web da zero, costruiti intorno alle esigenze della tua attività.",
   },
   {
     index: "02",
-    title: "RESTYLING",
+    title: "RESTYLING E RIVISITAZIONE",
     description:
-      "Trasformiamo siti datati in esperienze più moderne, chiare ed efficaci.",
+      "Trasformiamo siti esistenti in esperienze più moderne, intuitive e piacevoli da utilizzare.",
   },
   {
     index: "03",
-    title: "DIGITAL EXPERIENCE",
+    title: "MANUTENZIONE E ASSISTENZA",
     description:
-      "Progettiamo esperienze digitali semplici, intuitive e piacevoli da utilizzare.",
+      "Continuiamo a prenderci cura del sito anche dopo la pubblicazione, con assistenza e manutenzione su richiesta.",
   },
   {
     index: "04",
-    title: "PRENOTAZIONI & INTEGRAZIONI",
+    title: "REBRANDING",
     description:
-      "Colleghiamo il sito agli strumenti digitali più adatti alle esigenze dell'attività.",
+      "Rinnoviamo l'identità di un'attività, dal logo alla presenza digitale, senza cancellarne la storia.",
   },
 ];
 

@@ -275,6 +275,19 @@
   animation: bretia-fade-up 0.5s var(--ease-brand) both;
 }
 
+/* Service 03 — clean continuous maintenance spinner */
+.service-spinner {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: service-spin 4.5s linear infinite;
+}
+
+@keyframes service-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   html {
