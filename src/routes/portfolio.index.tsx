@@ -4,7 +4,7 @@ import { ProjectShowcase } from "@/components/site/ProjectShowcase";
 import { BrandButton } from "@/components/ui-brand/BrandButton";
 import { Reveal } from "@/components/ui-brand/Reveal";
 
-export const Route = createFileRoute("/portfolio")({
+export const Route = createFileRoute("/portfolio/")({
   head: () => ({
     meta: [
       { title: "Portfolio — BRETÌA Web Studio" },

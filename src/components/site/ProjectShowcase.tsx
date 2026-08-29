@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { cn } from "@/lib/utils";
 import osteriaNova from "@/assets/osteria-nova.png.asset.json";
@@ -10,6 +11,7 @@ export type ShowcaseProject = {
   description?: string;
   image?: string;
   placeholder?: boolean;
+  to?: string;
 };
 
 export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
@@ -20,6 +22,7 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     description:
       "Un'esperienza digitale costruita attorno all'atmosfera, alla cucina e all'identità di un ristorante italiano contemporaneo.",
     image: osteriaNova.url,
+    to: "/portfolio/osteria-nova",
   },
   {
     id: "concept-1",
@@ -38,9 +41,11 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
 function ProjectCard({
   project,
   compact,
+  movedRef,
 }: {
   project: ShowcaseProject;
   compact?: boolean;
+  movedRef?: React.MutableRefObject<boolean>;
 }) {
   return (
     <article
@@ -89,14 +94,32 @@ function ProjectCard({
             {project.description}
           </p>
         ) : null}
-        <div className="mt-2 flex items-center gap-2.5 text-muted-foreground/80">
-          <span className="text-[0.5625rem] uppercase tracking-[0.28em]">A concept by</span>
-          <BretiaSymbol variant="white" className="h-3.5 w-auto opacity-70" />
-          <span className="font-display text-[0.75rem] font-semibold tracking-[0.16em] text-foreground/80">
-            BRETÌA
-          </span>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5 text-muted-foreground/80">
+            <span className="text-[0.5625rem] uppercase tracking-[0.28em]">A concept by</span>
+            <BretiaSymbol variant="white" className="h-3.5 w-auto opacity-70" />
+            <span className="font-display text-[0.75rem] font-semibold tracking-[0.16em] text-foreground/80">
+              BRETÌA
+            </span>
+          </div>
+          {project.to ? (
+            <span className="text-[0.5625rem] uppercase tracking-[0.28em] text-primary">
+              Apri il progetto →
+            </span>
+          ) : null}
         </div>
       </div>
+
+      {project.to ? (
+        <Link
+          to={project.to}
+          aria-label={`Apri il progetto ${project.title}`}
+          className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          onClick={(e) => {
+            if (movedRef?.current) e.preventDefault();
+          }}
+        />
+      ) : null}
     </article>
   );
 }
@@ -120,6 +143,7 @@ export function ProjectShowcase({
     startX: 0,
     startOffset: 0,
   });
+  const movedRef = useRef(false);
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
@@ -153,14 +177,20 @@ export function ProjectShowcase({
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     dragRef.current = { active: true, startX: e.clientX, startOffset: offsetRef.current };
+    movedRef.current = false;
     pausedRef.current = true;
     setDragging(true);
-    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragRef.current.active) return;
-    offsetRef.current = dragRef.current.startOffset + (e.clientX - dragRef.current.startX);
+    const dx = e.clientX - dragRef.current.startX;
+    if (Math.abs(dx) > 6 && !movedRef.current) {
+      // Only capture once it is a real drag, so plain clicks still reach the card link.
+      movedRef.current = true;
+      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    }
+    offsetRef.current = dragRef.current.startOffset + dx;
   };
 
   const endDrag = (e: React.PointerEvent) => {
@@ -168,10 +198,16 @@ export function ProjectShowcase({
     dragRef.current.active = false;
     setDragging(false);
     pausedRef.current = false;
-    (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+    const el = e.currentTarget as HTMLElement;
+    if (el.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
+    window.setTimeout(() => {
+      movedRef.current = false;
+    }, 120);
   };
 
+
   const items = [...SHOWCASE_PROJECTS, ...SHOWCASE_PROJECTS];
+
 
   return (
     <div
@@ -203,7 +239,12 @@ export function ProjectShowcase({
         }}
       >
         {items.map((project, i) => (
-          <ProjectCard key={`${project.id}-${i}`} project={project} compact={compact} />
+          <ProjectCard
+            key={`${project.id}-${i}`}
+            project={project}
+            compact={compact}
+            movedRef={movedRef}
+          />
         ))}
       </div>
 

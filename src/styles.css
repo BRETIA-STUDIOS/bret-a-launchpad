@@ -302,3 +302,101 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ============================================================
+   OSTERIA NÒVA — scoped concept design system (portfolio demo)
+   Fully isolated from the BRETÌA token set.
+   ============================================================ */
+.osteria {
+  --on-green: #10251f;
+  --on-green-2: #18332a;
+  --on-ivory: #f1e8d5;
+  --on-white: #faf7ef;
+  --on-brick: #9b3e2f;
+  --on-red: #b6533f;
+  --on-brown: #5a3828;
+  --on-black: #11100e;
+  --on-serif: "Cormorant Garamond", Georgia, serif;
+  --on-sans: "Jost", "DM Sans", system-ui, sans-serif;
+
+  background-color: var(--on-green);
+  color: var(--on-ivory);
+  font-family: var(--on-sans);
+}
+
+.osteria h1,
+.osteria h2,
+.osteria h3,
+.osteria .on-serif {
+  font-family: var(--on-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.osteria .on-label {
+  font-family: var(--on-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.osteria .on-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.9rem 1.75rem;
+  font-family: var(--on-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+.osteria .on-btn-primary {
+  background-color: var(--on-brick);
+  color: var(--on-white);
+}
+
+.osteria .on-btn-primary:hover {
+  background-color: var(--on-red);
+}
+
+.osteria .on-btn-ghost {
+  border: 1px solid color-mix(in oklab, var(--on-ivory) 40%, transparent);
+  color: var(--on-ivory);
+}
+
+.osteria .on-btn-ghost:hover {
+  border-color: var(--on-ivory);
+  background-color: color-mix(in oklab, var(--on-ivory) 8%, transparent);
+}
+
+.osteria .on-rule {
+  height: 1px;
+  background-color: color-mix(in oklab, var(--on-ivory) 22%, transparent);
+}
+
+.osteria input,
+.osteria textarea,
+.osteria select {
+  font-family: var(--on-sans);
+  background-color: color-mix(in oklab, var(--on-black) 45%, transparent);
+  border: 1px solid color-mix(in oklab, var(--on-ivory) 22%, transparent);
+  color: var(--on-white);
+  border-radius: 2px;
+  transition: border-color 0.3s ease;
+}
+
+.osteria input:focus,
+.osteria textarea:focus,
+.osteria select:focus {
+  outline: none;
+  border-color: var(--on-red);
+}
+
+.osteria input::placeholder,
+.osteria textarea::placeholder {
+  color: color-mix(in oklab, var(--on-ivory) 45%, transparent);
+}
