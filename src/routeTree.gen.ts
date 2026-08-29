@@ -15,6 +15,7 @@ import { Route as ContattiRouteImport } from './routes/contatti'
 import { Route as MetodoRouteImport } from './routes/metodo'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as ServiziRouteImport } from './routes/servizi'
+import { Route as PortfolioOsteriaNovaRouteImport } from './routes/portfolio.osteria-nova'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,22 +47,29 @@ const ServiziRoute = ServiziRouteImport.update({
   path: '/servizi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortfolioOsteriaNovaRoute = PortfolioOsteriaNovaRouteImport.update({
+  id: '/osteria-nova',
+  path: '/osteria-nova',
+  getParentRoute: () => PortfolioRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chi-siamo': typeof ChiSiamoRoute
   '/contatti': typeof ContattiRoute
   '/metodo': typeof MetodoRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
   '/servizi': typeof ServiziRoute
+  '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chi-siamo': typeof ChiSiamoRoute
   '/contatti': typeof ContattiRoute
   '/metodo': typeof MetodoRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
   '/servizi': typeof ServiziRoute
+  '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,15 +77,29 @@ export interface FileRoutesById {
   '/chi-siamo': typeof ChiSiamoRoute
   '/contatti': typeof ContattiRoute
   '/metodo': typeof MetodoRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
   '/servizi': typeof ServiziRoute
+  '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/chi-siamo' | '/contatti' | '/metodo' | '/portfolio' | '/servizi'
+    | '/'
+    | '/chi-siamo'
+    | '/contatti'
+    | '/metodo'
+    | '/portfolio'
+    | '/servizi'
+    | '/portfolio/osteria-nova'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chi-siamo' | '/contatti' | '/metodo' | '/portfolio' | '/servizi'
+  to:
+    | '/'
+    | '/chi-siamo'
+    | '/contatti'
+    | '/metodo'
+    | '/portfolio'
+    | '/servizi'
+    | '/portfolio/osteria-nova'
   id:
     | '__root__'
     | '/'
@@ -86,6 +108,7 @@ export interface FileRouteTypes {
     | '/metodo'
     | '/portfolio'
     | '/servizi'
+    | '/portfolio/osteria-nova'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,7 +116,7 @@ export interface RootRouteChildren {
   ChiSiamoRoute: typeof ChiSiamoRoute
   ContattiRoute: typeof ContattiRoute
   MetodoRoute: typeof MetodoRoute
-  PortfolioRoute: typeof PortfolioRoute
+  PortfolioRoute: typeof PortfolioRouteWithChildren
   ServiziRoute: typeof ServiziRoute
 }
 
@@ -141,15 +164,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiziRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portfolio/osteria-nova': {
+      id: '/portfolio/osteria-nova'
+      path: '/osteria-nova'
+      fullPath: '/portfolio/osteria-nova'
+      preLoaderRoute: typeof PortfolioOsteriaNovaRouteImport
+      parentRoute: typeof PortfolioRoute
+    }
   }
 }
+
+interface PortfolioRouteChildren {
+  PortfolioOsteriaNovaRoute: typeof PortfolioOsteriaNovaRoute
+}
+
+const PortfolioRouteChildren: PortfolioRouteChildren = {
+  PortfolioOsteriaNovaRoute: PortfolioOsteriaNovaRoute,
+}
+
+const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
+  PortfolioRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChiSiamoRoute: ChiSiamoRoute,
   ContattiRoute: ContattiRoute,
   MetodoRoute: MetodoRoute,
-  PortfolioRoute: PortfolioRoute,
+  PortfolioRoute: PortfolioRouteWithChildren,
   ServiziRoute: ServiziRoute,
 }
 export const routeTree = rootRouteImport
