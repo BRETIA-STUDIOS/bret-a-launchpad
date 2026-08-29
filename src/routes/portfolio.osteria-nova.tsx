@@ -476,7 +476,7 @@ function OsteriaNova() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(16,37,31,0.92) 0%, rgba(16,37,31,0.62) 42%, rgba(16,37,31,0.96) 100%)",
+                "linear-gradient(180deg, rgba(16,37,31,0.82) 0%, rgba(16,37,31,0.34) 40%, rgba(16,37,31,0.94) 100%)",
             }}
           />
         </div>
