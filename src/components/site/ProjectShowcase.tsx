@@ -180,13 +180,16 @@ export function ProjectShowcase({
     movedRef.current = false;
     pausedRef.current = true;
     setDragging(true);
-    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragRef.current.active) return;
     const dx = e.clientX - dragRef.current.startX;
-    if (Math.abs(dx) > 6) movedRef.current = true;
+    if (Math.abs(dx) > 6 && !movedRef.current) {
+      // Only capture once it is a real drag, so plain clicks still reach the card link.
+      movedRef.current = true;
+      (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    }
     offsetRef.current = dragRef.current.startOffset + dx;
   };
 
@@ -195,11 +198,13 @@ export function ProjectShowcase({
     dragRef.current.active = false;
     setDragging(false);
     pausedRef.current = false;
-    (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+    const el = e.currentTarget as HTMLElement;
+    if (el.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
     window.setTimeout(() => {
       movedRef.current = false;
     }, 120);
   };
+
 
   const items = [...SHOWCASE_PROJECTS, ...SHOWCASE_PROJECTS];
 
