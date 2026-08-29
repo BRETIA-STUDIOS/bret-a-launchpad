@@ -5,7 +5,9 @@ import { BrandButton } from "@/components/ui-brand/BrandButton";
 import { Reveal } from "@/components/ui-brand/Reveal";
 import { SectionHeading } from "@/components/ui-brand/SectionHeading";
 import { ServiceCard } from "@/components/site/ServiceCard";
+import { MethodFlow } from "@/components/site/MethodFlow";
 import { PortfolioCard } from "@/components/site/PortfolioCard";
+
 import conceptRestaurant from "@/assets/concept-restaurant.jpg";
 import conceptAutomotive from "@/assets/concept-automotive.jpg";
 import conceptBeauty from "@/assets/concept-beauty.jpg";
