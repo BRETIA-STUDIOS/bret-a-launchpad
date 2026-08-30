@@ -143,6 +143,9 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <div className="border-b border-border py-4">
+            <AuthLink onNavigate={() => setOpen(false)} />
+          </div>
           <BrandButton to="/contatti" className="mt-8 w-full" onClick={() => setOpen(false)}>
             Parliamone
           </BrandButton>
