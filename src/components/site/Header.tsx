@@ -99,7 +99,8 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-7 lg:flex">
+          <AuthLink />
           <BrandButton to="/contatti">Parliamone</BrandButton>
         </div>
 
