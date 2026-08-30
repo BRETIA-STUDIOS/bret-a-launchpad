@@ -1,8 +1,5 @@
 import { defineTool } from "@lovable.dev/mcp-js";
-import { defineToolNoop } from "./_noop";
 import { METHOD } from "../content";
-
-void defineToolNoop;
 
 export default defineTool({
   name: "list_method_stages",
