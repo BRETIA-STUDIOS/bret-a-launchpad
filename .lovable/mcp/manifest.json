@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "sdk_version": "0.28.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "bretia-launchpad",
+      "version": "0.1.0",
+      "title": "BRETÌA Launchpad"
+    },
+    "tools": [
+      {
+        "name": "get_studio_info",
+        "title": "Get studio info",
+        "description": "Get public information about BRETÌA Web Studio: mission, positioning, location, contact email and the list of site pages.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_services",
+        "title": "List services",
+        "description": "List the services BRETÌA Web Studio offers (website creation, restyling, maintenance, rebranding), with descriptions in Italian.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "Optional service id to return only one service, e.g. 'manutenzione'.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_method_stages",
+        "title": "List method stages",
+        "description": "List the four stages of BRETÌA's working method (Analizziamo, Progettiamo, Sviluppiamo, Lanciamo) with their descriptions.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_portfolio_projects",
+        "title": "List portfolio projects",
+        "description": "List the concept projects shown in the BRETÌA portfolio, including their category and the page where each can be viewed.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
