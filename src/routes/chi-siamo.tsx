@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal } from "@/components/ui-brand/Reveal";
-import { BrandButton } from "@/components/ui-brand/BrandButton";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
+import { ClosingCta } from "@/components/site/ClosingCta";
 
 export const Route = createFileRoute("/chi-siamo")({
   head: () => ({
@@ -203,33 +203,11 @@ function ChiSiamo() {
       </section>
 
       {/* 07 — Messaggio finale */}
-      <section className="pb-24 sm:pb-32">
-        <div className="container-brand max-w-3xl">
-          <Reveal as="p" className="label-eyebrow">
-            BRETÌA
-          </Reveal>
-          <Reveal
-            as="h2"
-            delay={80}
-            className="mt-5 text-balance text-3xl font-semibold leading-[1.08] sm:text-4xl"
-          >
-            Professionalità digitale, senza compromessi inutili.
-          </Reveal>
-          <Reveal
-            as="p"
-            delay={140}
-            className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            Dalla prima idea alla presenza online, costruiamo strumenti digitali pensati per
-            funzionare davvero per chi li utilizza.
-          </Reveal>
-          <Reveal delay={200} className="mt-9">
-            <BrandButton to="/contatti" size="lg">
-              Parliamone
-            </BrandButton>
-          </Reveal>
-        </div>
-      </section>
+      <ClosingCta
+        eyebrow="BRETÌA"
+        title="Professionalità digitale, senza compromessi inutili."
+        description="Dalla prima idea alla presenza online, costruiamo strumenti digitali pensati per funzionare davvero per chi li utilizza."
+      />
     </>
   );
 }

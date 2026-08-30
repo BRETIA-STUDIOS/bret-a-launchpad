@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { ServiceShowcase } from "@/components/site/ServiceShowcase";
-import { BrandButton } from "@/components/ui-brand/BrandButton";
-import { Reveal } from "@/components/ui-brand/Reveal";
+import { ClosingCta } from "@/components/site/ClosingCta";
 
 export const Route = createFileRoute("/servizi")({
   head: () => ({
@@ -89,21 +88,10 @@ function Servizi() {
         </div>
       </section>
 
-      <section className="border-t border-border py-20 text-center sm:py-28">
-        <div className="container-brand">
-          <Reveal as="p" className="label-eyebrow">
-            PROSSIMO PASSO
-          </Reveal>
-          <Reveal as="p" delay={90} className="mx-auto mt-6 max-w-xl text-balance font-display text-xl font-medium leading-snug sm:text-2xl">
-            Raccontaci la tua attività: troviamo insieme il servizio più adatto.
-          </Reveal>
-          <Reveal delay={160} className="mt-10">
-            <BrandButton to="/contatti" size="lg">
-              Parliamone
-            </BrandButton>
-          </Reveal>
-        </div>
-      </section>
+      <ClosingCta
+        eyebrow="PROSSIMO PASSO"
+        title="Raccontaci la tua attività: troviamo insieme il servizio più adatto."
+      />
     </>
   );
 }

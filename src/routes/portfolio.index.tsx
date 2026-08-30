@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { ProjectShowcase } from "@/components/site/ProjectShowcase";
-import { BrandButton } from "@/components/ui-brand/BrandButton";
 import { Reveal } from "@/components/ui-brand/Reveal";
+import { ClosingCta } from "@/components/site/ClosingCta";
 
 export const Route = createFileRoute("/portfolio/")({
   head: () => ({
@@ -48,24 +48,7 @@ function Portfolio() {
         </div>
       </section>
 
-      <section className="border-t border-border py-24 text-center sm:py-32">
-        <div className="container-brand">
-          <Reveal
-            as="h2"
-            className="font-display text-3xl font-semibold leading-[1.06] sm:text-5xl"
-          >
-            Un progetto in mente?
-          </Reveal>
-          <Reveal as="p" delay={100} className="mt-5 text-base text-muted-foreground sm:text-lg">
-            Costruiamolo insieme.
-          </Reveal>
-          <Reveal delay={170} className="mt-10">
-            <BrandButton to="/contatti" size="lg">
-              PARLIAMONE
-            </BrandButton>
-          </Reveal>
-        </div>
-      </section>
+      <ClosingCta title="Un progetto in mente?" description="Costruiamolo insieme." ctaLabel="PARLIAMONE" />
     </>
   );
 }
