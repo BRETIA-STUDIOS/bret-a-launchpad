@@ -82,7 +82,7 @@ function Metodo() {
       </section>
 
       {/* Processo timeline — invariato nella struttura */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-28">
+      <section className="py-20 sm:py-28">
         <div className="container-brand">
           <MethodFlow />
         </div>
