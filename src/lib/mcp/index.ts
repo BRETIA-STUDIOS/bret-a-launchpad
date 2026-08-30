@@ -10,5 +10,12 @@ export default defineMcp({
   version: "0.1.0",
   instructions:
     "Public tools for the BRETÌA Web Studio website. Use `get_studio_info` for the studio's mission, positioning and contact details, `list_services` for what BRETÌA offers, `list_method_stages` for how projects are run, and `list_portfolio_projects` for the concept projects in the portfolio. All content is in Italian and mirrors the public website.",
-  tools: [getStudioInfo, listServices, listMethodStages, listPortfolioProjects],
+  // exactOptionalPropertyTypes makes the SDK's optional `outputSchema` field
+  // structurally incompatible with the declared tool list type.
+  tools: [
+    getStudioInfo,
+    listServices,
+    listMethodStages,
+    listPortfolioProjects,
+  ] as unknown as AnyToolDefinition[],
 });
