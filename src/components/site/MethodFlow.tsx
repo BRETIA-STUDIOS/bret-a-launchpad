@@ -1,17 +1,43 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/ui-brand/Reveal";
 
 type Stage = {
-  index: string;
+  key: string;
   title: string;
   text: string;
+  subtext: string;
 };
 
 const STAGES: Stage[] = [
-  { index: "01", title: "ANALIZZIAMO", text: "Capiamo l'attività, gli obiettivi e le persone da raggiungere." },
-  { index: "02", title: "PROGETTIAMO", text: "Definiamo struttura, contenuti e direzione visiva." },
-  { index: "03", title: "SVILUPPIAMO", text: "Costruiamo un sito veloce, responsive e curato nel dettaglio." },
-  { index: "04", title: "LANCIAMO", text: "Pubblichiamo, verifichiamo e accompagniamo l'attività online." },
+  {
+    key: "analyze",
+    title: "ANALIZZIAMO",
+    text: "Capiamo l'attività, gli obiettivi e le persone da raggiungere.",
+    subtext:
+      "Studiamo l'attività, il pubblico e gli obiettivi prima di prendere qualsiasi decisione.",
+  },
+  {
+    key: "design",
+    title: "PROGETTIAMO",
+    text: "Definiamo struttura, contenuti e direzione visiva.",
+    subtext:
+      "Trasformiamo le idee in una struttura chiara, funzionale e coerente con l'identità dell'attività.",
+  },
+  {
+    key: "develop",
+    title: "SVILUPPIAMO",
+    text: "Costruiamo un sito veloce, responsive e curato nel dettaglio.",
+    subtext:
+      "Diamo forma al progetto curando esperienza, responsive design, performance e dettagli.",
+  },
+  {
+    key: "launch",
+    title: "LANCIAMO",
+    text: "Pubblichiamo, verifichiamo e accompagniamo l'attività online.",
+    subtext:
+      "Mettiamo il progetto online, verifichiamo che tutto funzioni e lasciamo una base pronta per evolvere.",
+  },
 ];
 
 /** Abstract, illustrative-only interface fragments — no data, no metrics. */
@@ -126,7 +152,7 @@ export function MethodFlow({ className }: { className?: string }) {
       <ol className="grid gap-10 lg:grid-cols-4 lg:gap-8">
         {STAGES.map((stage, i) => (
           <li
-            key={stage.index}
+            key={stage.key}
             style={{ transitionDelay: `${i * 140}ms` }}
             className={cn(
               "relative pl-8 transition-all duration-[var(--transition-slow)] ease-[var(--ease-brand)] lg:pl-0 lg:pt-8",
@@ -143,9 +169,15 @@ export function MethodFlow({ className }: { className?: string }) {
               <span className="h-1 w-1 rounded-full bg-primary" />
             </span>
 
-            <span className="font-display text-xs tracking-[0.3em] text-primary">{stage.index}</span>
-            <h3 className="mt-4 font-display text-lg font-semibold tracking-[0.1em]">{stage.title}</h3>
+            <h3 className="font-display text-lg font-semibold tracking-[0.1em]">{stage.title}</h3>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">{stage.text}</p>
+
+            {/* additional description — appears subtly as the user scrolls through */}
+            <Reveal delay={120}>
+              <p className="mt-5 border-t border-border/60 pt-4 text-xs leading-relaxed text-muted-foreground/70">
+                {stage.subtext}
+              </p>
+            </Reveal>
 
             <div className="mt-7 h-[5.5rem] w-full max-w-[16rem] rounded-[var(--radius-lg)] border border-border bg-surface/40 p-2">
               <StageVisual step={i} active={active} />
