@@ -1,4 +1,4 @@
-import { defineMcp } from "@lovable.dev/mcp-js";
+import { defineMcp, type AnyToolDefinition } from "@lovable.dev/mcp-js";
 import listServices from "./tools/list-services";
 import listMethodStages from "./tools/list-method-stages";
 import listPortfolioProjects from "./tools/list-portfolio-projects";
