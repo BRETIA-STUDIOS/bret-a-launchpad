@@ -3,7 +3,47 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { BrandButton } from "@/components/ui-brand/BrandButton";
+import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+
+/** Session state for the sign-in affordance. `undefined` = not resolved yet. */
+function useSessionEmail() {
+  const [email, setEmail] = useState<string | null | undefined>(undefined);
+  useEffect(() => {
+    void supabase.auth.getSession().then(({ data }) => setEmail(data.session?.user.email ?? null));
+    const { data } = supabase.auth.onAuthStateChange((_event, session) =>
+      setEmail(session?.user.email ?? null),
+    );
+    return () => data.subscription.unsubscribe();
+  }, []);
+  return email;
+}
+
+function AuthLink({ onNavigate }: { onNavigate?: () => void }) {
+  const email = useSessionEmail();
+  if (email === undefined) return null;
+  const className =
+    "font-display text-[0.8125rem] tracking-[0.1em] text-muted-foreground transition-colors duration-200 hover:text-foreground";
+  if (!email) {
+    return (
+      <Link to="/auth" search={{ next: "/" }} onClick={onNavigate} className={className}>
+        Accedi
+      </Link>
+    );
+  }
+  return (
+    <button
+      type="button"
+      className={className}
+      onClick={async () => {
+        onNavigate?.();
+        await supabase.auth.signOut();
+      }}
+    >
+      Esci
+    </button>
+  );
+}
 
 export const NAV_ITEMS = [
   { to: "/servizi", label: "Servizi" },
@@ -59,7 +99,8 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-7 lg:flex">
+          <AuthLink />
           <BrandButton to="/contatti">Parliamone</BrandButton>
         </div>
 
@@ -102,6 +143,9 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <div className="border-b border-border py-4">
+            <AuthLink onNavigate={() => setOpen(false)} />
+          </div>
           <BrandButton to="/contatti" className="mt-8 w-full" onClick={() => setOpen(false)}>
             Parliamone
           </BrandButton>
