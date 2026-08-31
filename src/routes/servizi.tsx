@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { ServiceShowcase } from "@/components/site/ServiceShowcase";
 import { ClosingCta } from "@/components/site/ClosingCta";
+import { Reveal } from "@/components/ui-brand/Reveal";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/servizi")({
