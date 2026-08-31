@@ -3,25 +3,17 @@ import { PageHero } from "@/components/site/PageHero";
 import { ProjectShowcase } from "@/components/site/ProjectShowcase";
 import { Reveal } from "@/components/ui-brand/Reveal";
 import { ClosingCta } from "@/components/site/ClosingCta";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/portfolio/")({
-  head: () => ({
-    meta: [
-      { title: "Portfolio — BRETÌA Web Studio" },
-      {
-        name: "description",
-        content:
-          "Una selezione di identità digitali, siti web e concept progettati da BRETÌA Web Studio.",
-      },
-      { property: "og:title", content: "Portfolio — BRETÌA Web Studio" },
-      {
-        property: "og:description",
-        content: "Progetti che prendono forma: identità digitali e concept firmati BRETÌA.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/portfolio",
+      title: "Portfolio — BRETÌA Web Studio",
+      description:
+        "Una selezione di identità digitali, siti web e concept progettati da BRETÌA Web Studio.",
+      ogDescription: "Progetti che prendono forma: identità digitali e concept firmati BRETÌA.",
+    }),
   component: Portfolio,
 });
 
@@ -39,16 +31,17 @@ function Portfolio() {
           <ProjectShowcase />
         </Reveal>
         <div className="container-brand mt-10">
-          <Reveal
-            as="p"
-            className="text-xs uppercase tracking-[0.28em] text-muted-foreground/70"
-          >
+          <Reveal as="p" className="text-xs uppercase tracking-[0.28em] text-muted-foreground/70">
             Trascina per esplorare
           </Reveal>
         </div>
       </section>
 
-      <ClosingCta title="Un progetto in mente?" description="Costruiamolo insieme." ctaLabel="PARLIAMONE" />
+      <ClosingCta
+        title="Un progetto in mente?"
+        description="Costruiamolo insieme."
+        ctaLabel="PARLIAMONE"
+      />
     </>
   );
 }

@@ -2,26 +2,18 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { ServiceShowcase } from "@/components/site/ServiceShowcase";
 import { ClosingCta } from "@/components/site/ClosingCta";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/servizi")({
-  head: () => ({
-    meta: [
-      { title: "Servizi — BRETÌA Web Studio" },
-      {
-        name: "description",
-        content:
-          "Creazione di siti web, restyling, manutenzione e assistenza, rebranding: i servizi di BRETÌA Web Studio.",
-      },
-      { property: "og:title", content: "Servizi — BRETÌA Web Studio" },
-      {
-        property: "og:description",
-        content:
-          "Quello che possiamo fare per te: nuovi siti web, restyling, manutenzione e rebranding.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/servizi",
+      title: "Servizi — BRETÌA Web Studio",
+      description:
+        "Creazione di siti web, restyling, manutenzione e assistenza, rebranding: i servizi di BRETÌA Web Studio.",
+      ogDescription:
+        "Quello che possiamo fare per te: nuovi siti web, restyling, manutenzione e rebranding.",
+    }),
   component: Servizi,
 });
 
@@ -61,7 +53,9 @@ function Servizi() {
             extra={
               <p className="text-base leading-relaxed text-muted-foreground">
                 Ogni sito realizzato da BRETÌA include{" "}
-                <span className="text-foreground">30 giorni di manutenzione ordinaria gratuita</span>{" "}
+                <span className="text-foreground">
+                  30 giorni di manutenzione ordinaria gratuita
+                </span>{" "}
                 dalla pubblicazione. Successivamente è possibile scegliere un servizio di
                 manutenzione mensile, con diversi livelli di assistenza in base alle necessità
                 dell'attività.

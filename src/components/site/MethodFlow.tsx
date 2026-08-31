@@ -54,15 +54,7 @@ function StageVisual({ step, active }: { step: number; active: boolean }) {
       fill="none"
     >
       {/* shared frame — a subtle interface fragment */}
-      <rect
-        x="4"
-        y="6"
-        width="152"
-        height="78"
-        rx="8"
-        stroke={faint}
-        strokeWidth="1"
-      />
+      <rect x="4" y="6" width="152" height="78" rx="8" stroke={faint} strokeWidth="1" />
       <path d="M4 20 H156" stroke={faint} strokeWidth="1" />
       <circle cx="14" cy="13" r="2" fill={faint} />
       <circle cx="22" cy="13" r="2" fill={faint} />
@@ -70,37 +62,144 @@ function StageVisual({ step, active }: { step: number; active: boolean }) {
 
       {step === 0 && (
         <g className={cn("method-draw", active && "is-active")}>
-          <path d="M18 68 L48 52 L78 60 L108 36 L142 44" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
-          <circle cx="48" cy="52" r="2.5" fill={stroke} className="method-dot" style={{ animationDelay: "220ms" }} />
-          <circle cx="108" cy="36" r="2.5" fill={stroke} className="method-dot" style={{ animationDelay: "420ms" }} />
+          <path
+            d="M18 68 L48 52 L78 60 L108 36 L142 44"
+            stroke={stroke}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            pathLength={1}
+          />
+          <circle
+            cx="48"
+            cy="52"
+            r="2.5"
+            fill={stroke}
+            className="method-dot"
+            style={{ animationDelay: "220ms" }}
+          />
+          <circle
+            cx="108"
+            cy="36"
+            r="2.5"
+            fill={stroke}
+            className="method-dot"
+            style={{ animationDelay: "420ms" }}
+          />
           <path d="M18 78 H142" stroke={faint} strokeWidth="1" strokeDasharray="3 4" />
         </g>
       )}
 
       {step === 1 && (
         <g className={cn("method-draw", active && "is-active")}>
-          <rect x="18" y="30" width="44" height="42" rx="4" stroke={stroke} strokeWidth="1.5" pathLength={1} />
-          <rect x="70" y="30" width="72" height="12" rx="3" stroke={faint} strokeWidth="1.5" pathLength={1} />
-          <rect x="70" y="48" width="72" height="8" rx="3" stroke={faint} strokeWidth="1.5" pathLength={1} />
-          <rect x="70" y="62" width="44" height="8" rx="3" stroke={faint} strokeWidth="1.5" pathLength={1} />
+          <rect
+            x="18"
+            y="30"
+            width="44"
+            height="42"
+            rx="4"
+            stroke={stroke}
+            strokeWidth="1.5"
+            pathLength={1}
+          />
+          <rect
+            x="70"
+            y="30"
+            width="72"
+            height="12"
+            rx="3"
+            stroke={faint}
+            strokeWidth="1.5"
+            pathLength={1}
+          />
+          <rect
+            x="70"
+            y="48"
+            width="72"
+            height="8"
+            rx="3"
+            stroke={faint}
+            strokeWidth="1.5"
+            pathLength={1}
+          />
+          <rect
+            x="70"
+            y="62"
+            width="44"
+            height="8"
+            rx="3"
+            stroke={faint}
+            strokeWidth="1.5"
+            pathLength={1}
+          />
         </g>
       )}
 
       {step === 2 && (
         <g className={cn("method-draw", active && "is-active")}>
-          <path d="M30 40 L20 51 L30 62" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" pathLength={1} />
-          <path d="M118 40 L128 51 L118 62" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" pathLength={1} />
-          <path d="M44 68 H104" stroke={faint} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
-          <path d="M44 34 H104" stroke={faint} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
-          <path d="M62 30 L86 72" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
+          <path
+            d="M30 40 L20 51 L30 62"
+            stroke={stroke}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            pathLength={1}
+          />
+          <path
+            d="M118 40 L128 51 L118 62"
+            stroke={stroke}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            pathLength={1}
+          />
+          <path
+            d="M44 68 H104"
+            stroke={faint}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            pathLength={1}
+          />
+          <path
+            d="M44 34 H104"
+            stroke={faint}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            pathLength={1}
+          />
+          <path
+            d="M62 30 L86 72"
+            stroke={stroke}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            pathLength={1}
+          />
         </g>
       )}
 
       {step === 3 && (
         <g className={cn("method-draw", active && "is-active")}>
-          <path d="M20 72 C 60 72, 84 46, 96 30" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
-          <path d="M96 30 L86 32 M96 30 L94 40" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" pathLength={1} />
-          <circle cx="96" cy="30" r="3" fill={stroke} className="method-dot" style={{ animationDelay: "520ms" }} />
+          <path
+            d="M20 72 C 60 72, 84 46, 96 30"
+            stroke={stroke}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            pathLength={1}
+          />
+          <path
+            d="M96 30 L86 32 M96 30 L94 40"
+            stroke={stroke}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            pathLength={1}
+          />
+          <circle
+            cx="96"
+            cy="30"
+            r="3"
+            fill={stroke}
+            className="method-dot"
+            style={{ animationDelay: "520ms" }}
+          />
           <path d="M112 68 H142" stroke={faint} strokeWidth="1" strokeDasharray="3 4" />
         </g>
       )}
@@ -170,7 +269,9 @@ export function MethodFlow({ className }: { className?: string }) {
             </span>
 
             <h3 className="font-display text-lg font-semibold tracking-[0.1em]">{stage.title}</h3>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">{stage.text}</p>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              {stage.text}
+            </p>
 
             {/* additional description — appears subtly as the user scrolls through */}
             <Reveal delay={120}>

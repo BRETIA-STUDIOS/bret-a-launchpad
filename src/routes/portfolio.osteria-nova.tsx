@@ -2,35 +2,27 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { cn } from "@/lib/utils";
-import logoLight from "@/assets/osteria/logo-light.png.asset.json";
-import heroImg from "@/assets/osteria/hero.jpg.asset.json";
-import dish1 from "@/assets/osteria/dish-1.jpg.asset.json";
-import dish2 from "@/assets/osteria/dish-2.jpg.asset.json";
-import dish3 from "@/assets/osteria/dish-3.jpg.asset.json";
-import dish4 from "@/assets/osteria/dish-4.jpg.asset.json";
-import cucinaImg from "@/assets/osteria/cucina.jpg.asset.json";
-import cantinaImg from "@/assets/osteria/cantina.jpg.asset.json";
-import prenotaImg from "@/assets/osteria/prenota.jpg.asset.json";
+import logoLight from "@/assets/osteria/osteria-logo-cream.png";
+import heroImg from "@/assets/osteria/osteria-hero.jpg";
+import dish1 from "@/assets/osteria/osteria-dish-1.jpg";
+import dish2 from "@/assets/osteria/osteria-dish-2.jpg";
+import dish3 from "@/assets/osteria/osteria-dish-3.jpg";
+import dish4 from "@/assets/osteria/osteria-dish-4.jpg";
+import cucinaImg from "@/assets/osteria/osteria-cucina.jpg";
+import cantinaImg from "@/assets/osteria/osteria-cantina.jpg";
+import prenotaImg from "@/assets/osteria/osteria-prenota.jpg";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/portfolio/osteria-nova")({
-  head: () => ({
-    meta: [
-      { title: "Osteria Nòva — Concept BRETÌA" },
-      {
-        name: "description",
-        content:
-          "Concept dimostrativo di un ristorante italiano contemporaneo: menu, cucina, cantina e prenotazione. Progetto realizzato da BRETÌA Web Studio.",
-      },
-      { property: "og:title", content: "Osteria Nòva — Concept BRETÌA" },
-      {
-        property: "og:description",
-        content:
-          "Un'esperienza digitale costruita attorno all'atmosfera, alla cucina e all'identità di un'osteria italiana contemporanea.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/portfolio/osteria-nova",
+      title: "Osteria Nòva — Concept BRETÌA",
+      description:
+        "Concept dimostrativo di un ristorante italiano contemporaneo: menu, cucina, cantina e prenotazione. Progetto realizzato da BRETÌA Web Studio.",
+      ogDescription:
+        "Un'esperienza digitale costruita attorno all'atmosfera, alla cucina e all'identità di un'osteria italiana contemporanea.",
+    }),
   component: OsteriaNova,
 });
 
@@ -49,28 +41,28 @@ const MENU = [
     name: "Polpo arrosto",
     description: "Crema di ceci, olio al prezzemolo, limone dei Monti Lattari.",
     price: "18",
-    image: dish2.url,
+    image: dish2,
   },
   {
     course: "Primo",
     name: "Tonnarelli cacio e pepe",
     description: "Pasta tirata a mano, pecorino romano DOP, pepe di Sarawak.",
     price: "16",
-    image: dish1.url,
+    image: dish1,
   },
   {
     course: "Secondo",
     name: "Petto d'anatra all'arancia",
     description: "Riduzione agli agrumi, cavolo rosso brasato, timo fresco.",
     price: "26",
-    image: dish3.url,
+    image: dish3,
   },
   {
     course: "Dolce",
     name: "Tiramisù dell'Osteria",
     description: "Mascarpone montato a mano, caffè in infusione, cacao amaro.",
     price: "9",
-    image: dish4.url,
+    image: dish4,
   },
 ];
 
@@ -148,9 +140,12 @@ function ConceptBy({ tone = "light", className }: { tone?: "light" | "dark"; cla
       className={cn("inline-flex items-center gap-2", className)}
       style={{ color: tone === "light" ? "var(--on-ivory)" : "var(--on-black)" }}
     >
-      <span className="text-[0.5625rem] uppercase tracking-[0.28em] opacity-70">A concept by</span>
-      <BretiaSymbol variant={tone === "light" ? "white" : "color"} className="h-3.5 w-auto opacity-80" />
-      <span className="text-[0.6875rem] font-medium uppercase tracking-[0.2em] opacity-90">BRETÌA</span>
+      <span className="text-xs uppercase tracking-[0.28em] opacity-70">A concept by</span>
+      <BretiaSymbol
+        variant={tone === "light" ? "white" : "color"}
+        className="h-3.5 w-auto opacity-80"
+      />
+      <span className="text-xs font-medium uppercase tracking-[0.2em] opacity-90">BRETÌA</span>
     </span>
   );
 }
@@ -177,10 +172,13 @@ function OsteriaHeader() {
     <header
       className="fixed inset-x-0 top-0 z-50 transition-colors duration-500"
       style={{
-        backgroundColor: scrolled || open ? "color-mix(in oklab, #10251f 92%, transparent)" : "transparent",
+        backgroundColor:
+          scrolled || open ? "color-mix(in oklab, #10251f 92%, transparent)" : "transparent",
         backdropFilter: scrolled || open ? "blur(10px)" : undefined,
         borderBottom:
-          scrolled || open ? "1px solid color-mix(in oklab, #f1e8d5 14%, transparent)" : "1px solid transparent",
+          scrolled || open
+            ? "1px solid color-mix(in oklab, #f1e8d5 14%, transparent)"
+            : "1px solid transparent",
       }}
     >
       <div className="mx-auto grid max-w-[80rem] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 sm:px-8 lg:py-5">
@@ -194,7 +192,7 @@ function OsteriaHeader() {
           aria-label="Osteria Nòva"
         >
           <img
-            src={logoLight.url}
+            src={logoLight}
             alt="Osteria Nòva"
             width={300}
             height={200}
@@ -208,14 +206,14 @@ function OsteriaHeader() {
               key={item.id}
               type="button"
               onClick={() => go(item.id)}
-              className="on-label opacity-75 transition-opacity duration-300 hover:opacity-100"
+              className="on-label inline-flex items-center py-1 opacity-75 transition-opacity duration-300 hover:opacity-100"
             >
               {item.label}
             </button>
           ))}
           <Link
             to="/portfolio"
-            className="on-label opacity-45 transition-opacity duration-300 hover:opacity-90"
+            className="on-label inline-flex items-center py-1 opacity-45 transition-opacity duration-300 hover:opacity-90"
           >
             ← Portfolio
           </Link>
@@ -348,8 +346,9 @@ function ReservationForm() {
         </span>
         <h3 className="text-3xl sm:text-4xl">Grazie, {values.nome.split(" ")[0]}.</h3>
         <p className="max-w-md text-sm leading-relaxed opacity-70">
-          Abbiamo preso nota della tua richiesta per il {values.data} alle {values.orario} — {values.persone}{" "}
-          {values.persone === "1" ? "persona" : "persone"}. Ti confermeremo il tavolo a breve.
+          Abbiamo preso nota della tua richiesta per il {values.data} alle {values.orario} —{" "}
+          {values.persone} {values.persone === "1" ? "persona" : "persone"}. Ti confermeremo il
+          tavolo a breve.
         </p>
         <button type="button" className="on-btn on-btn-ghost mt-2" onClick={() => setDone(false)}>
           Nuova richiesta
@@ -465,7 +464,7 @@ function OsteriaNova() {
       <section className="relative min-h-[100svh] overflow-hidden pt-28 pb-16 sm:pt-32">
         <div className="absolute inset-0">
           <img
-            src={heroImg.url}
+            src={heroImg}
             alt="Sala dell'Osteria Nòva illuminata a candela"
             width={1600}
             height={1200}
@@ -500,8 +499,8 @@ function OsteriaNova() {
             delay={330}
             className="mt-7 max-w-xl text-base leading-relaxed opacity-75 sm:text-lg"
           >
-            Materie prime scelte, ricette di famiglia e una mano contemporanea. Nel cuore della città,
-            dal 1974.
+            Materie prime scelte, ricette di famiglia e una mano contemporanea. Nel cuore della
+            città, dal 1974.
           </OnReveal>
 
           <OnReveal delay={450} className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
@@ -528,7 +527,11 @@ function OsteriaNova() {
       </section>
 
       {/* MENU */}
-      <section id="menu" className="scroll-mt-20 py-20 sm:py-28" style={{ backgroundColor: "var(--on-green-2)" }}>
+      <section
+        id="menu"
+        className="scroll-mt-20 py-20 sm:py-28"
+        style={{ backgroundColor: "var(--on-green-2)" }}
+      >
         <div className="mx-auto max-w-[74rem] px-5 sm:px-8">
           <OnReveal className="flex flex-col items-center text-center">
             <p className="on-label" style={{ color: "var(--on-red)" }}>
@@ -568,8 +571,13 @@ function OsteriaNova() {
                     {dish.course}
                   </p>
                   <div className="mt-5 flex items-end justify-between gap-6">
-                    <h3 className="min-w-0 text-3xl leading-tight sm:text-4xl lg:text-5xl">{dish.name}</h3>
-                    <span className="on-serif shrink-0 text-2xl sm:text-3xl" style={{ color: "var(--on-red)" }}>
+                    <h3 className="min-w-0 text-3xl leading-tight sm:text-4xl lg:text-5xl">
+                      {dish.name}
+                    </h3>
+                    <span
+                      className="on-serif shrink-0 text-2xl sm:text-3xl"
+                      style={{ color: "var(--on-red)" }}
+                    >
                       € {dish.price}
                     </span>
                   </div>
@@ -585,11 +593,15 @@ function OsteriaNova() {
       </section>
 
       {/* LA NOSTRA CUCINA */}
-      <section id="cucina" className="scroll-mt-20 py-20 sm:py-28" style={{ backgroundColor: "var(--on-white)" }}>
+      <section
+        id="cucina"
+        className="scroll-mt-20 py-20 sm:py-28"
+        style={{ backgroundColor: "var(--on-white)" }}
+      >
         <div className="mx-auto grid max-w-[74rem] items-center gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
           <OnReveal className="lg:col-span-6">
             <img
-              src={cucinaImg.url}
+              src={cucinaImg}
               alt="Lo chef dell'Osteria Nòva impiatta in cucina"
               width={1600}
               height={1100}
@@ -609,17 +621,28 @@ function OsteriaNova() {
             >
               <span style={{ color: "var(--on-black)" }}>Il rispetto della materia prima.</span>
             </OnReveal>
-            <OnReveal as="p" delay={220} className="mt-7 max-w-md text-sm leading-relaxed sm:text-base">
-              Lavoriamo con piccoli produttori del territorio: pasta tirata a mano ogni mattina, pesce
-              del giorno, verdure di stagione. Nulla di più, nulla di superfluo.
+            <OnReveal
+              as="p"
+              delay={220}
+              className="mt-7 max-w-md text-sm leading-relaxed sm:text-base"
+            >
+              Lavoriamo con piccoli produttori del territorio: pasta tirata a mano ogni mattina,
+              pesce del giorno, verdure di stagione. Nulla di più, nulla di superfluo.
             </OnReveal>
-            <OnReveal as="p" delay={300} className="mt-5 max-w-md text-sm leading-relaxed sm:text-base">
-              La tradizione resta la nostra grammatica; l'interpretazione contemporanea è solo il modo
-              in cui la raccontiamo oggi.
+            <OnReveal
+              as="p"
+              delay={300}
+              className="mt-5 max-w-md text-sm leading-relaxed sm:text-base"
+            >
+              La tradizione resta la nostra grammatica; l'interpretazione contemporanea è solo il
+              modo in cui la raccontiamo oggi.
             </OnReveal>
             <OnReveal delay={380} className="mt-10">
               <div className="on-rule" style={{ backgroundColor: "rgba(90,56,40,0.25)" }} />
-              <p className="on-serif mt-6 text-2xl leading-snug sm:text-3xl" style={{ color: "var(--on-black)" }}>
+              <p
+                className="on-serif mt-6 text-2xl leading-snug sm:text-3xl"
+                style={{ color: "var(--on-black)" }}
+              >
                 «Cucinare è ricordare, e poi decidere cosa vale la pena cambiare.»
               </p>
               <p className="on-label mt-4 opacity-60">Chef · Osteria Nòva</p>
@@ -639,10 +662,18 @@ function OsteriaNova() {
             <OnReveal as="p" className="on-label">
               <span style={{ color: "var(--on-red)" }}>Cantina</span>
             </OnReveal>
-            <OnReveal as="h2" delay={120} className="mt-6 text-balance text-4xl leading-[1.08] sm:text-5xl">
+            <OnReveal
+              as="h2"
+              delay={120}
+              className="mt-6 text-balance text-4xl leading-[1.08] sm:text-5xl"
+            >
               Vini selezionati, storie da condividere.
             </OnReveal>
-            <OnReveal as="p" delay={200} className="mt-7 max-w-md text-sm leading-relaxed opacity-75 sm:text-base">
+            <OnReveal
+              as="p"
+              delay={200}
+              className="mt-7 max-w-md text-sm leading-relaxed opacity-75 sm:text-base"
+            >
               Una cantina costruita nel tempo, tra cantine storiche e piccoli vignaioli che lavorano
               poche bottiglie all'anno. Ogni etichetta viene scelta assaggiando, mai da un catalogo.
             </OnReveal>
@@ -670,7 +701,7 @@ function OsteriaNova() {
 
           <OnReveal delay={120} className="lg:col-span-7">
             <img
-              src={cantinaImg.url}
+              src={cantinaImg}
               alt="Bottiglie e calici nella cantina dell'Osteria Nòva"
               width={1600}
               height={1200}
@@ -685,7 +716,7 @@ function OsteriaNova() {
       <section id="prenota" className="relative scroll-mt-20 overflow-hidden py-20 sm:py-28">
         <div className="absolute inset-0">
           <img
-            src={prenotaImg.url}
+            src={prenotaImg}
             alt=""
             aria-hidden="true"
             width={1600}
@@ -708,10 +739,18 @@ function OsteriaNova() {
             <OnReveal as="p" className="on-label">
               <span style={{ color: "var(--on-red)" }}>Prenotazione</span>
             </OnReveal>
-            <OnReveal as="h2" delay={120} className="mt-6 text-balance text-4xl leading-[1.08] sm:text-5xl">
+            <OnReveal
+              as="h2"
+              delay={120}
+              className="mt-6 text-balance text-4xl leading-[1.08] sm:text-5xl"
+            >
               Il tuo tavolo ti aspetta.
             </OnReveal>
-            <OnReveal as="p" delay={200} className="mt-7 max-w-md text-sm leading-relaxed opacity-75 sm:text-base">
+            <OnReveal
+              as="p"
+              delay={200}
+              className="mt-7 max-w-md text-sm leading-relaxed opacity-75 sm:text-base"
+            >
               Accogliamo un numero limitato di coperti ogni sera. Scrivici data e orario: ti
               confermeremo il tavolo il prima possibile.
             </OnReveal>
@@ -733,7 +772,7 @@ function OsteriaNova() {
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <img
-                src={logoLight.url}
+                src={logoLight}
                 alt="Osteria Nòva"
                 width={300}
                 height={200}
@@ -778,10 +817,16 @@ function OsteriaNova() {
                 ciao@osterianova.it
               </p>
               <div className="mt-5 flex flex-col gap-1.5 text-sm opacity-80">
-                <a href="#top" className="transition-opacity hover:opacity-100">
+                <a
+                  href="#top"
+                  className="inline-flex items-center py-1 transition-opacity hover:opacity-100"
+                >
                   Instagram
                 </a>
-                <a href="#top" className="transition-opacity hover:opacity-100">
+                <a
+                  href="#top"
+                  className="inline-flex items-center py-1 transition-opacity hover:opacity-100"
+                >
                   Facebook
                 </a>
               </div>
@@ -795,11 +840,11 @@ function OsteriaNova() {
             <ConceptBy />
           </div>
 
-          <p className="mt-14 max-w-3xl text-[0.6875rem] leading-relaxed opacity-35">
+          <p className="mt-14 max-w-3xl text-xs leading-relaxed opacity-35">
             <span className="uppercase tracking-[0.22em]">Concept dimostrativo</span>
             <br />
-            Osteria Nòva è un progetto concept realizzato a fini dimostrativi da BRETÌA. Il marchio, il
-            nome, i contenuti e gli elementi visivi presenti in questa demo sono utilizzati
+            Osteria Nòva è un progetto concept realizzato a fini dimostrativi da BRETÌA. Il marchio,
+            il nome, i contenuti e gli elementi visivi presenti in questa demo sono utilizzati
             esclusivamente a scopo esemplificativo. BRETÌA non è affiliata, associata o incaricata
             dall'attività eventualmente rappresentata e non si assume responsabilità per eventuali
             informazioni, servizi o contenuti riferibili a realtà esistenti.

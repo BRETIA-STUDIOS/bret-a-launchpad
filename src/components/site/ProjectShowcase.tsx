@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
+import { useShouldAnimate } from "@/hooks/use-should-animate";
 import { cn } from "@/lib/utils";
-import osteriaNova from "@/assets/osteria-nova.png.asset.json";
+import osteriaNova from "@/assets/osteria-nova.png";
 
 export type ShowcaseProject = {
   id: string;
@@ -21,7 +23,7 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     category: "Restaurant · Web Design · UI/UX · Branding",
     description:
       "Un'esperienza digitale costruita attorno all'atmosfera, alla cucina e all'identità di un ristorante italiano contemporaneo.",
-    image: osteriaNova.url,
+    image: osteriaNova,
     to: "/portfolio/osteria-nova",
   },
   {
@@ -42,13 +44,19 @@ function ProjectCard({
   project,
   compact,
   movedRef,
+  duplicate = false,
 }: {
   project: ShowcaseProject;
   compact?: boolean;
   movedRef?: React.MutableRefObject<boolean>;
+  /** Seconda copia del nastro: serve solo al loop visivo. */
+  duplicate?: boolean;
 }) {
   return (
     <article
+      // La copia esiste per far scorrere il nastro senza stacchi. Nasconderla
+      // agli screen reader evita che ogni progetto venga annunciato due volte.
+      aria-hidden={duplicate || undefined}
       className={cn(
         "group relative shrink-0 overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-surface transition-colors duration-[var(--transition-base)] hover:border-primary/50",
         compact
@@ -85,7 +93,7 @@ function ProjectCard({
       </div>
 
       <div className="flex flex-col gap-3 p-6 sm:p-8">
-        <p className="label-eyebrow text-primary">{project.category}</p>
+        <p className="label-eyebrow text-brand">{project.category}</p>
         <h3 className="font-display text-xl font-semibold tracking-[0.14em] sm:text-2xl">
           {project.title}
         </h3>
@@ -96,14 +104,14 @@ function ProjectCard({
         ) : null}
         <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2.5 text-muted-foreground/80">
-            <span className="text-[0.5625rem] uppercase tracking-[0.28em]">A concept by</span>
+            <span className="text-xs uppercase tracking-[0.28em]">A concept by</span>
             <BretiaSymbol variant="white" className="h-3.5 w-auto opacity-70" />
             <span className="font-display text-[0.75rem] font-semibold tracking-[0.16em] text-foreground/80">
               BRETÌA
             </span>
           </div>
           {project.to ? (
-            <span className="text-[0.5625rem] uppercase tracking-[0.28em] text-primary">
+            <span className="text-xs uppercase tracking-[0.28em] text-brand">
               Apri il progetto →
             </span>
           ) : null}
@@ -114,7 +122,10 @@ function ProjectCard({
         <Link
           to={project.to}
           aria-label={`Apri il progetto ${project.title}`}
-          className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          // La copia resta fuori dal tab order: altrimenti si tabberebbe due
+          // volte sugli stessi progetti.
+          tabIndex={duplicate ? -1 : undefined}
+          className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           onClick={(e) => {
             if (movedRef?.current) e.preventDefault();
           }}
@@ -123,6 +134,9 @@ function ProjectCard({
     </article>
   );
 }
+
+const controlClass =
+  "inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border-strong text-foreground transition-colors duration-200 hover:border-brand hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export function ProjectShowcase({
   compact = false,
@@ -134,10 +148,20 @@ export function ProjectShowcase({
   /** px per second */
   speed?: number;
 }) {
-  const viewportRef = useRef<HTMLDivElement | null>(null);
+  // Il nastro scorre solo mentre è davvero sullo schermo e la scheda è attiva.
+  const { ref: viewportRef, shouldAnimate } = useShouldAnimate<HTMLDivElement>();
   const trackRef = useRef<HTMLDivElement | null>(null);
   const offsetRef = useRef(0);
-  const pausedRef = useRef(false);
+  /** px ancora da percorrere per il salto avviato dai pulsanti. */
+  const glideRef = useRef(0);
+  /*
+   * Lo scorrimento si ferma finché almeno uno di questi è attivo. Tenerli
+   * separati evita il bug classico del flag unico: uscire col mouse mentre
+   * il focus è ancora dentro (o viceversa) faceva ripartire il nastro.
+   */
+  const holdsRef = useRef({ hover: false, focus: false, drag: false });
+  const userPausedRef = useRef(false);
+  const reduceRef = useRef(false);
   const dragRef = useRef<{ active: boolean; startX: number; startOffset: number }>({
     active: false,
     startX: 0,
@@ -145,25 +169,62 @@ export function ProjectShowcase({
   });
   const movedRef = useRef(false);
   const [dragging, setDragging] = useState(false);
+  const [userPaused, setUserPaused] = useState(false);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => {
+      reduceRef.current = mq.matches;
+      setReduced(mq.matches);
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Fuori schermo o scheda in secondo piano: nessun loop attivo, zero CPU.
+    if (!track || !shouldAnimate) return;
 
     let raf = 0;
     let last = performance.now();
 
-    const loopWidth = () => track.scrollWidth / 2 || 1;
+    // scrollWidth conta 2 copie separate da un gap in meno rispetto al periodo
+    // reale del loop: senza il gap il nastro salta di mezzo gap ad ogni giro.
+    const loopWidth = () => {
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return (track.scrollWidth + gap) / 2 || 1;
+    };
 
     const tick = (now: number) => {
-      const dt = (now - last) / 1000;
+      // dt limitato: al ritorno da una scheda in secondo piano `now - last`
+      // vale svariati secondi e il nastro farebbe un balzo.
+      const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
-      if (!pausedRef.current && !reduce) {
+
+      const holds = holdsRef.current;
+
+      if (glideRef.current !== 0) {
+        // Salto da pulsante: decelerazione esponenziale fino a destinazione.
+        const stepPx = glideRef.current * Math.min(1, dt * 9);
+        offsetRef.current += stepPx;
+        glideRef.current -= stepPx;
+        if (Math.abs(glideRef.current) < 0.5) {
+          offsetRef.current += glideRef.current;
+          glideRef.current = 0;
+        }
+      } else if (
+        !holds.hover &&
+        !holds.focus &&
+        !holds.drag &&
+        !userPausedRef.current &&
+        !reduceRef.current
+      ) {
         offsetRef.current -= speed * dt;
       }
+
       const w = loopWidth();
       if (offsetRef.current <= -w) offsetRef.current += w;
       if (offsetRef.current > 0) offsetRef.current -= w;
@@ -172,13 +233,34 @@ export function ProjectShowcase({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [speed]);
+  }, [speed, shouldAnimate]);
+
+  /** Alternativa da tastiera al trascinamento: avanza di una card per volta. */
+  const move = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    const card = track?.firstElementChild as HTMLElement | null;
+    if (!track || !card) return;
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    const distance = (card.getBoundingClientRect().width + gap) * -direction;
+    if (reduceRef.current) {
+      offsetRef.current += distance;
+    } else {
+      glideRef.current += distance;
+    }
+  };
+
+  const toggleUserPaused = () => {
+    const next = !userPausedRef.current;
+    userPausedRef.current = next;
+    setUserPaused(next);
+  };
 
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     dragRef.current = { active: true, startX: e.clientX, startOffset: offsetRef.current };
     movedRef.current = false;
-    pausedRef.current = true;
+    holdsRef.current.drag = true;
+    glideRef.current = 0;
     setDragging(true);
   };
 
@@ -197,7 +279,7 @@ export function ProjectShowcase({
     if (!dragRef.current.active) return;
     dragRef.current.active = false;
     setDragging(false);
-    pausedRef.current = false;
+    holdsRef.current.drag = false;
     const el = e.currentTarget as HTMLElement;
     if (el.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
     window.setTimeout(() => {
@@ -205,57 +287,107 @@ export function ProjectShowcase({
     }, 120);
   };
 
-
   const items = [...SHOWCASE_PROJECTS, ...SHOWCASE_PROJECTS];
-
 
   return (
     <div
-      ref={viewportRef}
-      className={cn("relative w-full overflow-hidden", className)}
-      onMouseEnter={() => {
-        pausedRef.current = true;
+      role="group"
+      aria-label="Progetti in evidenza"
+      className={cn("w-full", className)}
+      onFocus={() => {
+        holdsRef.current.focus = true;
       }}
-      onMouseLeave={() => {
-        if (!dragRef.current.active) pausedRef.current = false;
+      onBlur={(e) => {
+        // Spostarsi da una card all'altra non deve far ripartire il nastro.
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          holdsRef.current.focus = false;
+        }
       }}
     >
       <div
-        className={cn(
-          "flex w-max gap-5 sm:gap-6",
-          dragging ? "cursor-grabbing" : "cursor-grab",
-        )}
-        style={{ touchAction: "pan-y" }}
-        ref={trackRef}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
-        onTouchStart={() => {
-          pausedRef.current = true;
+        ref={viewportRef}
+        className="relative w-full overflow-hidden"
+        onMouseEnter={() => {
+          holdsRef.current.hover = true;
         }}
-        onTouchEnd={() => {
-          pausedRef.current = false;
+        onMouseLeave={() => {
+          holdsRef.current.hover = false;
         }}
       >
-        {items.map((project, i) => (
-          <ProjectCard
-            key={`${project.id}-${i}`}
-            project={project}
-            compact={compact}
-            movedRef={movedRef}
-          />
-        ))}
+        <div
+          className={cn("flex w-max gap-5 sm:gap-6", dragging ? "cursor-grabbing" : "cursor-grab")}
+          style={{ touchAction: "pan-y" }}
+          ref={trackRef}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onTouchStart={() => {
+            holdsRef.current.drag = true;
+          }}
+          onTouchEnd={() => {
+            holdsRef.current.drag = false;
+          }}
+        >
+          {items.map((project, i) => (
+            <ProjectCard
+              key={`${project.id}-${i}`}
+              project={project}
+              compact={compact}
+              movedRef={movedRef}
+              duplicate={i >= SHOWCASE_PROJECTS.length}
+            />
+          ))}
+        </div>
+
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-linear-to-r from-background to-transparent sm:w-20"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-background to-transparent sm:w-20"
+        />
       </div>
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-linear-to-r from-background to-transparent sm:w-20"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-background to-transparent sm:w-20"
-      />
+      <div className="container-brand mt-6 flex items-center justify-end gap-2">
+        <button
+          type="button"
+          onClick={() => move(-1)}
+          aria-label="Progetto precedente"
+          className={controlClass}
+        >
+          <ChevronLeft aria-hidden="true" className="size-5" />
+        </button>
+
+        {/* Con prefers-reduced-motion il nastro è già fermo: un tasto pausa
+            non avrebbe niente da mettere in pausa. */}
+        {reduced ? null : (
+          <button
+            type="button"
+            onClick={toggleUserPaused}
+            aria-label={
+              userPaused ? "Riprendi lo scorrimento automatico" : "Ferma lo scorrimento automatico"
+            }
+            className={controlClass}
+          >
+            {userPaused ? (
+              <Play aria-hidden="true" className="size-5" />
+            ) : (
+              <Pause aria-hidden="true" className="size-5" />
+            )}
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={() => move(1)}
+          aria-label="Progetto successivo"
+          className={controlClass}
+        >
+          <ChevronRight aria-hidden="true" className="size-5" />
+        </button>
+      </div>
     </div>
   );
 }

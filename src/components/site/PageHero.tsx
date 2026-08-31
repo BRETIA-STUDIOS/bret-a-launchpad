@@ -21,10 +21,18 @@ export function PageHero({
         <Reveal as="p" className="label-eyebrow">
           {eyebrow}
         </Reveal>
-        <Reveal as="h1" delay={80} className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
+        <Reveal
+          as="h1"
+          delay={80}
+          className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl"
+        >
           {title}
         </Reveal>
-        <Reveal as="p" delay={150} className="mt-7 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+        <Reveal
+          as="p"
+          delay={150}
+          className="mt-7 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+        >
           {description}
         </Reveal>
       </div>

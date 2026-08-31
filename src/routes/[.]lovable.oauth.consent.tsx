@@ -32,7 +32,8 @@ export const Route = createFileRoute("/.lovable/oauth/consent")({
   // Browser-only: the session lives in localStorage and is absent during SSR.
   ssr: false,
   validateSearch: (search: Record<string, unknown>) => ({
-    authorization_id: typeof search["authorization_id"] === "string" ? search["authorization_id"] : "",
+    authorization_id:
+      typeof search["authorization_id"] === "string" ? search["authorization_id"] : "",
   }),
   beforeLoad: async ({ search, location }) => {
     if (!search["authorization_id"]) throw new Error("Richiesta di autorizzazione non valida.");
@@ -135,7 +136,7 @@ function Consent() {
         </p>
 
         {error ? (
-          <p role="alert" className="mt-6 text-sm text-primary">
+          <p role="alert" className="mt-6 text-sm text-brand">
             {error}
           </p>
         ) : null}

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import symbolWhite from "@/assets/brand/symbol.png.asset.json";
-import wordmark from "@/assets/brand/wordmark.png.asset.json";
-import descriptor from "@/assets/brand/descriptor.png.asset.json";
+import symbolWhite from "@/assets/brand/bretia-symbol.png";
+import wordmark from "@/assets/brand/bretia-wordmark.png";
+import descriptor from "@/assets/brand/bretia-descriptor.png";
 import { cn } from "@/lib/utils";
 
 /**
@@ -26,7 +26,7 @@ export function Logo({
       )}
     >
       <img
-        src={symbolWhite.url}
+        src={symbolWhite}
         alt=""
         aria-hidden="true"
         width={202}
@@ -35,7 +35,7 @@ export function Logo({
       />
       <span className="flex flex-col items-start">
         <img
-          src={wordmark.url}
+          src={wordmark}
           alt="BRETÌA"
           width={520}
           height={86}
@@ -43,7 +43,7 @@ export function Logo({
         />
         {showDescriptor ? (
           <img
-            src={descriptor.url}
+            src={descriptor}
             alt=""
             aria-hidden="true"
             width={525}

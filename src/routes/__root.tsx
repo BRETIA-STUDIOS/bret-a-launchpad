@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { OG_IMAGE_ALT, OG_IMAGE_PATH, SITE_NAME, absoluteUrl } from "../lib/seo";
 import { Header } from "../components/site/Header";
 import { Footer } from "../components/site/Footer";
 
@@ -86,9 +87,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "BRETÌA è un web studio italiano che progetta siti web moderni, professionali e accessibili per piccole e medie attività.",
       },
-      { name: "author", content: "BRETÌA Web Studio" },
+      { name: "author", content: SITE_NAME },
+
+      // Metadati social validi per tutto il sito. Le singole pagine
+      // sovrascrivono titolo, descrizione, og:url e canonical via pageHead().
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:locale", content: "it_IT" },
+      { property: "og:image", content: absoluteUrl(OG_IMAGE_PATH) },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: OG_IMAGE_ALT },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: absoluteUrl(OG_IMAGE_PATH) },
+
       { name: "theme-color", content: "#0b1020" },
     ],
     links: [
@@ -136,7 +148,10 @@ function RootComponent() {
         Vai al contenuto
       </a>
       {isImmersive ? null : <Header />}
-      <main id="main">
+      {/* tabIndex={-1} rende `main` bersaglio valido per lo skip link: senza,
+          il link scorre la pagina ma il focus resta sul body e la tabulazione
+          riparte dall'header, vanificando il salto. */}
+      <main id="main" tabIndex={-1} className="focus:outline-none">
         <Outlet />
       </main>
       {isImmersive ? null : <Footer />}

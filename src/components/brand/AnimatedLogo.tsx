@@ -1,6 +1,6 @@
-import symbolColor from "@/assets/brand/symbol_color.png.asset.json";
-import wordmark from "@/assets/brand/wordmark.png.asset.json";
-import descriptor from "@/assets/brand/descriptor.png.asset.json";
+import symbolColor from "@/assets/brand/bretia-symbol_color.png";
+import wordmark from "@/assets/brand/bretia-wordmark.png";
+import descriptor from "@/assets/brand/bretia-descriptor.png";
 import { cn } from "@/lib/utils";
 
 /**
@@ -13,7 +13,7 @@ export function AnimatedLogo({ className }: { className?: string }) {
   return (
     <div className={cn("flex flex-col items-center", className)}>
       <img
-        src={symbolColor.url}
+        src={symbolColor}
         alt="BRETÌA"
         width={541}
         height={694}
@@ -22,7 +22,7 @@ export function AnimatedLogo({ className }: { className?: string }) {
         className="anim-symbol h-24 w-auto object-contain sm:h-28"
       />
       <img
-        src={wordmark.url}
+        src={wordmark}
         alt=""
         aria-hidden="true"
         width={520}
@@ -30,7 +30,7 @@ export function AnimatedLogo({ className }: { className?: string }) {
         className="anim-wordmark mt-7 h-[1.6rem] w-auto object-contain sm:h-8"
       />
       <img
-        src={descriptor.url}
+        src={descriptor}
         alt=""
         aria-hidden="true"
         width={525}

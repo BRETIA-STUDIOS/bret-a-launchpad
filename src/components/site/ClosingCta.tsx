@@ -35,9 +35,7 @@ export function ClosingCta({
       )}
     >
       {/* Decorative symbol — oversized, cropped by the section edges */}
-      <BretiaSymbol
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[24rem] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.05] sm:h-[34rem] lg:h-[44rem]"
-      />
+      <BretiaSymbol className="pointer-events-none absolute left-1/2 top-1/2 h-[24rem] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.05] sm:h-[34rem] lg:h-[44rem]" />
       <div className="container-brand relative">
         {eyebrow ? (
           <Reveal as="p" className="label-eyebrow">

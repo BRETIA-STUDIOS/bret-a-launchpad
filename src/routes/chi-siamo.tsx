@@ -3,26 +3,18 @@ import { PageHero } from "@/components/site/PageHero";
 import { Reveal } from "@/components/ui-brand/Reveal";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { ClosingCta } from "@/components/site/ClosingCta";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/chi-siamo")({
-  head: () => ({
-    meta: [
-      { title: "Chi siamo — BRETÌA Web Studio" },
-      {
-        name: "description",
-        content:
-          "BRETÌA è un web studio indipendente: riduciamo ciò che non serve, non la qualità. Presenza digitale professionale per piccole e medie attività.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Chi siamo — BRETÌA Web Studio" },
-      {
-        property: "og:description",
-        content:
-          "Un web studio indipendente e agile. Professionalità digitale, senza compromessi inutili.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/chi-siamo",
+      title: "Chi siamo — BRETÌA Web Studio",
+      description:
+        "BRETÌA è un web studio indipendente: riduciamo ciò che non serve, non la qualità. Presenza digitale professionale per piccole e medie attività.",
+      ogDescription:
+        "Un web studio indipendente e agile. Professionalità digitale, senza compromessi inutili.",
+    }),
   component: ChiSiamo,
 });
 
@@ -51,7 +43,7 @@ const PRINCIPI = [
 
 function RuleLine({ delay = 0 }: { delay?: number }) {
   return (
-    <Reveal delay={delay} className="origin-left">
+    <Reveal delay={delay} className="w-full origin-left">
       <span aria-hidden="true" className="block h-px w-full bg-border" />
     </Reveal>
   );
@@ -144,7 +136,7 @@ function ChiSiamo() {
                 delay={i * 90}
                 className="border-b border-border py-8 pr-6 sm:py-10 sm:[&:nth-child(odd)]:pr-12 sm:[&:nth-child(even)]:pl-12 sm:[&:nth-child(even)]:border-l"
               >
-                <span className="font-display text-xs tracking-[0.22em] text-primary">{p.n}</span>
+                <span className="font-display text-xs tracking-[0.22em] text-brand">{p.n}</span>
                 <h3 className="mt-4 text-xl font-semibold tracking-[0.04em] sm:text-2xl">
                   {p.title}
                 </h3>
@@ -189,11 +181,7 @@ function ChiSiamo() {
           <Reveal delay={120} className="mt-14">
             <BretiaSymbol className="h-20 w-auto sm:h-28" title="Simbolo BRETÌA" />
           </Reveal>
-          <Reveal
-            as="p"
-            delay={240}
-            className="label-eyebrow mt-10"
-          >
+          <Reveal as="p" delay={240} className="label-eyebrow mt-10">
             WEB STUDIO INDIPENDENTE
           </Reveal>
           <div className="mt-14 w-full">

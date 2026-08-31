@@ -22,8 +22,10 @@ function useSessionEmail() {
 function AuthLink({ onNavigate }: { onNavigate?: () => void }) {
   const email = useSessionEmail();
   if (email === undefined) return null;
+  // py-1 porta il bersaglio a 28px di altezza: il testo da solo si ferma a 20px,
+  // sotto i 24px minimi di WCAG 2.5.8 Target Size.
   const className =
-    "font-display text-[0.8125rem] tracking-[0.1em] text-muted-foreground transition-colors duration-200 hover:text-foreground";
+    "inline-flex items-center py-1 font-display text-[0.8125rem] tracking-[0.1em] text-muted-foreground transition-colors duration-200 hover:text-foreground";
   if (!email) {
     return (
       <Link to="/auth" search={{ next: "/" }} onClick={onNavigate} className={className}>
@@ -83,7 +85,7 @@ export function Header() {
           : "border-b border-transparent",
       )}
     >
-      <div className="container-brand flex h-20 items-center justify-between">
+      <div className="container-brand flex h-[var(--header-height)] items-center justify-between">
         <Logo />
 
         <nav aria-label="Navigazione principale" className="hidden items-center gap-9 lg:flex">
@@ -137,7 +139,7 @@ export function Header() {
               key={item.to}
               to={item.to}
               onClick={() => setOpen(false)}
-              className="border-b border-border py-4 font-display text-lg tracking-[0.04em] text-foreground/90 transition-colors duration-200 hover:text-primary active:text-primary [&.active]:text-primary"
+              className="border-b border-border py-4 font-display text-lg tracking-[0.04em] text-foreground/90 transition-colors duration-200 hover:text-brand active:text-brand [&.active]:text-brand"
               activeProps={{ className: "active" }}
             >
               {item.label}

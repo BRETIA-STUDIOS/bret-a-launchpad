@@ -1,5 +1,5 @@
-import symbolColor from "@/assets/brand/symbol_color.png.asset.json";
-import symbolWhite from "@/assets/brand/symbol.png.asset.json";
+import symbolColor from "@/assets/brand/bretia-symbol_color.png";
+import symbolWhite from "@/assets/brand/bretia-symbol.png";
 import { cn } from "@/lib/utils";
 
 type BretiaSymbolProps = {
@@ -14,7 +14,7 @@ type BretiaSymbolProps = {
  * never redrawn, never distorted (aspect ratio is preserved).
  */
 export function BretiaSymbol({ className, title, variant = "color" }: BretiaSymbolProps) {
-  const src = variant === "white" ? symbolWhite.url : symbolColor.url;
+  const src = variant === "white" ? symbolWhite : symbolColor;
   return (
     <img
       src={src}

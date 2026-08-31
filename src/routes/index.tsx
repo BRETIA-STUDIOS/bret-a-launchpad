@@ -7,28 +7,18 @@ import { SectionHeading } from "@/components/ui-brand/SectionHeading";
 import { ServiceCard } from "@/components/site/ServiceCard";
 import { MethodFlow } from "@/components/site/MethodFlow";
 import { ProjectShowcase } from "@/components/site/ProjectShowcase";
-
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "BRETÌA Web Studio — La professionalità digitale, per tutti" },
-      {
-        name: "description",
-        content:
-          "Progettiamo siti web moderni, professionali e accessibili, pensati per dare a ogni attività la presenza online che merita.",
-      },
-      {
-        property: "og:title",
-        content: "BRETÌA Web Studio — La professionalità digitale, per tutti",
-      },
-      {
-        property: "og:description",
-        content:
-          "Siti web moderni e accessibili per piccole e medie attività. Design, funzionalità e cura del dettaglio.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/",
+      title: "BRETÌA Web Studio — La professionalità digitale, per tutti",
+      description:
+        "Progettiamo siti web moderni, professionali e accessibili, pensati per dare a ogni attività la presenza online che merita.",
+      ogDescription:
+        "Siti web moderni e accessibili per piccole e medie attività. Design, funzionalità e cura del dettaglio.",
+    }),
   component: Home,
 });
 
@@ -73,7 +63,6 @@ const PRINCIPLES = [
     text: "Design, funzionalità e rifinitura restano al centro di ogni progetto, sempre.",
   },
 ];
-
 
 function Home() {
   return (
@@ -218,7 +207,9 @@ function Home() {
                     <h3 className="mt-6 font-display text-base font-semibold tracking-[0.12em]">
                       {item.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {item.text}
+                    </p>
                   </div>
                 </Reveal>
               </li>
@@ -232,7 +223,6 @@ function Home() {
           </Reveal>
         </div>
       </section>
-
 
       {/* SECTION 7 — FINAL CTA */}
       <ClosingCta title="HAI UN PROGETTO?" description="Raccontaci cosa hai in mente." />

@@ -13,5 +13,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
-  plugins: [mcpPlugin()],
+  // @lovable.dev/mcp-js crashes on Windows (it compares Vite's forward-slash root
+  // with a backslash path), so it is skipped locally. The routes it generates are
+  // already committed under src/routes, and Lovable (Linux) still runs it normally.
+  plugins: process.platform === "win32" ? [] : [mcpPlugin()],
 });

@@ -14,7 +14,7 @@ export function ServiceCard({
   return (
     <Reveal delay={delay} className="h-full">
       <article className="surface-card group flex h-full flex-col p-7 hover:-translate-y-1 hover:border-primary/50 sm:p-9">
-        <span className="font-display text-xs tracking-[0.3em] text-primary">{index}</span>
+        <span className="font-display text-xs tracking-[0.3em] text-brand">{index}</span>
         <h3 className="mt-6 font-display text-xl font-semibold tracking-[0.04em] sm:text-2xl">
           {title}
         </h3>

@@ -30,6 +30,12 @@ type Props = VariantProps<typeof brandButtonVariants> & {
   href?: string;
   type?: "button" | "submit";
   onClick?: () => void;
+  /** Blocca il bottone: usato per impedire il doppio invio durante una richiesta. */
+  disabled?: boolean;
+  /** Segnala agli screen reader che un'operazione è in corso. */
+  "aria-busy"?: boolean;
+  "aria-describedby"?: string;
+  "aria-label"?: string;
 };
 
 export function BrandButton({
@@ -41,25 +47,37 @@ export function BrandButton({
   href,
   type = "button",
   onClick,
+  disabled,
+  "aria-busy": ariaBusy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-label": ariaLabel,
 }: Props) {
   const classes = cn(brandButtonVariants({ variant, size }), className);
 
   if (to) {
     return (
-      <Link to={to} className={classes} onClick={onClick}>
+      <Link to={to} className={classes} onClick={onClick} aria-label={ariaLabel}>
         {children}
       </Link>
     );
   }
   if (href) {
     return (
-      <a href={href} className={classes} onClick={onClick}>
+      <a className={classes} href={href} onClick={onClick} aria-label={ariaLabel}>
         {children}
       </a>
     );
   }
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <button
+      type={type}
+      className={classes}
+      onClick={onClick}
+      disabled={disabled}
+      aria-busy={ariaBusy}
+      aria-describedby={ariaDescribedBy}
+      aria-label={ariaLabel}
+    >
       {children}
     </button>
   );

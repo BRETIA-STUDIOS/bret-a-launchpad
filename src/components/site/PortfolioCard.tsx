@@ -28,7 +28,7 @@ export function PortfolioCard({
           />
         </div>
         <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-          <p className="label-eyebrow text-primary">CONCEPT / BRETÌA</p>
+          <p className="label-eyebrow text-brand">CONCEPT / BRETÌA</p>
           <h3 className="mt-3 font-display text-xl font-semibold tracking-[0.14em] sm:text-2xl">
             {title}
           </h3>

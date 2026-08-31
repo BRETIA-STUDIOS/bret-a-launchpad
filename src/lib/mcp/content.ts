@@ -75,7 +75,8 @@ export const METHOD: MethodStage[] = [
     id: "sviluppiamo",
     name: "Sviluppiamo",
     summary: "Costruiamo un sito veloce, responsive e curato nel dettaglio.",
-    details: "Diamo forma al progetto curando esperienza, responsive design, performance e dettagli.",
+    details:
+      "Diamo forma al progetto curando esperienza, responsive design, performance e dettagli.",
   },
   {
     id: "lanciamo",

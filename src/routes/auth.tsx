@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
+import { pageHead } from "@/lib/seo";
 
 /** Only same-origin relative paths may be used as a post-login destination. */
 function safeNext(value: unknown): string {
@@ -16,29 +17,20 @@ export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>) => ({
     next: safeNext(search["next"]),
   }),
-  head: () => ({
-    meta: [
-      { title: "Accedi — BRETÌA Web Studio" },
-      {
-        name: "description",
-        content:
-          "Accedi al tuo account BRETÌA per autorizzare le applicazioni collegate e gestire il tuo accesso.",
-      },
-      { property: "og:title", content: "Accedi — BRETÌA Web Studio" },
-      {
-        property: "og:description",
-        content: "Area riservata BRETÌA Web Studio: accedi o crea il tuo account.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "robots", content: "noindex" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/auth",
+      title: "Accedi — BRETÌA Web Studio",
+      description:
+        "Accedi al tuo account BRETÌA per autorizzare le applicazioni collegate e gestire il tuo accesso.",
+      ogDescription: "Area riservata BRETÌA Web Studio: accedi o crea il tuo account.",
+      noindex: true,
+    }),
   component: AuthPage,
 });
 
 const inputClass =
-  "w-full min-w-0 rounded-xl border border-border bg-surface/60 px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary";
+  "w-full min-w-0 rounded-xl border border-border bg-surface/60 px-4 py-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus:border-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 function AuthPage() {
   const { next } = Route.useSearch();
@@ -158,7 +150,7 @@ function AuthPage() {
           </div>
 
           {error ? (
-            <p role="alert" className="text-sm text-primary">
+            <p role="alert" className="text-sm text-brand">
               {error}
             </p>
           ) : null}
@@ -173,7 +165,7 @@ function AuthPage() {
           </button>
         </form>
 
-        <div className="my-6 flex items-center gap-4 text-[0.625rem] tracking-[0.28em] text-muted-foreground">
+        <div className="my-6 flex items-center gap-4 text-xs tracking-[0.28em] text-muted-foreground">
           <span className="h-px flex-1 bg-border" />
           OPPURE
           <span className="h-px flex-1 bg-border" />
@@ -197,7 +189,7 @@ function AuthPage() {
               setError(null);
               setNotice(null);
             }}
-            className="text-foreground underline underline-offset-4 transition-colors hover:text-primary"
+            className="text-foreground underline underline-offset-4 transition-colors hover:text-brand"
           >
             {mode === "signin" ? "Registrati" : "Accedi"}
           </button>

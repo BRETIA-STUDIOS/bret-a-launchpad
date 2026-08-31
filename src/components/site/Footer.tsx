@@ -13,9 +13,7 @@ export function Footer() {
               <BretiaSymbol className="h-9 w-auto" />
               <div>
                 <p className="font-display text-xl font-semibold tracking-[0.18em]">BRETÌA</p>
-                <p className="mt-1 text-[0.5625rem] tracking-[0.34em] text-muted-foreground">
-                  WEB STUDIO
-                </p>
+                <p className="mt-1 text-xs tracking-[0.34em] text-muted-foreground">WEB STUDIO</p>
               </div>
             </div>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">
@@ -31,7 +29,7 @@ export function Footer() {
                 <li key={item.to}>
                   <Link
                     to={item.to}
-                    className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                    className="inline-flex items-center py-1 text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -46,17 +44,23 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:hello@bretia.studio"
-                  className="transition-colors duration-200 hover:text-foreground"
+                  className="inline-flex items-center py-1 transition-colors duration-200 hover:text-foreground"
                 >
                   hello@bretia.studio
                 </a>
               </li>
               <li>Italia — da remoto</li>
               <li className="flex gap-4 pt-2">
-                <a href="#" className="transition-colors duration-200 hover:text-foreground">
+                <a
+                  href="#"
+                  className="inline-flex items-center py-1 transition-colors duration-200 hover:text-foreground"
+                >
                   Instagram
                 </a>
-                <a href="#" className="transition-colors duration-200 hover:text-foreground">
+                <a
+                  href="#"
+                  className="inline-flex items-center py-1 transition-colors duration-200 hover:text-foreground"
+                >
                   LinkedIn
                 </a>
               </li>

@@ -3,19 +3,17 @@ import { PageHero } from "@/components/site/PageHero";
 import { MethodFlow } from "@/components/site/MethodFlow";
 import { Reveal } from "@/components/ui-brand/Reveal";
 import { ClosingCta } from "@/components/site/ClosingCta";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/metodo")({
-  head: () => ({
-    meta: [
-      { title: "Metodo — BRETÌA Web Studio" },
-      {
-        name: "description",
-        content: "Analizziamo, progettiamo, sviluppiamo e lanciamo: il metodo di lavoro di BRETÌA Web Studio.",
-      },
-      { property: "og:title", content: "Metodo — BRETÌA Web Studio" },
-      { property: "og:description", content: "Dal primo messaggio al sito online: come lavoriamo." },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/metodo",
+      title: "Metodo — BRETÌA Web Studio",
+      description:
+        "Analizziamo, progettiamo, sviluppiamo e lanciamo: il metodo di lavoro di BRETÌA Web Studio.",
+      ogDescription: "Dal primo messaggio al sito online: come lavoriamo.",
+    }),
   component: Metodo,
 });
 
@@ -67,8 +65,8 @@ function Metodo() {
               className="text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
               Prima di progettare una pagina, cerchiamo di capire l'attività, le persone a cui si
-              rivolge e ciò che vuole comunicare. Ogni progetto nasce da un confronto diretto. Da
-              lì costruiamo una direzione chiara, senza complicare ciò che può essere semplice.
+              rivolge e ciò che vuole comunicare. Ogni progetto nasce da un confronto diretto. Da lì
+              costruiamo una direzione chiara, senza complicare ciò che può essere semplice.
             </Reveal>
             <Reveal delay={200} className="mt-8">
               <p className="border-l border-primary pl-6 font-display text-lg leading-snug text-foreground sm:text-xl">
@@ -119,7 +117,7 @@ function Metodo() {
                 delay={i * 90}
                 className="border-b border-border py-8 sm:py-10 sm:pr-8 sm:[&:not(:first-child)]:border-l sm:[&:not(:first-child)]:pl-8"
               >
-                <h3 className="font-display text-sm tracking-[0.22em] text-primary">{point.title}</h3>
+                <h3 className="font-display text-sm tracking-[0.22em] text-brand">{point.title}</h3>
                 <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground sm:text-base">
                   {point.text}
                 </p>
