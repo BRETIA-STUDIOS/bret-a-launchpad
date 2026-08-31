@@ -79,8 +79,35 @@ function Servizi() {
             }
             closing="Dare nuova vita a un'attività che ha già una storia, senza cancellarne l'identità."
           />
+
+          <Reveal>
+            <Link
+              to="/social-media-managing"
+              className="group grid items-center gap-6 border-t border-border py-16 transition-colors duration-[var(--transition-base)] sm:py-20 lg:grid-cols-12 lg:gap-16"
+            >
+              <div className="lg:col-span-7">
+                <span className="font-display text-xs tracking-[0.3em] text-brand">05</span>
+                <h2 className="mt-5 font-display text-2xl font-semibold leading-tight tracking-[0.04em] sm:text-3xl lg:text-[2.35rem]">
+                  SOCIAL MEDIA MANAGING
+                </h2>
+                <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground">
+                  Strategia, contenuti, gestione e analisi: costruiamo la presenza social
+                  dell'attività senza che il titolare debba diventare un creator. È un servizio
+                  autonomo, che non richiede un sito realizzato da BRETÌA.
+                </p>
+                <span className="mt-8 inline-flex items-center gap-3 font-display text-[0.8125rem] tracking-[0.1em] text-foreground">
+                  SCOPRI IL SERVIZIO
+                  <span
+                    aria-hidden="true"
+                    className="block h-px w-10 bg-border-strong transition-all duration-[var(--transition-base)] group-hover:w-16 group-hover:bg-primary"
+                  />
+                </span>
+              </div>
+            </Link>
+          </Reveal>
         </div>
       </section>
+
 
       <ClosingCta
         eyebrow="PROSSIMO PASSO"
