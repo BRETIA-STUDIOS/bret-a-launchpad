@@ -443,3 +443,113 @@
 .osteria textarea::placeholder {
   color: color-mix(in oklab, var(--on-ivory) 45%, transparent);
 }
+
+/* ============================================================
+   SOCIAL MEDIA MANAGING — hero sequence (one-shot, ~4.8s)
+   Ogni animazione ha `both` e nessun `infinite`: al termine la scena
+   resta ferma e non consuma più CPU/GPU.
+   ============================================================ */
+
+.smm-stage .smm-phone,
+.smm-stage .smm-full,
+.smm-stage .smm-orb,
+.smm-stage .smm-trail,
+.smm-stage .smm-label {
+  opacity: 0;
+}
+
+/* Stato finale immediato: motion ridotto o nessun JS */
+.smm-stage.is-static .smm-full,
+.smm-stage.is-static .smm-label {
+  opacity: 1;
+}
+
+.smm-stage.is-playing .smm-phone {
+  animation: smm-phone-in 0.8s var(--ease-brand) both;
+}
+
+.smm-stage.is-playing .smm-full {
+  animation: bretia-fade-up 0.8s var(--ease-brand) 3s both;
+}
+
+.smm-stage.is-playing .smm-orb {
+  animation: smm-orb 3s var(--ease-brand) 0.8s both;
+}
+
+.smm-stage.is-playing .smm-trail {
+  animation: smm-trail 2.2s var(--ease-brand) 0.9s both;
+}
+
+.smm-stage.is-playing .smm-label {
+  animation: bretia-fade-up 0.6s var(--ease-brand) both;
+}
+
+@keyframes smm-phone-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Emersione dal telefono, breve orbita, approdo alla posizione finale.
+   Le variabili --ox/--oy sono impostate inline per ogni pallino. */
+@keyframes smm-orb {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.4);
+  }
+  12% {
+    opacity: 1;
+    transform: translate3d(calc(var(--ox) * 0.18), calc(var(--oy) * 0.18), 0) scale(0.8);
+  }
+  33% {
+    opacity: 1;
+    transform: translate3d(calc(var(--ox) * 0.55), calc(var(--oy) * -0.35), 0) scale(1);
+  }
+  55% {
+    opacity: 1;
+    transform: translate3d(calc(var(--ox) * 0.95), calc(var(--oy) * 0.25), 0) scale(1);
+  }
+  78% {
+    opacity: 1;
+    transform: translate3d(var(--ox), var(--oy), 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--ox), var(--oy), 0) scale(0.9);
+  }
+}
+
+@keyframes smm-trail {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+  30% {
+    opacity: 0.65;
+  }
+  70% {
+    opacity: 0.5;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smm-stage .smm-full,
+  .smm-stage .smm-label {
+    opacity: 1;
+  }
+  .smm-stage .smm-orb,
+  .smm-stage .smm-trail,
+  .smm-stage .smm-phone {
+    opacity: 0;
+  }
+}
