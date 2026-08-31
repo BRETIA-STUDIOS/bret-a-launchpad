@@ -49,6 +49,7 @@ function AuthLink({ onNavigate }: { onNavigate?: () => void }) {
 
 export const NAV_ITEMS = [
   { to: "/servizi", label: "Servizi" },
+  { to: "/social-media-managing", label: "Social" },
   { to: "/portfolio", label: "Portfolio" },
   { to: "/metodo", label: "Metodo" },
   { to: "/chi-siamo", label: "Chi siamo" },
