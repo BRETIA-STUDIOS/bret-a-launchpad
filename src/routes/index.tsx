@@ -77,18 +77,18 @@ function Home() {
         <div className="container-brand relative flex min-h-[100svh] flex-col items-center justify-center py-32 text-center">
           <AnimatedLogo />
 
-          <h1 className="anim-wordmark mt-14 max-w-4xl text-balance font-display text-[2.15rem] font-semibold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className="anim-hero-title mt-14 max-w-4xl text-balance font-display text-[2.15rem] font-semibold leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-6xl xl:text-7xl">
             LA PROFESSIONALITÀ
             <br className="hidden sm:block" />{" "}
             <span className="text-gradient-accent">DIGITALE</span>, PER TUTTI.
           </h1>
 
-          <p className="anim-descriptor mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="anim-hero-lead mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             Progettiamo siti web moderni, professionali e accessibili, pensati per dare a ogni
             attività la presenza online che merita.
           </p>
 
-          <div className="anim-descriptor mt-11 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
+          <div className="anim-hero-lead mt-11 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
             <BrandButton to="/chi-siamo" size="lg" className="w-full sm:w-auto">
               Scopri BRETÌA
             </BrandButton>

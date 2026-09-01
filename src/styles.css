@@ -275,6 +275,34 @@
   animation: bretia-fade-up 0.55s var(--ease-brand) 0.85s both;
 }
 
+/*
+ * Entrata della hero in home. Il titolo è l'elemento più grande della prima
+ * schermata: è quello che i motori misurano come "momento in cui la pagina
+ * appare caricata" (LCP). Prima riusava `anim-wordmark`, che parte da
+ * trasparente dopo 0,6s di attesa: il titolo restava invisibile per oltre
+ * mezzo secondo e il tempo misurato ne pagava il conto.
+ *
+ * Qui il titolo non attende e non parte da trasparente: viene disegnato
+ * subito e si limita a salire di pochi pixel. L'effetto d'entrata resta,
+ * il ritardo no. Sottotitolo e pulsanti seguono a ruota.
+ */
+@keyframes bretia-rise {
+  from {
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@utility anim-hero-title {
+  animation: bretia-rise 0.55s var(--ease-brand) both;
+}
+
+@utility anim-hero-lead {
+  animation: bretia-fade-up 0.55s var(--ease-brand) 0.15s both;
+}
+
 /* Method section — progressive line drawing (abstract, illustrative only) */
 /*
  * Il tratto si disegna con un'ANIMAZIONE, non con una transizione.

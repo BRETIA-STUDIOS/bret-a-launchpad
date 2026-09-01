@@ -12,6 +12,7 @@ import cucinaImg from "@/assets/osteria/osteria-cucina.jpg";
 import cantinaImg from "@/assets/osteria/osteria-cantina.jpg";
 import prenotaImg from "@/assets/osteria/osteria-prenota.jpg";
 import { pageHead } from "@/lib/seo";
+import { OSTERIA_FONTS_HREF } from "@/lib/fonts";
 
 export const Route = createFileRoute("/portfolio/osteria-nova")({
   head: () =>
@@ -22,6 +23,9 @@ export const Route = createFileRoute("/portfolio/osteria-nova")({
         "Concept dimostrativo di un ristorante italiano contemporaneo: menu, cucina, cantina e prenotazione. Progetto realizzato da BRETÌA Web Studio.",
       ogDescription:
         "Un'esperienza digitale costruita attorno all'atmosfera, alla cucina e all'identità di un'osteria italiana contemporanea.",
+      // Cormorant Garamond e Jost sono l'identità dell'Osteria: li carica
+      // solo questa pagina, non tutto il sito.
+      extraLinks: [{ rel: "stylesheet", href: OSTERIA_FONTS_HREF }],
     }),
   component: OsteriaNova,
 });
@@ -689,12 +693,15 @@ function OsteriaNova() {
             </OnReveal>
 
             <OnReveal delay={360} className="mt-10">
+              {/* Il bottone chiude la sezione Cantina e porta alla prenotazione:
+                  l'etichetta ora dice dove si va davvero. Prima prometteva di
+                  mostrare la cantina — che è proprio la sezione in cui si trova. */}
               <button
                 type="button"
                 className="on-btn on-btn-ghost w-full sm:w-auto"
                 onClick={() => scrollToId("prenota")}
               >
-                Scopri la nostra cantina
+                Prenota un tavolo
               </button>
             </OnReveal>
           </div>

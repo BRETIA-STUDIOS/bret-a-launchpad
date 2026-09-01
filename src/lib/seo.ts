@@ -17,6 +17,24 @@ export const SITE_URL = "https://bretia.studio";
 
 export const SITE_NAME = "BRETÌA Web Studio";
 
+/*
+ * ⚠️ PROFILI SOCIAL — SEGNAPOSTO, DA SOSTITUIRE PRIMA DELLA PUBBLICAZIONE.
+ *
+ * Puntano alla pagina iniziale delle due piattaforme: indirizzi veri, che si
+ * aprono davvero. Prima puntavano a "#", che non è un indirizzo: il clic
+ * ricaricava la stessa pagina senza andare da nessuna parte.
+ *
+ * Sostituire con i profili dello studio, per esempio:
+ *   { label: "Instagram", href: "https://www.instagram.com/bretia.studio/" }
+ *
+ * Una voce con `href` vuoto non viene disegnata affatto: se un profilo non
+ * esiste, svuotare l'indirizzo invece di lasciare un collegamento morto.
+ */
+export const SOCIAL_LINKS: Array<{ label: string; href: string }> = [
+  { label: "Instagram", href: "https://www.instagram.com/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/" },
+];
+
 /** Immagine di condivisione predefinita: public/og-image.png, 1200×630. */
 export const OG_IMAGE_PATH = "/og-image.png";
 export const OG_IMAGE_ALT = "BRETÌA Web Studio — la professionalità digitale, per tutti";
@@ -41,6 +59,8 @@ type PageHeadInput = {
   imageAlt?: string;
   /** Esclude la pagina dagli indici dei motori di ricerca. */
   noindex?: boolean;
+  /** Risorse richieste solo da questa pagina (es. caratteri tipografici propri). */
+  extraLinks?: Array<Record<string, string>>;
 };
 
 export function pageHead({
@@ -52,6 +72,7 @@ export function pageHead({
   image = OG_IMAGE_PATH,
   imageAlt = OG_IMAGE_ALT,
   noindex = false,
+  extraLinks = [],
 }: PageHeadInput) {
   const url = absoluteUrl(path);
   const imageUrl = absoluteUrl(image);
@@ -76,6 +97,6 @@ export function pageHead({
 
       ...(noindex ? [{ name: "robots", content: "noindex, nofollow" }] : []),
     ],
-    links: [{ rel: "canonical", href: url }],
+    links: [{ rel: "canonical", href: url }, ...extraLinks],
   };
 }

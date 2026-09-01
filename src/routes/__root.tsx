@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { OG_IMAGE_ALT, OG_IMAGE_PATH, SITE_NAME, absoluteUrl } from "../lib/seo";
+import { BRAND_FONTS_HREF } from "../lib/fonts";
 import { Header } from "../components/site/Header";
 import { Footer } from "../components/site/Footer";
 
@@ -107,10 +108,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=DM+Sans:opsz,wght@9..40,300..700&family=Jost:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap",
-      },
+      /*
+       * Solo i due caratteri del marchio: Space Grotesk (titoli) e DM Sans
+       * (testo). Cormorant Garamond e Jost servono unicamente alla pagina
+       * Osteria Nòva e ora vengono richiesti soltanto lì: prima ogni pagina
+       * del sito ne scaricava quattro, due dei quali non usava mai.
+       * `display=swap` fa comparire subito il testo con il carattere di
+       * sistema, che viene sostituito appena il font è pronto.
+       */
+      { rel: "preload", as: "style", href: BRAND_FONTS_HREF },
+      { rel: "stylesheet", href: BRAND_FONTS_HREF },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
     ],
   }),

@@ -135,5 +135,3 @@ function Metodo() {
     </>
   );
 }
-
-export default Metodo;

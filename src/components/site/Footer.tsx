@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { Signature } from "@/components/ui-brand/Signature";
+import { SOCIAL_LINKS } from "@/lib/seo";
 import { NAV_ITEMS } from "./Header";
 
 export function Footer() {
@@ -50,20 +51,21 @@ export function Footer() {
                 </a>
               </li>
               <li>Italia — da remoto</li>
-              <li className="flex gap-4 pt-2">
-                <a
-                  href="#"
-                  className="inline-flex items-center py-1 transition-colors duration-200 hover:text-foreground"
-                >
-                  Instagram
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center py-1 transition-colors duration-200 hover:text-foreground"
-                >
-                  LinkedIn
-                </a>
-              </li>
+              {SOCIAL_LINKS.some((social) => social.href) ? (
+                <li className="flex gap-4 pt-2">
+                  {SOCIAL_LINKS.filter((social) => social.href).map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center py-1 transition-colors duration-200 hover:text-foreground"
+                    >
+                      {social.label}
+                    </a>
+                  ))}
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>
