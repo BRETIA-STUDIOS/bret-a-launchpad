@@ -16,6 +16,7 @@ import { Route as ContattiRouteImport } from './routes/contatti'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MetodoRouteImport } from './routes/metodo'
 import { Route as ServiziRouteImport } from './routes/servizi'
+import { Route as SocialMediaManagingRouteImport } from './routes/social-media-managing'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
@@ -56,6 +57,11 @@ const MetodoRoute = MetodoRouteImport.update({
 const ServiziRoute = ServiziRouteImport.update({
   id: '/servizi',
   path: '/servizi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SocialMediaManagingRoute = SocialMediaManagingRouteImport.update({
+  id: '/social-media-managing',
+  path: '/social-media-managing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotmcpChar93ListToolsRoute =
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/mcp': typeof McpRoute
   '/metodo': typeof MetodoRoute
   '/servizi': typeof ServiziRoute
+  '/social-media-managing': typeof SocialMediaManagingRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/mcp': typeof McpRoute
   '/metodo': typeof MetodoRoute
   '/servizi': typeof ServiziRoute
+  '/social-media-managing': typeof SocialMediaManagingRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/mcp': typeof McpRoute
   '/metodo': typeof MetodoRoute
   '/servizi': typeof ServiziRoute
+  '/social-media-managing': typeof SocialMediaManagingRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/metodo'
     | '/servizi'
+    | '/social-media-managing'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/portfolio/osteria-nova'
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/metodo'
     | '/servizi'
+    | '/social-media-managing'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/portfolio/osteria-nova'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/metodo'
     | '/servizi'
+    | '/social-media-managing'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/portfolio/osteria-nova'
@@ -194,6 +206,7 @@ export interface RootRouteChildren {
   McpRoute: typeof McpRoute
   MetodoRoute: typeof MetodoRoute
   ServiziRoute: typeof ServiziRoute
+  SocialMediaManagingRoute: typeof SocialMediaManagingRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   PortfolioOsteriaNovaRoute: typeof PortfolioOsteriaNovaRoute
@@ -253,6 +266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiziRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/social-media-managing': {
+      id: '/social-media-managing'
+      path: '/social-media-managing'
+      fullPath: '/social-media-managing'
+      preLoaderRoute: typeof SocialMediaManagingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.mcp/list-tools': {
       id: '/.mcp/list-tools'
       path: '/.mcp/list-tools'
@@ -306,6 +326,7 @@ const rootRouteChildren: RootRouteChildren = {
   McpRoute: McpRoute,
   MetodoRoute: MetodoRoute,
   ServiziRoute: ServiziRoute,
+  SocialMediaManagingRoute: SocialMediaManagingRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
