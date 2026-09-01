@@ -215,7 +215,8 @@ export function ServiceShowcase({
           }
         }
       },
-      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" },
+      // Stesso tempismo dei blocchi in dissolvenza: si parte all'affaccio.
+      { threshold: 0 },
     );
     observer.observe(node);
     return () => observer.disconnect();

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { useShouldAnimate } from "@/hooks/use-should-animate";
 import { cn } from "@/lib/utils";
@@ -135,9 +134,6 @@ function ProjectCard({
   );
 }
 
-const controlClass =
-  "inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border-strong text-foreground transition-colors duration-200 hover:border-brand hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
-
 export function ProjectShowcase({
   compact = false,
   className,
@@ -152,7 +148,7 @@ export function ProjectShowcase({
   const { ref: viewportRef, shouldAnimate } = useShouldAnimate<HTMLDivElement>();
   const trackRef = useRef<HTMLDivElement | null>(null);
   const offsetRef = useRef(0);
-  /** px ancora da percorrere per il salto avviato dai pulsanti. */
+  /** px ancora da percorrere per il salto avviato dalle frecce. */
   const glideRef = useRef(0);
   /*
    * Lo scorrimento si ferma finché almeno uno di questi è attivo. Tenerli
@@ -160,7 +156,6 @@ export function ProjectShowcase({
    * il focus è ancora dentro (o viceversa) faceva ripartire il nastro.
    */
   const holdsRef = useRef({ hover: false, focus: false, drag: false });
-  const userPausedRef = useRef(false);
   const reduceRef = useRef(false);
   const dragRef = useRef<{ active: boolean; startX: number; startOffset: number }>({
     active: false,
@@ -169,14 +164,11 @@ export function ProjectShowcase({
   });
   const movedRef = useRef(false);
   const [dragging, setDragging] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
-  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const apply = () => {
       reduceRef.current = mq.matches;
-      setReduced(mq.matches);
     };
     apply();
     mq.addEventListener("change", apply);
@@ -207,7 +199,7 @@ export function ProjectShowcase({
       const holds = holdsRef.current;
 
       if (glideRef.current !== 0) {
-        // Salto da pulsante: decelerazione esponenziale fino a destinazione.
+        // Salto da tastiera: decelerazione esponenziale fino a destinazione.
         const stepPx = glideRef.current * Math.min(1, dt * 9);
         offsetRef.current += stepPx;
         glideRef.current -= stepPx;
@@ -215,13 +207,7 @@ export function ProjectShowcase({
           offsetRef.current += glideRef.current;
           glideRef.current = 0;
         }
-      } else if (
-        !holds.hover &&
-        !holds.focus &&
-        !holds.drag &&
-        !userPausedRef.current &&
-        !reduceRef.current
-      ) {
+      } else if (!holds.hover && !holds.focus && !holds.drag && !reduceRef.current) {
         offsetRef.current -= speed * dt;
       }
 
@@ -235,7 +221,7 @@ export function ProjectShowcase({
     return () => cancelAnimationFrame(raf);
   }, [speed, shouldAnimate]);
 
-  /** Alternativa da tastiera al trascinamento: avanza di una card per volta. */
+  /** Alternativa al trascinamento per chi non usa il mouse: una card per volta. */
   const move = (direction: 1 | -1) => {
     const track = trackRef.current;
     const card = track?.firstElementChild as HTMLElement | null;
@@ -247,12 +233,6 @@ export function ProjectShowcase({
     } else {
       glideRef.current += distance;
     }
-  };
-
-  const toggleUserPaused = () => {
-    const next = !userPausedRef.current;
-    userPausedRef.current = next;
-    setUserPaused(next);
   };
 
   const onPointerDown = (e: React.PointerEvent) => {
@@ -290,10 +270,36 @@ export function ProjectShowcase({
   const items = [...SHOWCASE_PROJECTS, ...SHOWCASE_PROJECTS];
 
   return (
+    /*
+     * Nessun comando visibile: la striscia è essa stessa il comando. Riceve il
+     * focus da tastiera e le frecce ← → la fanno scorrere di una card per
+     * volta, così chi naviga senza mouse non resta tagliato fuori. Il focus e
+     * il passaggio del mouse fermano lo scorrimento automatico.
+     */
     <div
+      ref={viewportRef}
       role="group"
-      aria-label="Progetti in evidenza"
-      className={cn("w-full", className)}
+      aria-label="Progetti in evidenza. Usa le frecce sinistra e destra per scorrere."
+      tabIndex={0}
+      className={cn(
+        "relative w-full overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+        className,
+      )}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          move(1);
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          move(-1);
+        }
+      }}
+      onMouseEnter={() => {
+        holdsRef.current.hover = true;
+      }}
+      onMouseLeave={() => {
+        holdsRef.current.hover = false;
+      }}
       onFocus={() => {
         holdsRef.current.focus = true;
       }}
@@ -305,89 +311,39 @@ export function ProjectShowcase({
       }}
     >
       <div
-        ref={viewportRef}
-        className="relative w-full overflow-hidden"
-        onMouseEnter={() => {
-          holdsRef.current.hover = true;
+        className={cn("flex w-max gap-5 sm:gap-6", dragging ? "cursor-grabbing" : "cursor-grab")}
+        style={{ touchAction: "pan-y" }}
+        ref={trackRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onTouchStart={() => {
+          holdsRef.current.drag = true;
         }}
-        onMouseLeave={() => {
-          holdsRef.current.hover = false;
+        onTouchEnd={() => {
+          holdsRef.current.drag = false;
         }}
       >
-        <div
-          className={cn("flex w-max gap-5 sm:gap-6", dragging ? "cursor-grabbing" : "cursor-grab")}
-          style={{ touchAction: "pan-y" }}
-          ref={trackRef}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={endDrag}
-          onPointerCancel={endDrag}
-          onTouchStart={() => {
-            holdsRef.current.drag = true;
-          }}
-          onTouchEnd={() => {
-            holdsRef.current.drag = false;
-          }}
-        >
-          {items.map((project, i) => (
-            <ProjectCard
-              key={`${project.id}-${i}`}
-              project={project}
-              compact={compact}
-              movedRef={movedRef}
-              duplicate={i >= SHOWCASE_PROJECTS.length}
-            />
-          ))}
-        </div>
-
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-linear-to-r from-background to-transparent sm:w-20"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-background to-transparent sm:w-20"
-        />
+        {items.map((project, i) => (
+          <ProjectCard
+            key={`${project.id}-${i}`}
+            project={project}
+            compact={compact}
+            movedRef={movedRef}
+            duplicate={i >= SHOWCASE_PROJECTS.length}
+          />
+        ))}
       </div>
 
-      <div className="container-brand mt-6 flex items-center justify-end gap-2">
-        <button
-          type="button"
-          onClick={() => move(-1)}
-          aria-label="Progetto precedente"
-          className={controlClass}
-        >
-          <ChevronLeft aria-hidden="true" className="size-5" />
-        </button>
-
-        {/* Con prefers-reduced-motion il nastro è già fermo: un tasto pausa
-            non avrebbe niente da mettere in pausa. */}
-        {reduced ? null : (
-          <button
-            type="button"
-            onClick={toggleUserPaused}
-            aria-label={
-              userPaused ? "Riprendi lo scorrimento automatico" : "Ferma lo scorrimento automatico"
-            }
-            className={controlClass}
-          >
-            {userPaused ? (
-              <Play aria-hidden="true" className="size-5" />
-            ) : (
-              <Pause aria-hidden="true" className="size-5" />
-            )}
-          </button>
-        )}
-
-        <button
-          type="button"
-          onClick={() => move(1)}
-          aria-label="Progetto successivo"
-          className={controlClass}
-        >
-          <ChevronRight aria-hidden="true" className="size-5" />
-        </button>
-      </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-linear-to-r from-background to-transparent sm:w-20"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-background to-transparent sm:w-20"
+      />
     </div>
   );
 }

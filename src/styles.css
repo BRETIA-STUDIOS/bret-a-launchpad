@@ -276,27 +276,45 @@
 }
 
 /* Method section — progressive line drawing (abstract, illustrative only) */
+/*
+ * Il tratto si disegna con un'ANIMAZIONE, non con una transizione.
+ * Una transizione parte solo se il browser ha già disegnato lo stato di
+ * partenza. Qui la sezione passa da invisibile a visibile nello stesso
+ * istante in cui riceve `is-active`: quello stato di partenza non è mai
+ * esistito su schermo, la transizione veniva saltata e i tratti restavano
+ * nascosti (su desktop; su mobile l'ordine di disegno salvava la situazione
+ * per caso). Un'animazione con fill `both` non ha questa dipendenza — è lo
+ * stesso meccanismo dei puntini, che infatti funzionavano già.
+ */
+@keyframes method-draw-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .method-draw [pathLength] {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1.1s var(--ease-brand);
 }
 
 .method-draw.is-active [pathLength] {
-  stroke-dashoffset: 0;
+  animation: method-draw-in 1.1s var(--ease-brand) both;
 }
 
-.method-draw path:nth-of-type(2),
-.method-draw rect:nth-of-type(2) {
-  transition-delay: 160ms;
+.method-draw.is-active path:nth-of-type(2),
+.method-draw.is-active rect:nth-of-type(2) {
+  animation-delay: 160ms;
 }
-.method-draw path:nth-of-type(3),
-.method-draw rect:nth-of-type(3) {
-  transition-delay: 320ms;
+.method-draw.is-active path:nth-of-type(3),
+.method-draw.is-active rect:nth-of-type(3) {
+  animation-delay: 320ms;
 }
-.method-draw path:nth-of-type(4),
-.method-draw rect:nth-of-type(4) {
-  transition-delay: 460ms;
+.method-draw.is-active path:nth-of-type(4),
+.method-draw.is-active rect:nth-of-type(4) {
+  animation-delay: 460ms;
 }
 
 .method-draw .method-dot {

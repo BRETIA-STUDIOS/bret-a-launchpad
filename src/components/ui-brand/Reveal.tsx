@@ -42,7 +42,14 @@ export function Reveal({
           }
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      /*
+       * Soglia 0 e nessun margine: la dissolvenza parte nell'istante in cui il
+       * blocco affaccia dal fondo dello schermo.
+       * I valori precedenti (soglia 0.15 con il fondo rialzato dell'8%)
+       * chiedevano di scorrere ~190px oltre l'affaccio prima di far partire
+       * qualcosa: si vedeva prima un'area vuota e poi uno scatto.
+       */
+      { threshold: 0 },
     );
     observer.observe(node);
     return () => observer.disconnect();
