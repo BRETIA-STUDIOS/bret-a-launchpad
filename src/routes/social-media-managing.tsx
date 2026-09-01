@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ClosingCta } from "@/components/site/ClosingCta";
 import { SocialHero } from "@/components/site/SocialHero";
+import { BrandButton } from "@/components/ui-brand/BrandButton";
 import { SectionHeading } from "@/components/ui-brand/SectionHeading";
 import { Reveal } from "@/components/ui-brand/Reveal";
 import { pageHead } from "@/lib/seo";
@@ -71,6 +72,11 @@ function SocialMediaManaging() {
             >
               Gestiamo i tuoi social trasformando ciò che rende unica la tua attività in contenuti
               capaci di raccontarla, valorizzarla e farla ricordare.
+            </Reveal>
+            <Reveal delay={380} className="mt-10">
+              <BrandButton to="/contatti" size="lg" className="w-full sm:w-auto">
+                Parliamone
+              </BrandButton>
             </Reveal>
           </div>
           <div className="lg:col-span-6">
@@ -148,7 +154,7 @@ function SocialMediaManaging() {
               </>
             }
           />
-          <div className="mt-10 grid gap-10 lg:grid-cols-12">
+          <div className="mt-16 grid gap-10 lg:grid-cols-12">
             <Reveal className="lg:col-span-6">
               <ul className="space-y-3 text-base leading-relaxed text-muted-foreground">
                 {[
@@ -174,30 +180,38 @@ function SocialMediaManaging() {
           </div>
 
           <Reveal delay={200} className="mt-16">
-            <div className="flex flex-col gap-4 border-t border-border pt-10 sm:flex-row sm:items-center sm:gap-6">
+            {/* È una sequenza, non quattro etichette sciolte: `ol` la annuncia
+                come tale e ne comunica l'ordine a chi non la vede. */}
+            <ol className="flex list-none flex-col gap-4 border-t border-border pt-10 sm:flex-row sm:items-center sm:gap-6">
               {FLOW.map((step, i) => (
-                <div key={step} className="flex items-center gap-4 sm:gap-6">
-                  <span className="font-display text-[0.6875rem] tracking-[0.24em] text-foreground/80 sm:text-xs">
+                <li key={step} className="flex items-center gap-4 sm:gap-6">
+                  <span className="font-display text-xs tracking-[0.22em] text-foreground/80">
                     {step}
                   </span>
                   {i < FLOW.length - 1 ? (
-                    <span aria-hidden="true" className="text-brand">
+                    // Sotto sm la sequenza si impila in verticale: una freccia
+                    // che continua a indicare a destra contraddice il layout.
+                    <span aria-hidden="true" className="rotate-90 text-brand sm:rotate-0">
                       →
                     </span>
                   ) : null}
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </Reveal>
         </div>
       </section>
 
       {/* NUMERI */}
-      <section className="border-b border-border bg-surface/30 py-28 sm:py-36">
+      <section className="border-b border-border bg-surface/30 py-24 sm:py-32 lg:py-40">
         <div className="container-brand">
+          <Reveal as="p" className="label-eyebrow">
+            RISULTATI
+          </Reveal>
           <Reveal
             as="h2"
-            className="max-w-4xl text-balance font-display text-3xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl"
+            delay={80}
+            className="mt-6 max-w-4xl text-balance font-display text-3xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl"
           >
             Non inseguiamo
             <br />
@@ -232,7 +246,7 @@ function SocialMediaManaging() {
       </section>
 
       {/* WEB + SOCIAL */}
-      <section className="border-b border-border bg-surface/30 py-24 sm:py-32">
+      <section className="bg-surface/30 py-24 sm:py-32">
         <div className="container-brand">
           <SectionHeading
             eyebrow="WEB E SOCIAL"

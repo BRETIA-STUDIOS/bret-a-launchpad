@@ -40,6 +40,7 @@
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-border-interactive: var(--border-interactive);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
@@ -59,6 +60,14 @@
   /* Palette derived from the official BRETÌA logo:
      BRETÌA blue #003CFD, silver #DADDEA, deep navy #0B1020. */
   --bretia-blue: oklch(0.494 0.282 264);
+
+  /* Blu del marchio quando fa da SUPERFICIE di un controllo.
+     Il blu del logo rende 2,81:1 contro i fondi del sito: sotto il 3:1 che
+     WCAG 1.4.11 chiede a ciò che definisce i confini di un componente. Questo
+     è lo stesso identico colore alzato di 0,026 in luminosità — impercettibile
+     accanto all'originale — e rende 3,07:1, mentre il bianco sopra sale a
+     5,91:1. Il token del logo qui sopra resta intatto per l'identità. */
+  --bretia-blue-interactive: oklch(0.52 0.282 264);
   --bretia-blue-bright: oklch(0.58 0.25 264);
   --bretia-blue-deep: oklch(0.4 0.24 264);
 
@@ -85,7 +94,7 @@
   --popover: oklch(0.195 0.032 268);
   --popover-foreground: oklch(0.97 0.008 276);
 
-  --primary: var(--bretia-blue);
+  --primary: var(--bretia-blue-interactive);
   --primary-foreground: oklch(0.98 0.005 276);
 
   /* Blu del marchio quando fa da testo o da indicatore di stato.
@@ -106,18 +115,85 @@
 
   --border: oklch(0.899 0.018 276 / 12%);
   --border-strong: oklch(0.899 0.018 276 / 24%);
+
+  /* Bordo dei controlli il cui unico confine visibile È il bordo: il pulsante
+     `secondary` non ha fondo, quindi è quella riga a dire dove finisce il
+     bersaglio. `--border-strong` rende 1,82:1, sotto il 3:1 di WCAG 1.4.11;
+     questo rende 3,72:1. Separato di proposito dai bordi decorativi, che non
+     identificano nulla e devono restare leggeri. */
+  --border-interactive: oklch(0.899 0.018 276 / 46%);
   --input: oklch(0.899 0.018 276 / 16%);
   --ring: var(--bretia-blue-bright);
 
-  --gradient-accent: linear-gradient(
-    135deg,
-    var(--bretia-blue-bright),
-    var(--bretia-silver)
-  );
+  --gradient-accent: linear-gradient(135deg, var(--bretia-blue-bright), var(--bretia-silver));
   --gradient-veil: radial-gradient(
     60% 50% at 50% 0%,
     oklch(0.494 0.282 264 / 22%),
     transparent 70%
+  );
+
+  /* Molla smorzata vera, campionata da un oscillatore (zeta 0.63 / 0.72):
+     un `cubic-bezier` non puo' descrivere un rimbalzo che si esaurisce, al
+     massimo lo imita con un singolo scarto. Serve alle entrate della hero
+     Social, dove l'oggetto deve avere una massa credibile.
+     `--ease-spring` sorpassa dell'8%, `--ease-spring-soft` del 4%. */
+  --ease-spring: linear(
+    0,
+    0.0581,
+    0.1961,
+    0.3694,
+    0.5462,
+    0.7061,
+    0.8383,
+    0.9387,
+    1.0083,
+    1.0512,
+    1.0726,
+    1.0782,
+    1.0733,
+    1.0623,
+    1.0487,
+    1.0349,
+    1.0225,
+    1.0122,
+    1.0045,
+    0.9992,
+    0.9959,
+    0.9943,
+    0.9939,
+    0.9943,
+    0.9952,
+    0.9962,
+    1
+  );
+  --ease-spring-soft: linear(
+    0,
+    0.0446,
+    0.1516,
+    0.2891,
+    0.4342,
+    0.5721,
+    0.6942,
+    0.7961,
+    0.877,
+    0.938,
+    0.9814,
+    1.0102,
+    1.0275,
+    1.036,
+    1.0384,
+    1.0367,
+    1.0326,
+    1.0274,
+    1.0218,
+    1.0165,
+    1.0118,
+    1.0079,
+    1.0048,
+    1.0024,
+    1.0007,
+    0.9996,
+    1
   );
 
   --transition-fast: 180ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -374,7 +450,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   html {
     scroll-behavior: auto;
   }
@@ -436,7 +511,10 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   border-radius: 2px;
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease;
 }
 
 .osteria .on-btn-primary {
@@ -491,111 +569,390 @@
 }
 
 /* ============================================================
-   SOCIAL MEDIA MANAGING — hero sequence (one-shot, ~4.8s)
-   Ogni animazione ha `both` e nessun `infinite`: al termine la scena
-   resta ferma e non consuma più CPU/GPU.
+   SOCIAL MEDIA MANAGING — hero "ecosistema"
+
+   Il render è affettato in otto layer indipendenti (vedi SocialHero.tsx).
+   Tre movimenti, ognuno su un elemento diverso, così non si contendono mai
+   la stessa proprietà `transform`:
+
+     .smm-layer   posizione + profondità (translateZ) + parallasse allo scroll
+       .smm-in    entrata a molla, una volta sola
+         .smm-float   oscillazione continua — l'UNICA animazione infinita
+
+   L'oscillazione è CSS puro su `transform`: gira sul thread di composizione e
+   si spegne con `animation-play-state` quando la scena esce dallo schermo o la
+   scheda passa in secondo piano. Inclinazione e parallasse sono guidati dagli
+   eventi, non da un loop perenne.
    ============================================================ */
 
-.smm-stage .smm-phone,
-.smm-stage .smm-full,
-.smm-stage .smm-orb,
-.smm-stage .smm-trail,
+.smm-stage {
+  perspective: 1200px;
+  /* Le oscillazioni sono espresse in `cqw`, cioè in percentuale della larghezza
+     dello stage: solo così l'angolo di rotazione dei fili — calcolato una volta
+     sola sulla geometria del canvas — resta corretto a ogni dimensione. */
+  container-type: inline-size;
+}
+
+.smm-viewport {
+  /* Il canvas del render è 3:2. Fissarlo qui riserva lo spazio prima che le
+     immagini arrivino: nessuno spostamento di layout al decode. */
+  aspect-ratio: 3 / 2;
+}
+
+.smm-scene {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+
+/* Il livello di composizione dedicato serve solo mentre la scena si inclina.
+   Tenerlo sempre acceso significherebbe una texture GPU parcheggiata per
+   tutta la vita della pagina. */
+.smm-stage.is-tilting .smm-scene {
+  will-change: transform;
+}
+
+.smm-layer {
+  position: absolute;
+  /* `--smm-scroll` lo scrive il componente sullo stage; `--par` è il
+     moltiplicatore del piano. Non è un'animazione: è una posizione. */
+  transform: translate3d(0, calc(var(--smm-scroll, 0px) * var(--par, 0)), 0)
+    translateZ(var(--z, 0px));
+}
+
+.smm-in,
+.smm-float {
+  position: absolute;
+  inset: 0;
+}
+
+.smm-stage:not(.is-quiet).is-playing .smm-float {
+  will-change: transform;
+}
+
+/* ---- Stato di partenza -------------------------------------------------- */
+
+.smm-stage .smm-in,
+.smm-stage .smm-bloom,
 .smm-stage .smm-label {
   opacity: 0;
 }
 
-/* Stato finale immediato: motion ridotto o nessun JS */
-.smm-stage.is-static .smm-full,
+.smm-stage .smm-net path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+/* Motion ridotto: la scena è già al suo posto, nessun movimento residuo. */
+.smm-stage.is-static .smm-in,
+.smm-stage.is-static .smm-bloom,
 .smm-stage.is-static .smm-label {
   opacity: 1;
 }
 
-.smm-stage.is-playing .smm-phone {
-  animation: smm-phone-in 0.8s var(--ease-brand) both;
+.smm-stage.is-static .smm-net path {
+  stroke-dashoffset: 0;
+  opacity: 1;
 }
 
-.smm-stage.is-playing .smm-full {
-  animation: bretia-fade-up 0.8s var(--ease-brand) 3s both;
+/* ---- Entrata ------------------------------------------------------------ */
+
+.smm-stage.is-playing .smm-bloom {
+  animation: smm-bloom-in 700ms var(--ease-brand) both;
 }
 
-.smm-stage.is-playing .smm-orb {
-  animation: smm-orb 3s var(--ease-brand) 0.8s both;
+.smm-stage.is-playing .smm-layer-phone .smm-in {
+  animation: smm-phone-in 880ms var(--ease-spring-soft) 60ms both;
 }
 
-.smm-stage.is-playing .smm-trail {
-  animation: smm-trail 2.2s var(--ease-brand) 0.9s both;
+.smm-stage.is-playing .smm-layer:not(.smm-layer-phone) .smm-in {
+  /* Il ritardo per satellite arriva inline dal componente. */
+  animation: smm-arrive 640ms var(--ease-spring) both;
+}
+
+.smm-stage.is-playing .smm-net path {
+  animation: smm-draw 400ms var(--ease-brand) both;
+}
+
+.smm-stage.is-playing .smm-sweep {
+  animation: smm-sweep-fade 900ms linear 640ms both;
+}
+
+.smm-stage.is-playing .smm-sweep-bar {
+  animation: smm-sweep-slide 900ms var(--ease-brand) 640ms both;
 }
 
 .smm-stage.is-playing .smm-label {
-  animation: bretia-fade-up 0.6s var(--ease-brand) both;
+  animation: bretia-fade-up 500ms var(--ease-brand) both;
 }
+
+/* ---- Oscillazione continua ---------------------------------------------- */
+
+.smm-stage.is-playing .smm-float {
+  animation: smm-float var(--fd, 6s) ease-in-out infinite;
+}
+
+/* Fuori schermo o scheda in secondo piano: fotogramma congelato, zero lavoro.
+   È il motivo per cui questa animazione sta su un elemento tutto suo. */
+.smm-stage.is-quiet .smm-float {
+  animation-play-state: paused;
+}
+
+@keyframes smm-float {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translate3d(0, calc(var(--fy, 8px) * -1), 0) rotate(calc(var(--fr, 0deg) * -1));
+  }
+  75% {
+    transform: translate3d(0, var(--fy, 8px), 0) rotate(var(--fr, 0deg));
+  }
+}
+
+/* ---- Fotogrammi d'entrata ------------------------------------------------ */
 
 @keyframes smm-phone-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 26px, 0) scale(0.94);
+    transform: perspective(900px) translate3d(0, 7%, 0) scale(0.93) rotateY(-7deg);
   }
   to {
     opacity: 1;
-    transform: none;
+    transform: perspective(900px) translate3d(0, 0, 0) scale(1) rotateY(0deg);
   }
 }
 
-/* Emersione dal telefono, breve orbita, approdo alla posizione finale.
-   Le variabili --ox/--oy sono impostate inline per ogni pallino. */
-@keyframes smm-orb {
+/* Il satellite parte compresso verso il centro del telefono: `--ax`/`--ay`
+   sono la direzione, calcolata dal componente sulla geometria reale. */
+@keyframes smm-arrive {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--ax, 0), var(--ay, 0), 0) scale(0.62);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes smm-draw {
+  from {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes smm-bloom-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ---- Alone di marca ------------------------------------------------------ */
+
+/*
+ * Il ritaglio con canale alpha ha portato via l'alone del render: sul navy
+ * della pagina il telefono resterebbe piatto, come incollato. Questo lo
+ * rimette, con i token del sistema e senza `filter: blur()` — un blur va
+ * rirasterizzato a ogni inclinazione della scena, un gradiente no.
+ */
+.smm-bloom {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in oklab, var(--color-primary) 34%, transparent) 0%,
+    color-mix(in oklab, var(--color-primary) 16%, transparent) 42%,
+    color-mix(in oklab, var(--color-primary) 5%, transparent) 68%,
+    transparent 100%
+  );
+}
+
+/* ---- Rete di connessione ------------------------------------------------- */
+
+.smm-net {
+  pointer-events: none;
+}
+
+/* Il colore del filamento sta qui e non negli attributi SVG: resta un token
+   del sistema, e cambia con il tema senza toccare il markup. */
+.smm-net stop {
+  stop-color: var(--color-primary);
+}
+
+/*
+ * Il filo ruota attorno al punto in cui entra nel telefono, non trasla: un capo
+ * è fisso sull'hub, l'altro deve seguire il satellite. Con l'angolo giusto il
+ * capo libero sale e scende esattamente quanto il satellite, e il collegamento
+ * non si spezza mai. Durata, ritardo e curva sono gli stessi dell'oscillazione.
+ */
+.smm-stage.is-playing .smm-wire {
+  animation: smm-wire var(--fd, 6s) ease-in-out infinite;
+}
+
+.smm-stage.is-quiet .smm-wire {
+  animation-play-state: paused;
+}
+
+@keyframes smm-wire {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(var(--wr, 0deg));
+  }
+  75% {
+    transform: rotate(calc(var(--wr, 0deg) * -1));
+  }
+}
+
+/* ---- Passata di luce sul vetro ------------------------------------------- */
+
+/*
+ * Mascherata sulla sagoma del telefono (la maschera è l'immagine stessa, il
+ * componente ne passa l'URL con hash). La barra si muove in `transform`:
+ * niente animazioni di `background-position`, che girerebbero sul thread di
+ * paint invece che su quello di composizione.
+ */
+.smm-sweep {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.smm-sweep-bar {
+  position: absolute;
+  top: -30%;
+  left: 0;
+  width: 45%;
+  height: 160%;
+  transform: translate3d(-160%, 0, 0) rotate(16deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--color-foreground) 42%, transparent),
+    transparent
+  );
+}
+
+@keyframes smm-sweep-fade {
   0% {
     opacity: 0;
-    transform: translate3d(0, 0, 0) scale(0.4);
   }
-  12% {
+  18% {
     opacity: 1;
-    transform: translate3d(calc(var(--ox) * 0.18), calc(var(--oy) * 0.18), 0) scale(0.8);
-  }
-  33% {
-    opacity: 1;
-    transform: translate3d(calc(var(--ox) * 0.55), calc(var(--oy) * -0.35), 0) scale(1);
-  }
-  55% {
-    opacity: 1;
-    transform: translate3d(calc(var(--ox) * 0.95), calc(var(--oy) * 0.25), 0) scale(1);
   }
   78% {
     opacity: 1;
-    transform: translate3d(var(--ox), var(--oy), 0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate3d(var(--ox), var(--oy), 0) scale(0.9);
   }
 }
 
-@keyframes smm-trail {
-  0% {
-    opacity: 0;
-    stroke-dashoffset: 1;
+@keyframes smm-sweep-slide {
+  from {
+    transform: translate3d(-160%, 0, 0) rotate(16deg);
   }
-  30% {
-    opacity: 0.65;
-  }
-  70% {
-    opacity: 0.5;
-    stroke-dashoffset: 0;
-  }
-  100% {
-    opacity: 0;
-    stroke-dashoffset: 0;
+  to {
+    transform: translate3d(340%, 0, 0) rotate(16deg);
   }
 }
 
+/* ---- Motion ridotto ------------------------------------------------------ */
+
+/*
+ * Rete di sicurezza per il caso in cui il JS non arrivi a rimuovere
+ * `is-playing`: qui non resta niente in movimento, la scena è già quella finale.
+ */
 @media (prefers-reduced-motion: reduce) {
-  .smm-stage .smm-full,
+  .smm-stage .smm-in,
+  .smm-stage .smm-bloom,
+  .smm-stage .smm-label {
+    opacity: 1;
+    animation: none;
+  }
+
+  .smm-stage .smm-net path {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    animation: none;
+  }
+
+  .smm-stage .smm-float,
+  .smm-stage .smm-wire,
+  .smm-stage .smm-scene {
+    animation: none;
+    transform: none;
+  }
+
+  .smm-stage .smm-sweep {
+    display: none;
+  }
+}
+
+/* ============================================================
+   NESSUNO SCRIPT
+
+   `Reveal`, la hero social e i tracciati del metodo partono da opacità 0 e
+   contano sul JavaScript per rivelarsi: senza script la pagina resta
+   praticamente vuota. `scripting: none` è l'unica condizione che il CSS sa
+   leggere da solo, e porta tutto allo stato finale senza aspettare nessuno.
+
+   Copre lo script disattivato, non lo script che fallisce a caricarsi: quel
+   caso nessun foglio di stile può intercettarlo.
+   ============================================================ */
+@media (scripting: none) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .smm-stage .smm-in,
+  .smm-stage .smm-bloom,
   .smm-stage .smm-label {
     opacity: 1;
   }
-  .smm-stage .smm-orb,
-  .smm-stage .smm-trail,
-  .smm-stage .smm-phone {
-    opacity: 0;
+
+  .smm-stage .smm-net path {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  .method-draw [pathLength] {
+    stroke-dashoffset: 0;
+  }
+
+  .method-draw .method-dot {
+    opacity: 1;
   }
 }
