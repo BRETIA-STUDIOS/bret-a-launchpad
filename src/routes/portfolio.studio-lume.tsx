@@ -465,7 +465,7 @@ function EsperienzaSection() {
               width={1536}
               height={1024}
               loading="lazy"
-              className="h-full w-full object-cover object-[62%_center] sm:object-center"
+              className="h-full w-full object-cover object-[70%_center] sm:object-center"
             />
           </div>
         </SlReveal>
