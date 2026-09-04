@@ -939,28 +939,9 @@ function StudioLume() {
           </div>
 
           <SlReveal delay={140}>
-            <div className="sl-panel">
-              <ol className="sl-label flex flex-wrap items-center gap-x-4 gap-y-2 opacity-70">
-                {["Professionista", "Servizio", "Data e ora", "Conferma"].map((step, i) => (
-                  <li key={step} className="flex items-center gap-2">
-                    <span className="sl-step">{i + 1}</span>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-              <div className="mt-8 grid gap-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start">
-                <div className="flex gap-4">
-                  {TEAM.map((m) => (
-                    <div key={m.name} className="text-center">
-                      <div className="sl-avatar" aria-hidden="true" />
-                      <p className="sl-body mt-2 text-xs">{m.name}</p>
-                    </div>
-                  ))}
-                </div>
-                <Frame label="Calendario" className="h-40 w-full" />
-              </div>
-            </div>
+            <BookingModule team={TEAM} />
           </SlReveal>
+
         </div>
       </section>
 
