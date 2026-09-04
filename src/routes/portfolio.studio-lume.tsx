@@ -794,36 +794,22 @@ function StudioLume() {
 
       {/* PRIMA / DOPO */}
       <section id="prima-dopo" className="sl-band">
-        <div className="mx-auto grid max-w-[82rem] items-center gap-10 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
-          <div>
-            <SectionLabel>Trasformazioni reali</SectionLabel>
-            <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
-              Stessa persona.
-              <br /> Una nuova luce.
-            </SlReveal>
-            <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
-              Scorri per vedere la trasformazione.
-            </SlReveal>
-            <SlReveal delay={260} className="mt-8">
-              <div className="sl-rule w-16" />
-            </SlReveal>
-          </div>
-          <SlReveal delay={140}>
-            <div className="relative">
-              <Frame label="Prima / Dopo" className="aspect-4/3 w-full" />
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-6 left-1/2 w-px"
-                style={{ backgroundColor: "color-mix(in oklab, #e9dfd1 45%, transparent)" }}
-              />
-              <div className="sl-label pointer-events-none absolute inset-x-6 bottom-4 flex justify-between opacity-60">
-                <span>Prima</span>
-                <span>Dopo</span>
-              </div>
-            </div>
+        <div className="mx-auto max-w-[82rem] px-5 pt-20 sm:px-8 sm:pt-28">
+          <SectionLabel>Prima / Dopo</SectionLabel>
+          <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+            La trasformazione
+            <br /> prende forma
+          </SlReveal>
+          <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
+            Un nuovo equilibrio, costruito intorno a te.
+          </SlReveal>
+          <SlReveal delay={260} className="mt-8">
+            <div className="sl-rule w-16" />
           </SlReveal>
         </div>
+        <BeforeAfter />
       </section>
+
 
       {/* IL TEAM */}
       <section id="team" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
