@@ -144,7 +144,8 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isImmersive = pathname.startsWith("/portfolio/osteria-nova");
+  const isImmersive =
+    pathname.startsWith("/portfolio/osteria-nova") || pathname.startsWith("/portfolio/studio-lume");
 
   return (
     <QueryClientProvider client={queryClient}>
