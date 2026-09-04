@@ -34,11 +34,22 @@ const NAV = [
 ];
 
 const SERVIZI = [
-  { title: "Taglio", caption: "Tecnica e stile, su misura per te." },
-  { title: "Colore", caption: "Riflessi che valorizzano la tua unicità." },
-  { title: "Styling", caption: "Il tuo stile, ogni giorno." },
-  { title: "Trattamenti", caption: "Salute e bellezza per i tuoi capelli." },
+  {
+    title: "Taglio",
+    caption:
+      "Linee studiate, proporzioni e tecnica per un taglio che valorizza il tuo viso e il tuo stile.",
+  },
+  {
+    title: "Colore",
+    caption: "Colore, tonalità e sfumature costruite per armonizzarsi con la tua persona.",
+  },
+  {
+    title: "Styling",
+    caption: "Texture, movimento e forma per completare il tuo look con naturalezza.",
+  },
+  { title: "Trattamenti", caption: "Rituali dedicati alla salute e alla bellezza del capello." },
 ];
+
 
 const TEAM = [
   { name: "Andrea", role: "Owner" },
