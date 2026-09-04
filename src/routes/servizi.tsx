@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHero } from "@/components/site/PageHero";
-import { ServiceShowcase } from "@/components/site/ServiceShowcase";
+import { CalendarCheck2, Gauge, PenTool, Smartphone } from "lucide-react";
+import { ServiceShowcase, type ServiceFeature } from "@/components/site/ServiceShowcase";
 import { BrandButton } from "@/components/ui-brand/BrandButton";
 import { ClosingCta } from "@/components/site/ClosingCta";
-import { Reveal } from "@/components/ui-brand/Reveal";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/servizi")({
@@ -19,22 +18,44 @@ export const Route = createFileRoute("/servizi")({
   component: Servizi,
 });
 
+/* Il paragrafo del primo blocco diventa un elenco: chi arriva qui sta
+   valutando, e vuole vedere cosa comprende il servizio senza leggere. */
+const WEB_FEATURES: ServiceFeature[] = [
+  {
+    icon: PenTool,
+    title: "Design su misura",
+    text: "Nessun template: struttura, identità e contenuti nascono dall'attività reale, non da un modello preconfezionato.",
+  },
+  {
+    icon: Gauge,
+    title: "Performance e SEO",
+    text: "Caricamento rapido e basi tecniche pulite, perché un sito che nessuno trova o che fa aspettare non converte.",
+  },
+  {
+    icon: CalendarCheck2,
+    title: "Funzionalità su richiesta",
+    text: "Prenotazioni, pagamenti, moduli di contatto e ogni strumento che serve davvero a chi visita il sito.",
+  },
+  {
+    icon: Smartphone,
+    title: "Responsive su ogni schermo",
+    text: "La stessa esperienza da smartphone, tablet e desktop: il mobile è il primo schermo, non un ripiego.",
+  },
+];
+
 function Servizi() {
   return (
     <>
-      <PageHero
-        eyebrow="SERVIZI"
-        title="Quello che possiamo fare per te."
-        description="Dalla creazione di un nuovo sito alla trasformazione di una presenza digitale già esistente."
-      />
-
-      <section className="py-6 sm:py-10">
+      <section className="pb-6 sm:pb-10">
         <div className="container-brand">
           <ServiceShowcase
+            lead
             visual={0}
-            title="CREAZIONE DI SITI WEB"
-            description="Partiamo da zero e costruiamo una presenza digitale pensata intorno alla tua attività. Ci confrontiamo con il cliente, ne comprendiamo esigenze e obiettivi e sviluppiamo un sito moderno, responsive e personalizzato, con la possibilità di integrare funzionalità come prenotazioni, pagamenti, moduli di contatto e altri strumenti utili."
-            closing="Ogni progetto viene costruito sulle esigenze dell'attività, non adattato a un modello preconfezionato."
+            eyebrow="SERVIZI // SVILUPPO WEB"
+            title="Infrastrutture digitali progettate per convertire"
+            description="Partiamo da zero: ci confrontiamo con il cliente, ne comprendiamo esigenze e obiettivi e costruiamo una presenza digitale pensata intorno alla sua attività."
+            features={WEB_FEATURES}
+            closing="Codice proprietario e zero plugin pesanti: il tuo sito resta veloce, sicuro e tuo al 100%."
           />
 
           <ServiceShowcase
