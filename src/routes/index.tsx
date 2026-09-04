@@ -24,25 +24,21 @@ export const Route = createFileRoute("/")({
 
 const SERVICES = [
   {
-    index: "01",
     title: "CREAZIONE DI SITI WEB",
     description:
       "Progettiamo e sviluppiamo siti web da zero, costruiti intorno alle esigenze della tua attività.",
   },
   {
-    index: "02",
     title: "RESTYLING E RIVISITAZIONE",
     description:
       "Trasformiamo siti esistenti in esperienze più moderne, intuitive e piacevoli da utilizzare.",
   },
   {
-    index: "03",
     title: "MANUTENZIONE E ASSISTENZA",
     description:
       "Continuiamo a prenderci cura del sito anche dopo la pubblicazione, con assistenza e manutenzione su richiesta.",
   },
   {
-    index: "04",
     title: "REBRANDING",
     description:
       "Rinnoviamo l'identità di un'attività, dal logo alla presenza digitale, senza cancellarne la storia.",
@@ -129,7 +125,7 @@ function Home() {
           <SectionHeading eyebrow="COSA FACCIAMO" title="Dal primo concept al sito online." />
           <div className="mt-16 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {SERVICES.map((service, i) => (
-              <ServiceCard key={service.index} {...service} delay={i * 80} />
+              <ServiceCard key={service.title} {...service} delay={i * 80} />
             ))}
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal } from "@/components/ui-brand/Reveal";
+import { SectionHeading } from "@/components/ui-brand/SectionHeading";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { ClosingCta } from "@/components/site/ClosingCta";
 import { pageHead } from "@/lib/seo";
@@ -20,22 +21,18 @@ export const Route = createFileRoute("/chi-siamo")({
 
 const PRINCIPI = [
   {
-    n: "01",
     title: "DIRETTI",
     text: "Un rapporto diretto con chi segue il progetto.",
   },
   {
-    n: "02",
     title: "SU MISURA",
     text: "Ogni progetto nasce dalle esigenze reali dell'attività.",
   },
   {
-    n: "03",
     title: "AGILI",
     text: "Processi efficienti, meno passaggi inutili.",
   },
   {
-    n: "04",
     title: "CURATI",
     text: "Ogni dettaglio viene progettato per essere visto, usato e ricordato.",
   },
@@ -126,21 +123,31 @@ function ChiSiamo() {
       {/* 04 — Cosa ci rende diversi */}
       <section className="py-20 sm:py-28">
         <div className="container-brand">
-          <Reveal as="p" className="label-eyebrow">
-            COSA CI RENDE DIVERSI
-          </Reveal>
-          <div className="mt-10 grid gap-px border-t border-border sm:grid-cols-2">
+          <SectionHeading
+            eyebrow="COSA CI RENDE DIVERSI"
+            title={
+              <>
+                Quattro scelte,
+                <br />
+                <span className="text-gradient-accent">non quattro slogan.</span>
+              </>
+            }
+          />
+          <div className="mt-14 grid gap-px border-t border-border sm:grid-cols-2">
             {PRINCIPI.map((p, i) => (
               <Reveal
-                key={p.n}
+                key={p.title}
                 delay={i * 90}
-                className="border-b border-border py-8 pr-6 sm:py-10 sm:[&:nth-child(odd)]:pr-12 sm:[&:nth-child(even)]:pl-12 sm:[&:nth-child(even)]:border-l"
+                className="group border-b border-border py-8 pr-6 sm:py-10 sm:[&:nth-child(odd)]:pr-12 sm:[&:nth-child(even)]:border-l sm:[&:nth-child(even)]:pl-12"
               >
-                <span className="font-display text-xs tracking-[0.22em] text-brand">{p.n}</span>
-                <h3 className="mt-4 text-xl font-semibold tracking-[0.04em] sm:text-2xl">
+                <h3 className="font-display text-2xl font-semibold tracking-[0.04em] sm:text-3xl">
                   {p.title}
                 </h3>
-                <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground sm:text-base">
+                <span
+                  aria-hidden="true"
+                  className="mt-4 block h-px w-10 bg-border-strong transition-all duration-[var(--transition-base)] group-hover:w-20 group-hover:bg-primary"
+                />
+                <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground sm:text-base">
                   {p.text}
                 </p>
               </Reveal>

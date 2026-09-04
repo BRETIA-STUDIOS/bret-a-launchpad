@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useShouldAnimate } from "@/hooks/use-should-animate";
 import { cn } from "@/lib/utils";
+import { SocialPhone } from "@/components/site/SocialPhone";
+
+/** `visual` del blocco social: al suo posto va il mockup del telefono. */
+const SOCIAL_VISUAL = 4;
 
 /** Abstract, illustrative-only interface fragments — consistent with the Metodo section. */
 function ServiceVisual({
@@ -177,19 +181,20 @@ function ServiceVisual({
 }
 
 export function ServiceShowcase({
-  index,
   title,
   description,
   closing,
   extra,
+  cta,
   visual,
   flip = false,
 }: {
-  index: string;
   title: string;
   description: string;
   closing?: ReactNode;
   extra?: ReactNode;
+  /** Azione in fondo al blocco: la usa solo il rimando al servizio social. */
+  cta?: ReactNode;
   visual: number;
   flip?: boolean;
 }) {
@@ -231,8 +236,7 @@ export function ServiceShowcase({
       )}
     >
       <div className={cn("lg:col-span-7", flip && "lg:order-2")}>
-        <span className="font-display text-xs tracking-[0.3em] text-brand">{index}</span>
-        <h2 className="mt-5 font-display text-2xl font-semibold leading-tight tracking-[0.04em] sm:text-3xl lg:text-[2.35rem]">
+        <h2 className="font-display text-2xl font-semibold leading-tight tracking-[0.04em] sm:text-3xl lg:text-[2.35rem]">
           {title}
         </h2>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground">
@@ -244,14 +248,21 @@ export function ServiceShowcase({
             {closing}
           </p>
         ) : null}
+        {cta ? <div className="mt-8">{cta}</div> : null}
       </div>
 
       <div className={cn("lg:col-span-5", flip && "lg:order-1")}>
-        <div className="surface-card w-full p-3 sm:p-4">
-          <div ref={motionRef} className="aspect-[5/3] w-full">
-            <ServiceVisual kind={visual} active={active} spinning={shouldAnimate} />
+        {/* Il servizio social non ha un pittogramma dentro una card larga: è
+            un telefono, quindi verticale e senza cornice attorno. */}
+        {visual === SOCIAL_VISUAL ? (
+          <SocialPhone />
+        ) : (
+          <div className="surface-card w-full p-3 sm:p-4">
+            <div ref={motionRef} className="aspect-[5/3] w-full">
+              <ServiceVisual kind={visual} active={active} spinning={shouldAnimate} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </article>
   );
