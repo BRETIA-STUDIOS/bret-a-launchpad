@@ -265,7 +265,7 @@ function BeforeAfter() {
                 Prima
               </span>
 
-              <div ref={dividerRef} className="sl-ba-divider" style={{ left: "50%" }}>
+              <div ref={dividerRef} className="sl-ba-divider" style={{ left: "0%" }}>
                 <div
                   ref={handleRef}
                   role="slider"
