@@ -438,7 +438,7 @@ function ServiziSection() {
                 width={1536}
                 height={1024}
                 loading="lazy"
-                className="h-full w-full object-cover object-[35%_center]"
+                className="h-full w-full object-cover object-[26%_center]"
               />
             </div>
             <figcaption className="sl-label mt-4 opacity-55">
