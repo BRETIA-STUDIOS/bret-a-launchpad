@@ -249,7 +249,7 @@ function BeforeAfter() {
                 className="absolute inset-0 h-full w-full object-cover"
                 draggable={false}
               />
-              <div ref={afterRef} className="absolute inset-0" style={{ clipPath: "inset(0 50% 0 0)" }}>
+              <div ref={afterRef} className="absolute inset-0" style={{ clipPath: "inset(0 100% 0 0)" }}>
                 <img
                   src={lumeDopo.url}
                   alt="Dopo il servizio: capelli con colore luminoso e onde definite"
