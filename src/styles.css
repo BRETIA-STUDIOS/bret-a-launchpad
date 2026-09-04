@@ -1021,6 +1021,22 @@
   background: color-mix(in oklab, var(--sl-bronze) 18%, var(--sl-coal));
 }
 
+/*
+ * Foto del team: il contenitore si adatta alle proporzioni naturali
+ * dell'immagine (object-contain, altezza automatica). Nessun taglio,
+ * nessuna distorsione: la fotografia comanda, il layout segue.
+ */
+.sl .sl-team-photo {
+  overflow: hidden;
+  background: var(--sl-coal);
+}
+
+.sl .sl-team-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .sl .sl-reveal {
   opacity: 0;
   transform: translateY(18px);

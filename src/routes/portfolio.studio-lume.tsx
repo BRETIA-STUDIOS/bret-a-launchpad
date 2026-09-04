@@ -13,6 +13,10 @@ import lumeLavaggio from "@/assets/lume/studio-lume-lavaggio.png.asset.json";
 import lumeStyling from "@/assets/lume/studio-lume-styling.png.asset.json";
 import lumePrima from "@/assets/lume/studio-lume-prima.png.asset.json";
 import lumeDopo from "@/assets/lume/studio-lume-dopo.png.asset.json";
+import lumeTeamGiuseppe from "@/assets/lume/studio-lume-team-giuseppe.png.asset.json";
+import lumeTeamMatteo from "@/assets/lume/studio-lume-team-matteo.png.asset.json";
+import lumeTeamAndrea from "@/assets/lume/studio-lume-team-andrea.png.asset.json";
+import lumeTeamGroup from "@/assets/lume/studio-lume-team-group.png.asset.json";
 
 export const Route = createFileRoute("/portfolio/studio-lume")({
   head: () =>
@@ -57,9 +61,24 @@ const SERVIZI = [
 
 
 const TEAM = [
-  { name: "Andrea", role: "Owner" },
-  { name: "Giuseppe", role: "Member" },
-  { name: "Matteo", role: "Member" },
+  {
+    name: "Giuseppe",
+    role: "Member",
+    bio: "Tecnica, precisione e attenzione ai dettagli.",
+    portrait: lumeTeamGiuseppe,
+  },
+  {
+    name: "Matteo",
+    role: "Member",
+    bio: "Creatività, ascolto e uno stile costruito su di te.",
+    portrait: lumeTeamMatteo,
+  },
+  {
+    name: "Andrea",
+    role: "Owner",
+    bio: "Founder & stylist. Visione, esperienza e cura di ogni dettaglio.",
+    portrait: lumeTeamAndrea,
+  },
 ];
 
 /* ------------------------------ reveal helper ----------------------------- */
@@ -819,38 +838,53 @@ function StudioLume() {
 
       {/* IL TEAM */}
       <section id="team" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-16">
-          <div>
-            <SectionLabel>Il team</SectionLabel>
-            <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
-              Esperienza
-              <br /> Passione
-              <br /> Persone
-            </SlReveal>
-            <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-sm">
-              Tre visioni, un&apos;unica filosofia: la bellezza autentica.
-            </SlReveal>
-            <SlReveal delay={280} className="mt-8">
-              <button
-                type="button"
-                onClick={() => scrollToId("prenota")}
-                className="sl-btn sl-btn-outline"
-              >
-                Conosci il team <span aria-hidden="true">→</span>
-              </button>
-            </SlReveal>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-3">
-            {TEAM.map((m, i) => (
-              <SlReveal key={m.name} delay={i * 90}>
-                <Frame label={m.name} className="aspect-3/4 w-full" />
-                <p className="sl-label mt-4">{m.name}</p>
-                <p className="sl-body mt-1 text-sm opacity-70">{m.role}</p>
-              </SlReveal>
-            ))}
-          </div>
+        <div className="max-w-2xl">
+          <SectionLabel>Il team</SectionLabel>
+          <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+            Persone,
+            <br /> prima di tutto.
+          </SlReveal>
+          <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
+            Un team che unisce tecnica, esperienza e attenzione per rendere ogni
+            appuntamento un momento pensato intorno a te.
+          </SlReveal>
+          <SlReveal delay={260} className="mt-8">
+            <div className="sl-rule w-16" />
+          </SlReveal>
         </div>
+
+        <div className="mt-14 grid gap-12 sm:mt-20 sm:gap-10 md:grid-cols-3 md:gap-8 lg:gap-12">
+          {TEAM.map((m, i) => (
+            <SlReveal key={m.name} delay={i * 120}>
+              <figure>
+                <div className="sl-team-photo">
+                  <img
+                    src={m.portrait.url}
+                    alt={`${m.name}, ${m.role} di Studio Lume Hair Atelier`}
+                    loading="lazy"
+                    className="h-auto w-full object-contain"
+                  />
+                </div>
+                <figcaption className="mt-6">
+                  <p className="sl-label">{m.name}</p>
+                  <p className="sl-label mt-2 opacity-55">{m.role}</p>
+                  <p className="sl-body mt-3 text-sm opacity-75">{m.bio}</p>
+                </figcaption>
+              </figure>
+            </SlReveal>
+          ))}
+        </div>
+
+        <SlReveal delay={140} className="mx-auto mt-16 max-w-3xl sm:mt-24">
+          <div className="sl-team-photo">
+            <img
+              src={lumeTeamGroup.url}
+              alt="Il team di Studio Lume Hair Atelier nel salone"
+              loading="lazy"
+              className="h-auto w-full object-contain"
+            />
+          </div>
+        </SlReveal>
       </section>
 
       {/* PRENOTAZIONE */}
