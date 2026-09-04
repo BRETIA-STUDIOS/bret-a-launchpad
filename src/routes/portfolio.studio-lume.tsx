@@ -333,7 +333,7 @@ function StudioLume() {
             <SlReveal delay={200}>
               <Frame label="Ritratto hero" className="aspect-4/5 w-full" />
             </SlReveal>
-            <ul className="sl-label mt-8 flex flex-wrap gap-x-8 gap-y-3 opacity-70 lg:absolute lg:-right-2 lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:flex-col lg:gap-4">
+            <ul className="sl-label mt-6 flex flex-wrap gap-x-8 gap-y-3 opacity-70">
               {SERVIZI.map((s) => (
                 <li key={s.title}>{s.title}</li>
               ))}
