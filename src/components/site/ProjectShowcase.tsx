@@ -27,10 +27,13 @@ export const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     to: "/portfolio/osteria-nova",
   },
   {
-    id: "concept-1",
-    title: "CONCEPT PROJECT",
-    category: "Web Design · UI/UX",
-    placeholder: true,
+    id: "studio-lume",
+    title: "STUDIO LUME",
+    category: "Hair Atelier · Web Design · UI/UX · Branding",
+    description:
+      "Un atelier di bellezza raccontato online: atmosfera, servizi, team e prenotazione in un'unica esperienza su misura.",
+    image: studioLumePreview.url,
+    to: "/portfolio/studio-lume",
   },
   {
     id: "concept-2",
