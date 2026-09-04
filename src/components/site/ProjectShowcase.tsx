@@ -4,6 +4,7 @@ import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
 import { useShouldAnimate } from "@/hooks/use-should-animate";
 import { cn } from "@/lib/utils";
 import osteriaNova from "@/assets/osteria-nova.png";
+import studioLumePreview from "@/assets/lume/studio-lume-preview.png.asset.json";
 
 export type ShowcaseProject = {
   id: string;
