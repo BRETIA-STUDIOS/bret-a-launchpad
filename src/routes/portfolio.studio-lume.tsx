@@ -157,13 +157,33 @@ function BeforeAfter() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // Solo la larghezza del frame è cacheata (cambia solo su resize): serve per
+    // muovere il divisore via transform. La posizione della track viene letta una
+    // volta per frame di scroll (lettura singola, senza scritture intercalate →
+    // nessun layout thrashing) così resta corretta anche se le immagini
+    // soprastanti spostano il layout dopo il mount.
+    let frameWidth = 0;
+    const measure = () => {
+      frameWidth = frame.offsetWidth;
+    };
+    measure();
+
+    if (afterRef.current) afterRef.current.style.willChange = "clip-path";
+    if (dividerRef.current) dividerRef.current.style.willChange = "transform";
+
+    let lastAria = -1;
     const apply = (v: number) => {
       valueRef.current = v;
       if (afterRef.current) afterRef.current.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
-      if (dividerRef.current) dividerRef.current.style.left = `${v}%`;
-      if (handleRef.current) {
-        handleRef.current.setAttribute("aria-valuenow", String(Math.round(v)));
-        handleRef.current.setAttribute("aria-valuetext", `${Math.round(v)}% dopo`);
+      // transform invece di left: nessun layout, solo compositing
+      if (dividerRef.current) {
+        dividerRef.current.style.transform = `translate3d(${(v / 100) * frameWidth - 0.5}px, 0, 0)`;
+      }
+      const rounded = Math.round(v);
+      if (handleRef.current && rounded !== lastAria) {
+        lastAria = rounded;
+        handleRef.current.setAttribute("aria-valuenow", String(rounded));
+        handleRef.current.setAttribute("aria-valuetext", `${rounded}% dopo`);
       }
     };
 
@@ -171,18 +191,25 @@ function BeforeAfter() {
     apply(reduced ? 50 : 0);
 
     /* --- scroll driven --- */
+    // Ripresa dopo il drag: il controllo torna allo scroll quando il target
+    // incrocia il valore manuale (cambio di segno) → zero salti.
+    let prevDiff: number | null = null;
     const readScroll = () => {
       rafRef.current = null;
       const rect = track.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
       if (total <= 0) return;
-      const raw = (0 - rect.top) / total;
-      const p = Math.min(1, Math.max(0, raw));
-      // ease the middle so 50/50 sits at mid-scroll
+      const p = Math.min(1, Math.max(0, -rect.top / total));
       const target = p * 100;
       if (manualRef.current) {
-        // resume only when scroll target meets the manual value (no jump)
-        if (Math.abs(target - valueRef.current) < 2.5) manualRef.current = false;
+        const diff = target - valueRef.current;
+        if (prevDiff !== null && (diff === 0 || Math.sign(diff) !== Math.sign(prevDiff))) {
+          manualRef.current = false;
+          prevDiff = null;
+          apply(target);
+        } else {
+          prevDiff = diff;
+        }
         return;
       }
       apply(target);
@@ -192,10 +219,15 @@ function BeforeAfter() {
       if (draggingRef.current) return;
       if (rafRef.current == null) rafRef.current = requestAnimationFrame(readScroll);
     };
+    const onResize = () => {
+      measure();
+      apply(valueRef.current);
+      onScroll();
+    };
 
     if (!reduced) {
       window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll);
+      window.addEventListener("resize", onResize);
       onScroll();
     }
 
@@ -243,7 +275,7 @@ function BeforeAfter() {
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
       frame.removeEventListener("pointerdown", onPointerDown);
       frame.removeEventListener("pointermove", onPointerMove);
       frame.removeEventListener("pointerup", endDrag);
