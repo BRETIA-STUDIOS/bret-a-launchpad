@@ -161,7 +161,7 @@ function LumeHeader() {
             alt="Studio Lume Hair Atelier"
             width={1272}
             height={696}
-            className="h-10 w-auto object-contain sm:h-12"
+            className="sl-enter h-10 w-auto object-contain sm:h-12"
           />
         </a>
 
