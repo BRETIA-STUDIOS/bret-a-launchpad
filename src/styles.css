@@ -995,3 +995,58 @@
     transform: none;
   }
 }
+
+/* Studio Lume — entrata hero (una sola volta) */
+@keyframes sl-enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sl-enter-media {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sl .sl-enter {
+  opacity: 0;
+  animation: sl-enter-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.sl .sl-enter-media {
+  opacity: 0;
+  animation: sl-enter-media 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.sl .sl-photo {
+  overflow: hidden;
+  border-radius: 3px;
+  background-color: var(--sl-coal);
+}
+
+.sl .sl-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl .sl-enter,
+  .sl .sl-enter-media {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
