@@ -85,13 +85,6 @@ export function BookingModule({ team }: { team: BookingMember[] }) {
     });
   }, [slots]);
 
-  useEffect(() => {
-    if (date && (!schedule || availableWindows(schedule, date, service.minDuration).length === 0)) {
-      // La data resta visibile, ma non c'è nulla di prenotabile: il messaggio
-      // dedicato lo spiega. Lo slot viene comunque azzerato dall'effetto sopra.
-    }
-  }, [date, schedule, service.minDuration]);
-
   const cells = monthGrid(viewMonth.getFullYear(), viewMonth.getMonth());
   const canGoBack =
     viewMonth.getFullYear() > today.getFullYear() ||
