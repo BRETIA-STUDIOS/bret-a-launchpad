@@ -102,7 +102,10 @@ export function freeGaps(schedule: ProfessionalSchedule, weekday: number): Perio
 
 export type Slot = { start: number; end: number; label: string };
 
-const GRID_STEP = 30;
+// Le finestre partono a ogni ora piena (o alla mezz'ora, se il varco libero
+// inizia lì): un elenco breve e leggibile, non una griglia da software medico.
+const GRID_ALIGN = 30;
+const GRID_STEP = 60;
 
 /**
  * Finestre di appuntamento valide: solo quelle che entrano per intero
@@ -116,7 +119,7 @@ export function availableWindows(
   const weekday = date.getDay();
   const slots: Slot[] = [];
   for (const gap of freeGaps(schedule, weekday)) {
-    const first = Math.ceil(gap.start / GRID_STEP) * GRID_STEP;
+    const first = Math.ceil(gap.start / GRID_ALIGN) * GRID_ALIGN;
     for (let start = first; start + duration <= gap.end; start += GRID_STEP) {
       const end = start + duration;
       slots.push({ start, end, label: `${formatTime(start)}–${formatTime(end)}` });
