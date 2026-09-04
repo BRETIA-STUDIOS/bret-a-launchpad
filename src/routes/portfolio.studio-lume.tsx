@@ -431,7 +431,7 @@ function ServiziSection() {
 
         <SlReveal delay={340} className="lg:pt-16">
           <figure className="lg:sticky lg:top-28">
-            <div className="sl-photo aspect-4/5 w-full sm:aspect-3/2 lg:aspect-4/5">
+            <div className="sl-photo aspect-4/3 w-full sm:aspect-3/2">
               <img
                 src={lumeProducts.url}
                 alt="Prodotti e strumenti professionali Studio Lume su piano in marmo scuro"
@@ -458,7 +458,7 @@ function EsperienzaSection() {
     <section id="esperienza" className="sl-band">
       <div className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
         <SlReveal delay={80}>
-          <div className="sl-photo aspect-4/5 w-full sm:aspect-16/9">
+          <div className="sl-photo aspect-4/3 w-full sm:aspect-3/2">
             <img
               src={lumeLavaggio.url}
               alt="Momento del lavaggio nel salone Studio Lume"
@@ -513,7 +513,7 @@ function RisultatoSection() {
           </SlReveal>
         </div>
         <SlReveal delay={180}>
-          <div className="sl-photo aspect-4/5 w-full sm:aspect-3/2">
+          <div className="sl-photo aspect-4/3 w-full sm:aspect-3/2">
             <img
               src={lumeStyling.url}
               alt="Styling finale su capelli lunghi nel salone Studio Lume"
