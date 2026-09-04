@@ -458,7 +458,7 @@ function EsperienzaSection() {
     <section id="esperienza" className="sl-band">
       <div className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
         <SlReveal delay={80}>
-          <div className="sl-photo aspect-4/5 w-full sm:aspect-16/9 lg:aspect-21/9">
+          <div className="sl-photo aspect-4/5 w-full sm:aspect-16/9">
             <img
               src={lumeLavaggio.url}
               alt="Momento del lavaggio nel salone Studio Lume"
