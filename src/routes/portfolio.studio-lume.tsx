@@ -5,6 +5,9 @@ import { cn } from "@/lib/utils";
 import { pageHead } from "@/lib/seo";
 import { LUME_FONTS_HREF } from "@/lib/fonts";
 import lumeLogo from "@/assets/lume/studio-lume-logo-light.png.asset.json";
+import lumeHero from "@/assets/lume/studio-lume-hero.png.asset.json";
+import lumeExterior from "@/assets/lume/studio-lume-exterior.png.asset.json";
+import lumeInterior from "@/assets/lume/studio-lume-interior.png.asset.json";
 
 export const Route = createFileRoute("/portfolio/studio-lume")({
   head: () =>
