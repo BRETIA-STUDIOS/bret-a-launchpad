@@ -941,6 +941,53 @@
   transform: translateY(-4px);
 }
 
+/* Studio Lume — righe editoriali dei servizi */
+.sl {
+  --sl-line: color-mix(in oklab, var(--sl-champagne) 12%, transparent);
+}
+
+.sl .sl-service {
+  border-color: var(--sl-line);
+}
+
+.sl .sl-service-title {
+  font-family: var(--sl-serif);
+  letter-spacing: 0.02em;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.4s ease;
+}
+
+.sl .sl-service-mark {
+  display: block;
+  width: 1.5rem;
+  height: 1px;
+  margin-top: 0.7rem;
+  background-color: color-mix(in oklab, var(--sl-bronze) 55%, transparent);
+  transition:
+    width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.4s ease;
+}
+
+@media (hover: hover) {
+  .sl .sl-service:hover .sl-service-title {
+    transform: translateX(6px);
+    color: var(--sl-bronze);
+  }
+
+  .sl .sl-service:hover .sl-service-mark {
+    width: 2.5rem;
+    background-color: var(--sl-bronze);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl .sl-service-title,
+  .sl .sl-service-mark {
+    transition: none;
+  }
+}
+
 .sl .sl-panel {
   padding: 1.5rem;
   border: 1px solid color-mix(in oklab, var(--sl-champagne) 12%, transparent);

@@ -8,6 +8,9 @@ import lumeLogo from "@/assets/lume/studio-lume-logo-light.png.asset.json";
 import lumeHero from "@/assets/lume/studio-lume-hero.png.asset.json";
 import lumeExterior from "@/assets/lume/studio-lume-exterior.png.asset.json";
 import lumeInterior from "@/assets/lume/studio-lume-interior.png.asset.json";
+import lumeProducts from "@/assets/lume/studio-lume-products.png.asset.json";
+import lumeLavaggio from "@/assets/lume/studio-lume-lavaggio.png.asset.json";
+import lumeStyling from "@/assets/lume/studio-lume-styling.png.asset.json";
 
 export const Route = createFileRoute("/portfolio/studio-lume")({
   head: () =>
@@ -34,11 +37,22 @@ const NAV = [
 ];
 
 const SERVIZI = [
-  { title: "Taglio", caption: "Tecnica e stile, su misura per te." },
-  { title: "Colore", caption: "Riflessi che valorizzano la tua unicità." },
-  { title: "Styling", caption: "Il tuo stile, ogni giorno." },
-  { title: "Trattamenti", caption: "Salute e bellezza per i tuoi capelli." },
+  {
+    title: "Taglio",
+    caption:
+      "Linee studiate, proporzioni e tecnica per un taglio che valorizza il tuo viso e il tuo stile.",
+  },
+  {
+    title: "Colore",
+    caption: "Colore, tonalità e sfumature costruite per armonizzarsi con la tua persona.",
+  },
+  {
+    title: "Styling",
+    caption: "Texture, movimento e forma per completare il tuo look con naturalezza.",
+  },
+  { title: "Trattamenti", caption: "Rituali dedicati alla salute e alla bellezza del capello." },
 ];
+
 
 const TEAM = [
   { name: "Andrea", role: "Owner" },
@@ -384,7 +398,139 @@ function SaloneSection() {
 }
 
 
+/* --------------------------------- servizi -------------------------------- */
+
+function ServiziSection() {
+  return (
+    <section id="servizi" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.82fr)] lg:gap-20">
+        <div>
+          <SectionLabel>Servizi</SectionLabel>
+          <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+            La cura
+            <br /> diventa stile
+          </SlReveal>
+          <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
+            Tecnica, ascolto e attenzione ai dettagli. Ogni servizio nasce per valorizzare la
+            persona, non semplicemente il suo look.
+          </SlReveal>
+
+          <ul className="mt-12 border-t" style={{ borderColor: "var(--sl-line)" }}>
+            {SERVIZI.map((s, i) => (
+              <SlReveal as="li" key={s.title} delay={260 + i * 90} className="sl-service border-b">
+                <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-5 gap-y-2 py-6 sm:py-7">
+                  <span className="sl-service-mark" aria-hidden="true" />
+                  <h3 className="sl-service-title text-xl sm:text-2xl">{s.title}</h3>
+                  <span aria-hidden="true" />
+                  <p className="sl-body max-w-md text-sm">{s.caption}</p>
+                </div>
+              </SlReveal>
+            ))}
+          </ul>
+        </div>
+
+        <SlReveal delay={340} className="lg:pt-16">
+          <figure className="lg:sticky lg:top-28">
+            <div className="sl-photo aspect-4/5 w-full sm:aspect-3/2 lg:aspect-4/5">
+              <img
+                src={lumeProducts.url}
+                alt="Prodotti e strumenti professionali Studio Lume su piano in marmo scuro"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                className="h-full w-full object-cover object-[26%_center]"
+              />
+            </div>
+            <figcaption className="sl-label mt-4 opacity-55">
+              Strumenti e prodotti selezionati
+            </figcaption>
+          </figure>
+        </SlReveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------- l'esperienza ------------------------------ */
+
+function EsperienzaSection() {
+  return (
+    <section id="esperienza" className="sl-band">
+      <div className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
+        <SlReveal delay={80}>
+          <div className="sl-photo aspect-4/5 w-full sm:aspect-16/9">
+            <img
+              src={lumeLavaggio.url}
+              alt="Momento del lavaggio nel salone Studio Lume"
+              width={1536}
+              height={1024}
+              loading="lazy"
+              className="h-full w-full object-cover object-[70%_center] sm:object-center"
+            />
+          </div>
+        </SlReveal>
+
+        <div className="mt-10 grid gap-8 sm:mt-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:items-start lg:gap-20">
+          <div>
+            <SectionLabel>L&apos;esperienza</SectionLabel>
+            <SlReveal as="h2" delay={140} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+              Prenditi
+              <br /> il tuo tempo
+            </SlReveal>
+          </div>
+          <div className="lg:pt-4">
+            <SlReveal as="p" delay={220} className="sl-body max-w-md">
+              Dalla consulenza al momento finale, ogni fase è pensata per farti sentire a tuo agio
+              e lasciare spazio alla cura.
+            </SlReveal>
+            <SlReveal delay={300} className="mt-8">
+              <div className="sl-rule w-16" />
+            </SlReveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------- il risultato ------------------------------ */
+
+function RisultatoSection() {
+  return (
+    <section id="risultato" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+        <div>
+          <SectionLabel>Il risultato</SectionLabel>
+          <SlReveal as="h2" delay={140} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+            Il tuo stile,
+            <br /> portato alla luce.
+          </SlReveal>
+          <SlReveal as="p" delay={220} className="sl-body mt-6 max-w-sm">
+            Forma, movimento e dettagli costruiti intorno a te.
+          </SlReveal>
+          <SlReveal delay={300} className="mt-8">
+            <div className="sl-rule w-16" />
+          </SlReveal>
+        </div>
+        <SlReveal delay={180}>
+          <div className="sl-photo aspect-4/5 w-full sm:aspect-3/2">
+            <img
+              src={lumeStyling.url}
+              alt="Styling finale su capelli lunghi nel salone Studio Lume"
+              width={1536}
+              height={1024}
+              loading="lazy"
+              className="h-full w-full object-cover object-[58%_center]"
+            />
+          </div>
+        </SlReveal>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------------------------- page ---------------------------------- */
+
 
 function StudioLume() {
   return (
@@ -468,37 +614,14 @@ function StudioLume() {
 
 
       {/* SERVIZI */}
-      <section id="servizi" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <SectionLabel>I nostri servizi</SectionLabel>
-            <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
-              Bellezza
-              <br /> in ogni dettaglio
-            </SlReveal>
-          </div>
-          <SlReveal delay={180} className="flex items-center gap-4">
-            <span className="sl-rule w-12" />
-            <span className="sl-label opacity-75">Scopri tutti i servizi →</span>
-          </SlReveal>
-        </div>
+      <ServiziSection />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVIZI.map((s, i) => (
-            <SlReveal key={s.title} delay={i * 90} className="sl-card">
-              <Frame label={s.title} className="aspect-4/5 w-full" />
-              <h3 className="sl-label mt-5">{s.title}</h3>
-              <p className="sl-body mt-2 text-sm">{s.caption}</p>
-              <div className="mt-5 flex items-center justify-between">
-                <span className="sl-rule w-10" />
-                <span aria-hidden="true" style={{ color: "var(--sl-bronze)" }}>
-                  →
-                </span>
-              </div>
-            </SlReveal>
-          ))}
-        </div>
-      </section>
+      {/* L'ESPERIENZA */}
+      <EsperienzaSection />
+
+      {/* IL RISULTATO */}
+      <RisultatoSection />
+
 
       {/* PRIMA / DOPO */}
       <section id="prima-dopo" className="sl-band">
