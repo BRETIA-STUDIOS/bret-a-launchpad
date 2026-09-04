@@ -115,6 +115,175 @@ function scrollToId(id: string) {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+/* ----------------------------- prima / dopo ------------------------------ */
+
+function BeforeAfter() {
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const afterRef = useRef<HTMLDivElement | null>(null);
+  const dividerRef = useRef<HTMLDivElement | null>(null);
+  const handleRef = useRef<HTMLDivElement | null>(null);
+
+  const valueRef = useRef(50);
+  const manualRef = useRef(false);
+  const draggingRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const frame = frameRef.current;
+    if (!track || !frame) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const apply = (v: number) => {
+      valueRef.current = v;
+      if (afterRef.current) afterRef.current.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      if (dividerRef.current) dividerRef.current.style.left = `${v}%`;
+      if (handleRef.current) handleRef.current.setAttribute("aria-valuenow", String(Math.round(v)));
+    };
+
+    apply(50);
+
+    /* --- scroll driven --- */
+    const readScroll = () => {
+      rafRef.current = null;
+      const rect = track.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+      const raw = (0 - rect.top) / total;
+      const p = Math.min(1, Math.max(0, raw));
+      // ease the middle so 50/50 sits at mid-scroll
+      const target = p * 100;
+      if (manualRef.current) {
+        // resume only when scroll target meets the manual value (no jump)
+        if (Math.abs(target - valueRef.current) < 2.5) manualRef.current = false;
+        return;
+      }
+      apply(target);
+    };
+
+    const onScroll = () => {
+      if (draggingRef.current) return;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(readScroll);
+    };
+
+    if (!reduced) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+      onScroll();
+    }
+
+    /* --- pointer drag --- */
+    const fromClientX = (clientX: number) => {
+      const r = frame.getBoundingClientRect();
+      return Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100));
+    };
+
+    const onPointerDown = (e: PointerEvent) => {
+      draggingRef.current = true;
+      manualRef.current = true;
+      frame.setPointerCapture?.(e.pointerId);
+      apply(fromClientX(e.clientX));
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      if (!draggingRef.current) return;
+      e.preventDefault();
+      apply(fromClientX(e.clientX));
+    };
+    const endDrag = (e: PointerEvent) => {
+      if (!draggingRef.current) return;
+      draggingRef.current = false;
+      frame.releasePointerCapture?.(e.pointerId);
+    };
+
+    frame.addEventListener("pointerdown", onPointerDown);
+    frame.addEventListener("pointermove", onPointerMove);
+    frame.addEventListener("pointerup", endDrag);
+    frame.addEventListener("pointercancel", endDrag);
+
+    const onKey = (e: KeyboardEvent) => {
+      const step = e.shiftKey ? 10 : 4;
+      if (e.key === "ArrowLeft") {
+        manualRef.current = true;
+        apply(Math.max(0, valueRef.current - step));
+        e.preventDefault();
+      } else if (e.key === "ArrowRight") {
+        manualRef.current = true;
+        apply(Math.min(100, valueRef.current + step));
+        e.preventDefault();
+      }
+    };
+    handleRef.current?.addEventListener("keydown", onKey);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      frame.removeEventListener("pointerdown", onPointerDown);
+      frame.removeEventListener("pointermove", onPointerMove);
+      frame.removeEventListener("pointerup", endDrag);
+      frame.removeEventListener("pointercancel", endDrag);
+      handleRef.current?.removeEventListener("keydown", onKey);
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <div ref={trackRef} className="sl-ba-track relative">
+      <div className="sticky top-0 flex min-h-screen items-center">
+        <div className="mx-auto w-full max-w-[72rem] px-5 py-16 sm:px-8">
+          <SlReveal>
+            <div
+              ref={frameRef}
+              className="sl-ba-frame relative w-full touch-pan-y select-none overflow-hidden"
+            >
+              <img
+                src={lumePrima.url}
+                alt="Prima del servizio: capelli lunghi opachi e privi di forma"
+                className="absolute inset-0 h-full w-full object-cover"
+                draggable={false}
+              />
+              <div ref={afterRef} className="absolute inset-0" style={{ clipPath: "inset(0 50% 0 0)" }}>
+                <img
+                  src={lumeDopo.url}
+                  alt="Dopo il servizio: capelli con colore luminoso e onde definite"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  draggable={false}
+                />
+              </div>
+
+              <span className="sl-label pointer-events-none absolute bottom-4 left-4 opacity-75 sm:bottom-6 sm:left-6">
+                Dopo
+              </span>
+              <span className="sl-label pointer-events-none absolute bottom-4 right-4 opacity-75 sm:bottom-6 sm:right-6">
+                Prima
+              </span>
+
+              <div ref={dividerRef} className="sl-ba-divider" style={{ left: "50%" }}>
+                <div
+                  ref={handleRef}
+                  role="slider"
+                  tabIndex={0}
+                  aria-label="Confronto prima e dopo"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={50}
+                  aria-valuetext="50% dopo"
+                  className="sl-ba-handle"
+                >
+                  <span aria-hidden="true">‹</span>
+                  <span aria-hidden="true">›</span>
+                </div>
+              </div>
+            </div>
+          </SlReveal>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 /* ------------------------------ attribuzione ------------------------------ */
 
 function ConceptBy({ className }: { className?: string }) {
