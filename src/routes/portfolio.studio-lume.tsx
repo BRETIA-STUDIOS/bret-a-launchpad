@@ -142,10 +142,14 @@ function BeforeAfter() {
       valueRef.current = v;
       if (afterRef.current) afterRef.current.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
       if (dividerRef.current) dividerRef.current.style.left = `${v}%`;
-      if (handleRef.current) handleRef.current.setAttribute("aria-valuenow", String(Math.round(v)));
+      if (handleRef.current) {
+        handleRef.current.setAttribute("aria-valuenow", String(Math.round(v)));
+        handleRef.current.setAttribute("aria-valuetext", `${Math.round(v)}% dopo`);
+      }
     };
 
-    apply(50);
+    // Inizio: 100% PRIMA / 0% DOPO (50/50 solo con reduced-motion, senza scroll-driven)
+    apply(reduced ? 50 : 0);
 
     /* --- scroll driven --- */
     const readScroll = () => {
@@ -245,7 +249,7 @@ function BeforeAfter() {
                 className="absolute inset-0 h-full w-full object-cover"
                 draggable={false}
               />
-              <div ref={afterRef} className="absolute inset-0" style={{ clipPath: "inset(0 50% 0 0)" }}>
+              <div ref={afterRef} className="absolute inset-0" style={{ clipPath: "inset(0 100% 0 0)" }}>
                 <img
                   src={lumeDopo.url}
                   alt="Dopo il servizio: capelli con colore luminoso e onde definite"
@@ -261,7 +265,7 @@ function BeforeAfter() {
                 Prima
               </span>
 
-              <div ref={dividerRef} className="sl-ba-divider" style={{ left: "50%" }}>
+              <div ref={dividerRef} className="sl-ba-divider" style={{ left: "0%" }}>
                 <div
                   ref={handleRef}
                   role="slider"
@@ -269,8 +273,8 @@ function BeforeAfter() {
                   aria-label="Confronto prima e dopo"
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-valuenow={50}
-                  aria-valuetext="50% dopo"
+                  aria-valuenow={0}
+                  aria-valuetext="0% dopo"
                   className="sl-ba-handle"
                 >
                   <span aria-hidden="true">‹</span>
