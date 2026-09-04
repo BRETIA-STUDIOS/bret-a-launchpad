@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BretiaSymbol } from "@/components/brand/BretiaSymbol";
+import { BookingModule } from "@/components/lume/BookingModule";
 import { cn } from "@/lib/utils";
 import { pageHead } from "@/lib/seo";
 import { LUME_FONTS_HREF } from "@/lib/fonts";
@@ -518,14 +519,6 @@ function ReturnControl() {
 /* -------------------------------- placeholder ----------------------------- */
 
 /** Riquadro tonale in attesa delle fotografie definitive del concept. */
-function Frame({ label, className }: { label: string; className?: string }) {
-  return (
-    <div className={cn("sl-frame flex items-center justify-center", className)}>
-      <span className="sl-label opacity-40">{label}</span>
-    </div>
-  );
-}
-
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <SlReveal as="p" className="sl-label" delay={40}>
@@ -921,7 +914,7 @@ function StudioLume() {
 
       {/* PRENOTAZIONE */}
       <section id="prenota" className="sl-band">
-        <div className="mx-auto grid max-w-[82rem] items-center gap-10 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+        <div className="mx-auto grid max-w-[82rem] items-start gap-10 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:gap-16">
           <div>
             <SectionLabel>Prenota il tuo appuntamento</SectionLabel>
             <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
@@ -939,28 +932,9 @@ function StudioLume() {
           </div>
 
           <SlReveal delay={140}>
-            <div className="sl-panel">
-              <ol className="sl-label flex flex-wrap items-center gap-x-4 gap-y-2 opacity-70">
-                {["Professionista", "Servizio", "Data e ora", "Conferma"].map((step, i) => (
-                  <li key={step} className="flex items-center gap-2">
-                    <span className="sl-step">{i + 1}</span>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-              <div className="mt-8 grid gap-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start">
-                <div className="flex gap-4">
-                  {TEAM.map((m) => (
-                    <div key={m.name} className="text-center">
-                      <div className="sl-avatar" aria-hidden="true" />
-                      <p className="sl-body mt-2 text-xs">{m.name}</p>
-                    </div>
-                  ))}
-                </div>
-                <Frame label="Calendario" className="h-40 w-full" />
-              </div>
-            </div>
+            <BookingModule team={TEAM} />
           </SlReveal>
+
         </div>
       </section>
 
