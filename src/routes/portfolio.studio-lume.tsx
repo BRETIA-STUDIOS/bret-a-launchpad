@@ -273,8 +273,8 @@ function BeforeAfter() {
                   aria-label="Confronto prima e dopo"
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-valuenow={50}
-                  aria-valuetext="50% dopo"
+                  aria-valuenow={0}
+                  aria-valuetext="0% dopo"
                   className="sl-ba-handle"
                 >
                   <span aria-hidden="true">‹</span>
