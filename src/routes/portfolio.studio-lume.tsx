@@ -11,6 +11,8 @@ import lumeInterior from "@/assets/lume/studio-lume-interior.png.asset.json";
 import lumeProducts from "@/assets/lume/studio-lume-products.png.asset.json";
 import lumeLavaggio from "@/assets/lume/studio-lume-lavaggio.png.asset.json";
 import lumeStyling from "@/assets/lume/studio-lume-styling.png.asset.json";
+import lumePrima from "@/assets/lume/studio-lume-prima.png.asset.json";
+import lumeDopo from "@/assets/lume/studio-lume-dopo.png.asset.json";
 
 export const Route = createFileRoute("/portfolio/studio-lume")({
   head: () =>
