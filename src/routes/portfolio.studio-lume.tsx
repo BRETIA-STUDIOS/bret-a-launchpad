@@ -142,10 +142,14 @@ function BeforeAfter() {
       valueRef.current = v;
       if (afterRef.current) afterRef.current.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
       if (dividerRef.current) dividerRef.current.style.left = `${v}%`;
-      if (handleRef.current) handleRef.current.setAttribute("aria-valuenow", String(Math.round(v)));
+      if (handleRef.current) {
+        handleRef.current.setAttribute("aria-valuenow", String(Math.round(v)));
+        handleRef.current.setAttribute("aria-valuetext", `${Math.round(v)}% dopo`);
+      }
     };
 
-    apply(50);
+    // Inizio: 100% PRIMA / 0% DOPO (50/50 solo con reduced-motion, senza scroll-driven)
+    apply(reduced ? 50 : 0);
 
     /* --- scroll driven --- */
     const readScroll = () => {
