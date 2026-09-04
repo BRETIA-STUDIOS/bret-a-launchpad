@@ -21,6 +21,7 @@ import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
 import { Route as PortfolioOsteriaNovaRouteImport } from './routes/portfolio.osteria-nova'
+import { Route as PortfolioStudioLumeRouteImport } from './routes/portfolio.studio-lume'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
@@ -86,6 +87,11 @@ const PortfolioOsteriaNovaRoute = PortfolioOsteriaNovaRouteImport.update({
   path: '/portfolio/osteria-nova',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortfolioStudioLumeRoute = PortfolioStudioLumeRouteImport.update({
+  id: '/portfolio/studio-lume',
+  path: '/portfolio/studio-lume',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
   id: '/.lovable/oauth/consent',
   path: '/.lovable/oauth/consent',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
+  '/portfolio/studio-lume': typeof PortfolioStudioLumeRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
+  '/portfolio/studio-lume': typeof PortfolioStudioLumeRoute
   '/portfolio': typeof PortfolioIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/portfolio/osteria-nova': typeof PortfolioOsteriaNovaRoute
+  '/portfolio/studio-lume': typeof PortfolioStudioLumeRoute
   '/portfolio/': typeof PortfolioIndexRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/portfolio/osteria-nova'
+    | '/portfolio/studio-lume'
     | '/portfolio/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/portfolio/osteria-nova'
+    | '/portfolio/studio-lume'
     | '/portfolio'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/portfolio/osteria-nova'
+    | '/portfolio/studio-lume'
     | '/portfolio/'
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   PortfolioOsteriaNovaRoute: typeof PortfolioOsteriaNovaRoute
+  PortfolioStudioLumeRoute: typeof PortfolioStudioLumeRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -301,6 +314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioOsteriaNovaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portfolio/studio-lume': {
+      id: '/portfolio/studio-lume'
+      path: '/portfolio/studio-lume'
+      fullPath: '/portfolio/studio-lume'
+      preLoaderRoute: typeof PortfolioStudioLumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.lovable/oauth/consent': {
       id: '/.lovable/oauth/consent'
       path: '/.lovable/oauth/consent'
@@ -331,6 +351,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   PortfolioOsteriaNovaRoute: PortfolioOsteriaNovaRoute,
+  PortfolioStudioLumeRoute: PortfolioStudioLumeRoute,
   PortfolioIndexRoute: PortfolioIndexRoute,
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
