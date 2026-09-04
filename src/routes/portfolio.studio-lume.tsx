@@ -175,13 +175,15 @@ function LumeHeader() {
           ))}
         </nav>
 
-        <button
-          type="button"
-          onClick={() => go("prenota")}
-          className="sl-btn sl-btn-outline hidden lg:inline-flex"
-        >
-          Prenota ora
-        </button>
+        <div className="hidden lg:block">
+          <button
+            type="button"
+            onClick={() => go("prenota")}
+            className="sl-btn sl-btn-outline"
+          >
+            Prenota ora
+          </button>
+        </div>
 
         <button
           type="button"
