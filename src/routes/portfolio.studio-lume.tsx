@@ -294,6 +294,96 @@ function SectionLabel({ children }: { children: ReactNode }) {
   );
 }
 
+/* -------------------------------- il salone ------------------------------- */
+
+function SaloneSection() {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const [shift, setShift] = useState(0);
+
+  useEffect(() => {
+    const node = wrapRef.current;
+    if (!node) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
+
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const rect = node.getBoundingClientRect();
+        const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        setShift((Math.min(Math.max(progress, 0), 1) - 0.5) * 24);
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return (
+    <section id="salone" className="sl-band">
+      <div className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
+          <div className="lg:pt-6">
+            <SectionLabel>Il salone</SectionLabel>
+            <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+              Un luogo
+              <br /> pensato per te
+            </SlReveal>
+            <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
+              Un ambiente dove tecnica, cura e atmosfera si incontrano. Ogni dettaglio è pensato
+              per rendere il tempo trascorso da Studio Lume parte dell&apos;esperienza.
+            </SlReveal>
+            <SlReveal delay={280} className="mt-8">
+              <div className="sl-rule w-16" />
+            </SlReveal>
+          </div>
+
+          <div ref={wrapRef}>
+            <SlReveal delay={120}>
+              <div className="sl-photo aspect-4/3 w-full">
+                <img
+                  src={lumeExterior.url}
+                  alt="La vetrina illuminata di Studio Lume Hair Atelier"
+                  width={1536}
+                  height={1024}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-300 ease-out"
+                  style={{ transform: `translate3d(0, ${shift}px, 0) scale(1.06)` }}
+                />
+              </div>
+            </SlReveal>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-8 sm:mt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.62fr)] lg:items-end lg:gap-16">
+          <div className="hidden lg:block" aria-hidden="true" />
+          <SlReveal delay={260}>
+            <div className="sl-photo aspect-3/2 w-full">
+              <img
+                src={lumeInterior.url}
+                alt="Interno di Studio Lume: postazioni e reception in marmo scuro"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <p className="sl-label mt-4 opacity-55">Milano · Hair atelier</p>
+          </SlReveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 /* ---------------------------------- page ---------------------------------- */
 
 function StudioLume() {
