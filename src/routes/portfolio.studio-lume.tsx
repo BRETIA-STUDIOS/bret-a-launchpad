@@ -395,7 +395,139 @@ function SaloneSection() {
 }
 
 
+/* --------------------------------- servizi -------------------------------- */
+
+function ServiziSection() {
+  return (
+    <section id="servizi" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.82fr)] lg:gap-20">
+        <div>
+          <SectionLabel>Servizi</SectionLabel>
+          <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+            La cura
+            <br /> diventa stile
+          </SlReveal>
+          <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
+            Tecnica, ascolto e attenzione ai dettagli. Ogni servizio nasce per valorizzare la
+            persona, non semplicemente il suo look.
+          </SlReveal>
+
+          <ul className="mt-12 border-t" style={{ borderColor: "var(--sl-line)" }}>
+            {SERVIZI.map((s, i) => (
+              <SlReveal as="li" key={s.title} delay={260 + i * 90} className="sl-service border-b">
+                <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-5 gap-y-2 py-6 sm:py-7">
+                  <span className="sl-service-mark" aria-hidden="true" />
+                  <h3 className="sl-service-title text-xl sm:text-2xl">{s.title}</h3>
+                  <span aria-hidden="true" />
+                  <p className="sl-body max-w-md text-sm">{s.caption}</p>
+                </div>
+              </SlReveal>
+            ))}
+          </ul>
+        </div>
+
+        <SlReveal delay={340} className="lg:pt-16">
+          <figure className="lg:sticky lg:top-28">
+            <div className="sl-photo aspect-4/5 w-full sm:aspect-3/2 lg:aspect-4/5">
+              <img
+                src={lumeProducts.url}
+                alt="Prodotti e strumenti professionali Studio Lume su piano in marmo scuro"
+                width={1536}
+                height={1024}
+                loading="lazy"
+                className="h-full w-full object-cover object-[35%_center]"
+              />
+            </div>
+            <figcaption className="sl-label mt-4 opacity-55">
+              Strumenti e prodotti selezionati
+            </figcaption>
+          </figure>
+        </SlReveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------- l'esperienza ------------------------------ */
+
+function EsperienzaSection() {
+  return (
+    <section id="esperienza" className="sl-band">
+      <div className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
+        <SlReveal delay={80}>
+          <div className="sl-photo aspect-4/5 w-full sm:aspect-16/9 lg:aspect-21/9">
+            <img
+              src={lumeLavaggio.url}
+              alt="Momento del lavaggio nel salone Studio Lume"
+              width={1536}
+              height={1024}
+              loading="lazy"
+              className="h-full w-full object-cover object-[62%_center] sm:object-center"
+            />
+          </div>
+        </SlReveal>
+
+        <div className="mt-10 grid gap-8 sm:mt-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:items-start lg:gap-20">
+          <div>
+            <SectionLabel>L&apos;esperienza</SectionLabel>
+            <SlReveal as="h2" delay={140} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+              Prenditi
+              <br /> il tuo tempo
+            </SlReveal>
+          </div>
+          <div className="lg:pt-4">
+            <SlReveal as="p" delay={220} className="sl-body max-w-md">
+              Dalla consulenza al momento finale, ogni fase è pensata per farti sentire a tuo agio
+              e lasciare spazio alla cura.
+            </SlReveal>
+            <SlReveal delay={300} className="mt-8">
+              <div className="sl-rule w-16" />
+            </SlReveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------- il risultato ------------------------------ */
+
+function RisultatoSection() {
+  return (
+    <section id="risultato" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+        <div>
+          <SectionLabel>Il risultato</SectionLabel>
+          <SlReveal as="h2" delay={140} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+            Il tuo stile,
+            <br /> portato alla luce.
+          </SlReveal>
+          <SlReveal as="p" delay={220} className="sl-body mt-6 max-w-sm">
+            Forma, movimento e dettagli costruiti intorno a te.
+          </SlReveal>
+          <SlReveal delay={300} className="mt-8">
+            <div className="sl-rule w-16" />
+          </SlReveal>
+        </div>
+        <SlReveal delay={180}>
+          <div className="sl-photo aspect-4/5 w-full sm:aspect-3/2">
+            <img
+              src={lumeStyling.url}
+              alt="Styling finale su capelli lunghi nel salone Studio Lume"
+              width={1536}
+              height={1024}
+              loading="lazy"
+              className="h-full w-full object-cover object-[58%_center]"
+            />
+          </div>
+        </SlReveal>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------------------------- page ---------------------------------- */
+
 
 function StudioLume() {
   return (
