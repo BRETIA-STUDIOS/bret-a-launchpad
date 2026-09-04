@@ -11,6 +11,8 @@ import lumeInterior from "@/assets/lume/studio-lume-interior.png.asset.json";
 import lumeProducts from "@/assets/lume/studio-lume-products.png.asset.json";
 import lumeLavaggio from "@/assets/lume/studio-lume-lavaggio.png.asset.json";
 import lumeStyling from "@/assets/lume/studio-lume-styling.png.asset.json";
+import lumePrima from "@/assets/lume/studio-lume-prima.png.asset.json";
+import lumeDopo from "@/assets/lume/studio-lume-dopo.png.asset.json";
 
 export const Route = createFileRoute("/portfolio/studio-lume")({
   head: () =>
@@ -114,6 +116,175 @@ function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
+
+/* ----------------------------- prima / dopo ------------------------------ */
+
+function BeforeAfter() {
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const afterRef = useRef<HTMLDivElement | null>(null);
+  const dividerRef = useRef<HTMLDivElement | null>(null);
+  const handleRef = useRef<HTMLDivElement | null>(null);
+
+  const valueRef = useRef(50);
+  const manualRef = useRef(false);
+  const draggingRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const frame = frameRef.current;
+    if (!track || !frame) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const apply = (v: number) => {
+      valueRef.current = v;
+      if (afterRef.current) afterRef.current.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+      if (dividerRef.current) dividerRef.current.style.left = `${v}%`;
+      if (handleRef.current) handleRef.current.setAttribute("aria-valuenow", String(Math.round(v)));
+    };
+
+    apply(50);
+
+    /* --- scroll driven --- */
+    const readScroll = () => {
+      rafRef.current = null;
+      const rect = track.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+      const raw = (0 - rect.top) / total;
+      const p = Math.min(1, Math.max(0, raw));
+      // ease the middle so 50/50 sits at mid-scroll
+      const target = p * 100;
+      if (manualRef.current) {
+        // resume only when scroll target meets the manual value (no jump)
+        if (Math.abs(target - valueRef.current) < 2.5) manualRef.current = false;
+        return;
+      }
+      apply(target);
+    };
+
+    const onScroll = () => {
+      if (draggingRef.current) return;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(readScroll);
+    };
+
+    if (!reduced) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+      onScroll();
+    }
+
+    /* --- pointer drag --- */
+    const fromClientX = (clientX: number) => {
+      const r = frame.getBoundingClientRect();
+      return Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100));
+    };
+
+    const onPointerDown = (e: PointerEvent) => {
+      draggingRef.current = true;
+      manualRef.current = true;
+      frame.setPointerCapture?.(e.pointerId);
+      apply(fromClientX(e.clientX));
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      if (!draggingRef.current) return;
+      e.preventDefault();
+      apply(fromClientX(e.clientX));
+    };
+    const endDrag = (e: PointerEvent) => {
+      if (!draggingRef.current) return;
+      draggingRef.current = false;
+      frame.releasePointerCapture?.(e.pointerId);
+    };
+
+    frame.addEventListener("pointerdown", onPointerDown);
+    frame.addEventListener("pointermove", onPointerMove);
+    frame.addEventListener("pointerup", endDrag);
+    frame.addEventListener("pointercancel", endDrag);
+
+    const onKey = (e: KeyboardEvent) => {
+      const step = e.shiftKey ? 10 : 4;
+      if (e.key === "ArrowLeft") {
+        manualRef.current = true;
+        apply(Math.max(0, valueRef.current - step));
+        e.preventDefault();
+      } else if (e.key === "ArrowRight") {
+        manualRef.current = true;
+        apply(Math.min(100, valueRef.current + step));
+        e.preventDefault();
+      }
+    };
+    handleRef.current?.addEventListener("keydown", onKey);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      frame.removeEventListener("pointerdown", onPointerDown);
+      frame.removeEventListener("pointermove", onPointerMove);
+      frame.removeEventListener("pointerup", endDrag);
+      frame.removeEventListener("pointercancel", endDrag);
+      handleRef.current?.removeEventListener("keydown", onKey);
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <div ref={trackRef} className="sl-ba-track relative">
+      <div className="sticky top-0 flex min-h-screen items-center">
+        <div className="mx-auto w-full max-w-[72rem] px-5 py-16 sm:px-8">
+          <SlReveal>
+            <div
+              ref={frameRef}
+              className="sl-ba-frame relative w-full touch-pan-y select-none overflow-hidden"
+            >
+              <img
+                src={lumePrima.url}
+                alt="Prima del servizio: capelli lunghi opachi e privi di forma"
+                className="absolute inset-0 h-full w-full object-cover"
+                draggable={false}
+              />
+              <div ref={afterRef} className="absolute inset-0" style={{ clipPath: "inset(0 50% 0 0)" }}>
+                <img
+                  src={lumeDopo.url}
+                  alt="Dopo il servizio: capelli con colore luminoso e onde definite"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  draggable={false}
+                />
+              </div>
+
+              <span className="sl-label pointer-events-none absolute bottom-4 left-4 opacity-75 sm:bottom-6 sm:left-6">
+                Dopo
+              </span>
+              <span className="sl-label pointer-events-none absolute bottom-4 right-4 opacity-75 sm:bottom-6 sm:right-6">
+                Prima
+              </span>
+
+              <div ref={dividerRef} className="sl-ba-divider" style={{ left: "50%" }}>
+                <div
+                  ref={handleRef}
+                  role="slider"
+                  tabIndex={0}
+                  aria-label="Confronto prima e dopo"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={50}
+                  aria-valuetext="50% dopo"
+                  className="sl-ba-handle"
+                >
+                  <span aria-hidden="true">‹</span>
+                  <span aria-hidden="true">›</span>
+                </div>
+              </div>
+            </div>
+          </SlReveal>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 /* ------------------------------ attribuzione ------------------------------ */
 
@@ -625,36 +796,22 @@ function StudioLume() {
 
       {/* PRIMA / DOPO */}
       <section id="prima-dopo" className="sl-band">
-        <div className="mx-auto grid max-w-[82rem] items-center gap-10 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
-          <div>
-            <SectionLabel>Trasformazioni reali</SectionLabel>
-            <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
-              Stessa persona.
-              <br /> Una nuova luce.
-            </SlReveal>
-            <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
-              Scorri per vedere la trasformazione.
-            </SlReveal>
-            <SlReveal delay={260} className="mt-8">
-              <div className="sl-rule w-16" />
-            </SlReveal>
-          </div>
-          <SlReveal delay={140}>
-            <div className="relative">
-              <Frame label="Prima / Dopo" className="aspect-4/3 w-full" />
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-6 left-1/2 w-px"
-                style={{ backgroundColor: "color-mix(in oklab, #e9dfd1 45%, transparent)" }}
-              />
-              <div className="sl-label pointer-events-none absolute inset-x-6 bottom-4 flex justify-between opacity-60">
-                <span>Prima</span>
-                <span>Dopo</span>
-              </div>
-            </div>
+        <div className="mx-auto max-w-[82rem] px-5 pt-20 sm:px-8 sm:pt-28">
+          <SectionLabel>Prima / Dopo</SectionLabel>
+          <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
+            La trasformazione
+            <br /> prende forma
+          </SlReveal>
+          <SlReveal as="p" delay={200} className="sl-body mt-6 max-w-md">
+            Un nuovo equilibrio, costruito intorno a te.
+          </SlReveal>
+          <SlReveal delay={260} className="mt-8">
+            <div className="sl-rule w-16" />
           </SlReveal>
         </div>
+        <BeforeAfter />
       </section>
+
 
       {/* IL TEAM */}
       <section id="team" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">

@@ -1097,3 +1097,71 @@
     transform: none;
   }
 }
+
+/* Studio Lume — confronto prima / dopo */
+.sl .sl-ba-track {
+  height: 220vh;
+}
+.sl .sl-ba-frame {
+  aspect-ratio: 4 / 3;
+  cursor: ew-resize;
+  border: 1px solid color-mix(in oklab, var(--sl-champagne) 12%, transparent);
+  background-color: var(--sl-coal);
+}
+.sl .sl-ba-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: color-mix(in oklab, var(--sl-champagne) 70%, transparent);
+  transform: translateX(-0.5px);
+  pointer-events: none;
+}
+.sl .sl-ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 3.75rem;
+  height: 3.75rem;
+  transform: translate(-50%, -50%);
+  color: var(--sl-champagne);
+  font-family: var(--sl-serif);
+  font-size: 1.1rem;
+  line-height: 1;
+  outline: none;
+  pointer-events: none;
+}
+.sl .sl-ba-handle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in oklab, var(--sl-champagne) 28%, transparent);
+  border-radius: 999px;
+  background-color: color-mix(in oklab, var(--sl-black) 35%, transparent);
+  backdrop-filter: blur(2px);
+}
+.sl .sl-ba-handle > span {
+  position: relative;
+  opacity: 0.85;
+}
+.sl .sl-ba-handle:focus-visible::before {
+  border-color: var(--sl-bronze);
+}
+@media (min-width: 640px) {
+  .sl .sl-ba-frame {
+    aspect-ratio: 3 / 2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sl .sl-ba-track {
+    height: auto;
+  }
+  .sl .sl-ba-track > div {
+    position: static;
+    min-height: 0;
+  }
+}
