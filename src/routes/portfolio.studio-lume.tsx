@@ -468,37 +468,14 @@ function StudioLume() {
 
 
       {/* SERVIZI */}
-      <section id="servizi" className="mx-auto max-w-[82rem] px-5 py-20 sm:px-8 sm:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <SectionLabel>I nostri servizi</SectionLabel>
-            <SlReveal as="h2" delay={120} className="mt-5 text-3xl sm:text-4xl lg:text-5xl">
-              Bellezza
-              <br /> in ogni dettaglio
-            </SlReveal>
-          </div>
-          <SlReveal delay={180} className="flex items-center gap-4">
-            <span className="sl-rule w-12" />
-            <span className="sl-label opacity-75">Scopri tutti i servizi →</span>
-          </SlReveal>
-        </div>
+      <ServiziSection />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVIZI.map((s, i) => (
-            <SlReveal key={s.title} delay={i * 90} className="sl-card">
-              <Frame label={s.title} className="aspect-4/5 w-full" />
-              <h3 className="sl-label mt-5">{s.title}</h3>
-              <p className="sl-body mt-2 text-sm">{s.caption}</p>
-              <div className="mt-5 flex items-center justify-between">
-                <span className="sl-rule w-10" />
-                <span aria-hidden="true" style={{ color: "var(--sl-bronze)" }}>
-                  →
-                </span>
-              </div>
-            </SlReveal>
-          ))}
-        </div>
-      </section>
+      {/* L'ESPERIENZA */}
+      <EsperienzaSection />
+
+      {/* IL RISULTATO */}
+      <RisultatoSection />
+
 
       {/* PRIMA / DOPO */}
       <section id="prima-dopo" className="sl-band">
