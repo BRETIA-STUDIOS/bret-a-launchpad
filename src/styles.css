@@ -803,3 +803,195 @@
   border-color: color-mix(in oklab, var(--color-accent) 32%, var(--color-border));
   box-shadow: 0 0 45px -12px color-mix(in oklab, var(--color-accent) 32%, transparent);
 }
+
+/* ============================================================
+   STUDIO LUME HAIR ATELIER — scoped concept design system
+   Isolato dai token BRETÌA: nessuna variabile condivisa.
+   ============================================================ */
+.sl {
+  --sl-black: #0b0a09;
+  --sl-coal: #14110e;
+  --sl-champagne: #e9dfd1;
+  --sl-bronze: #b9976b;
+  --sl-taupe: #8c8074;
+  --sl-serif: "Playfair Display", Georgia, serif;
+  --sl-sans: "Montserrat", "DM Sans", system-ui, sans-serif;
+
+  background-color: var(--sl-black);
+  color: var(--sl-champagne);
+  font-family: var(--sl-sans);
+}
+
+.sl h1,
+.sl h2,
+.sl h3 {
+  font-family: var(--sl-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.sl .sl-body {
+  font-family: var(--sl-sans);
+  font-weight: 300;
+  line-height: 1.75;
+  color: color-mix(in oklab, var(--sl-champagne) 78%, transparent);
+}
+
+.sl .sl-label {
+  font-family: var(--sl-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.sl .sl-rule {
+  display: block;
+  height: 1px;
+  background-color: color-mix(in oklab, var(--sl-bronze) 55%, transparent);
+}
+
+.sl .sl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.9rem 1.9rem;
+  font-family: var(--sl-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition:
+    background-color 0.45s ease,
+    color 0.45s ease,
+    border-color 0.45s ease;
+}
+
+.sl .sl-btn-outline {
+  border: 1px solid color-mix(in oklab, var(--sl-champagne) 34%, transparent);
+  color: var(--sl-champagne);
+}
+
+.sl .sl-btn-outline:hover {
+  border-color: var(--sl-bronze);
+  background-color: color-mix(in oklab, var(--sl-bronze) 14%, transparent);
+}
+
+.sl .sl-btn-solid {
+  background-color: var(--sl-champagne);
+  color: var(--sl-black);
+}
+
+.sl .sl-btn-solid:hover {
+  background-color: var(--sl-bronze);
+}
+
+.sl .sl-band {
+  background-color: var(--sl-coal);
+  border-block: 1px solid color-mix(in oklab, var(--sl-champagne) 8%, transparent);
+}
+
+.sl .sl-cta {
+  background:
+    radial-gradient(
+      120% 80% at 50% 0%,
+      color-mix(in oklab, var(--sl-bronze) 16%, transparent) 0%,
+      transparent 70%
+    ),
+    var(--sl-black);
+}
+
+.sl .sl-footer {
+  background-color: var(--sl-coal);
+  border-top: 1px solid color-mix(in oklab, var(--sl-champagne) 10%, transparent);
+}
+
+.sl .sl-hero-veil {
+  background:
+    radial-gradient(
+      90% 70% at 78% 30%,
+      color-mix(in oklab, var(--sl-bronze) 14%, transparent) 0%,
+      transparent 65%
+    ),
+    linear-gradient(180deg, var(--sl-black) 0%, var(--sl-coal) 100%);
+}
+
+.sl .sl-frame {
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--sl-champagne) 12%, transparent);
+  border-radius: 3px;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in oklab, var(--sl-bronze) 12%, transparent) 0%,
+      transparent 55%
+    ),
+    color-mix(in oklab, var(--sl-champagne) 5%, var(--sl-coal));
+}
+
+.sl .sl-card {
+  border-bottom: 1px solid color-mix(in oklab, var(--sl-champagne) 10%, transparent);
+  padding-bottom: 1.5rem;
+  transition: transform 0.5s ease;
+}
+
+.sl .sl-card:hover {
+  transform: translateY(-4px);
+}
+
+.sl .sl-panel {
+  padding: 1.5rem;
+  border: 1px solid color-mix(in oklab, var(--sl-champagne) 12%, transparent);
+  border-radius: 4px;
+  background-color: color-mix(in oklab, var(--sl-champagne) 4%, var(--sl-black));
+}
+
+@media (min-width: 640px) {
+  .sl .sl-panel {
+    padding: 2rem;
+  }
+}
+
+.sl .sl-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--sl-bronze) 60%, transparent);
+  color: var(--sl-bronze);
+  font-size: 0.6rem;
+}
+
+.sl .sl-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--sl-champagne) 18%, transparent);
+  background: color-mix(in oklab, var(--sl-bronze) 18%, var(--sl-coal));
+}
+
+.sl .sl-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sl .sl-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl .sl-reveal,
+  .sl .sl-card {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

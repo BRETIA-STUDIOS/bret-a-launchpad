@@ -44,3 +44,7 @@ export const OSTERIA_FONTS_HREF =
  * vanno cambiati: restano "Space Grotesk" e "DM Sans".
  * ─────────────────────────────────────────────────────────────────────────
  */
+
+/** Playfair Display + Montserrat: identità di Studio Lume, solo su quella pagina. */
+export const LUME_FONTS_HREF =
+  "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..500&family=Montserrat:wght@300;400;500;600&display=swap";
